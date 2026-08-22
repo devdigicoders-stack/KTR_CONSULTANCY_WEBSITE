@@ -52,7 +52,7 @@ const Header = () => {
               <svg className="w-[14px] h-[14px] text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <span className="whitespace-nowrap">info@ktrconsultants.com</span>
+              <a href="mailto:info@ktrconsultants.in" className="whitespace-nowrap hover:text-[#de9e48] transition-colors">info@ktrconsultants.in</a>
             </div>
           </div>
           
@@ -120,11 +120,11 @@ const Header = () => {
         {/* Right Actions */}
         <div className="hidden lg:flex items-center gap-3 xl:gap-4 flex-shrink-0">
           {/* Phone block */}
-          <a href="tel:+911234567890" className="flex items-center gap-2 px-3 py-2 border-2 border-gray-100 rounded-lg text-gray-800 hover:border-[#de9e48] hover:text-[#de9e48] transition-all group shadow-sm bg-white whitespace-nowrap">
+          <a href="tel:+919918699696" className="flex items-center gap-2 px-3 py-2 border-2 border-gray-100 rounded-lg text-gray-800 hover:border-[#de9e48] hover:text-[#de9e48] transition-all group shadow-sm bg-white whitespace-nowrap">
             <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#de9e48] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            <span className="font-bold text-[13px] xl:text-[14px] tracking-wide">+91 12345 67890</span>
+            <span className="font-bold text-[13px] xl:text-[14px] tracking-wide">+91 99186 99696</span>
           </a>
 
           {/* CTA Button */}
@@ -192,11 +192,11 @@ const Header = () => {
               );
             })}
             <div className="pt-6 mt-6 border-t border-gray-100 px-2 space-y-3">
-              <a href="tel:+911234567890" className="flex items-center justify-center gap-2 w-full px-4 py-3.5 border-2 border-gray-100 rounded-lg text-gray-800 font-bold bg-white hover:border-[#de9e48] hover:text-[#de9e48] transition-colors">
+              <a href="tel:+919918699696" className="flex items-center justify-center gap-2 w-full px-4 py-3.5 border-2 border-gray-100 rounded-lg text-gray-800 font-bold bg-white hover:border-[#de9e48] hover:text-[#de9e48] transition-colors">
                 <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                +91 12345 67890
+                +91 99186 99696
               </a>
               <Link 
                 to="/apply-online" 

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 
 // Pages
 import Home from './pages/Home';
@@ -44,6 +45,7 @@ function App() {
         <Footer />
         
         {/* Global Floating Components */}
+        <FloatingWhatsApp />
         <ScrollToTop />
       </div>
     </Router>

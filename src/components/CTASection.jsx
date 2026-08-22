@@ -47,7 +47,7 @@ const CTASection = () => {
 
             {/* WhatsApp Button */}
             <a 
-              href="https://wa.me/911234567890" 
+              href="https://wa.me/919918699696" 
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center bg-transparent border border-gray-600 hover:border-gray-400 text-white font-semibold text-[13px] py-3.5 px-6 rounded-md transition-all duration-300 hover:bg-white/5"

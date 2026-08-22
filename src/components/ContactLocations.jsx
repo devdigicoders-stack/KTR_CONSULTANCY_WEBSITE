@@ -4,17 +4,17 @@ const ContactLocations = () => {
     {
       title: "Head Office: Lucknow",
       address: "Virat Khand, Gomti Nagar,\nLucknow, Uttar Pradesh - 226010",
-      phone: "+91 12345 67890",
+      phone: "+91 99186 99696",
     },
     {
       title: "Branch Office: Kanpur",
       address: "Swaroop Nagar, Kanpur,\nUttar Pradesh - 208002",
-      phone: "+91 98765 43210",
+      phone: "+91 99186 99696",
     },
     {
       title: "Branch Office: Noida",
       address: "Sector 62, Noida,\nUttar Pradesh - 201309",
-      phone: "+91 87654 32109",
+      phone: "+91 99186 99696",
     }
   ];
 

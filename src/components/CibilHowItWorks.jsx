@@ -137,12 +137,17 @@ const CibilHowItWorks = () => {
                 Our experts are here to help you understand your CIBIL report.
               </p>
               
-              <button className="w-full bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-[14px] py-3 rounded-md transition-colors flex items-center justify-center shadow-sm">
+              <a 
+                href="https://wa.me/919918699696"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-[14px] py-3 rounded-md transition-colors flex items-center justify-center shadow-sm"
+              >
                 Talk to Expert
                 <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </button>
+              </a>
               
             </div>
           </div>

@@ -81,7 +81,7 @@ const PrivacyPolicy = () => {
             <div>
               <h2 className="text-[#020d1c] font-bold text-[22px] font-serif mb-3 tracking-tight">6. Your Rights and Choices</h2>
               <p className="text-gray-600 text-[15px] leading-[1.8]">
-                Depending on your location, you may have certain rights regarding your personal information, such as the right to access, correct, or delete your data. If you wish to exercise these rights or have questions about our privacy practices, please contact us at privacy@ktrconsultants.com.
+                Depending on your location, you may have certain rights regarding your personal information, such as the right to access, correct, or delete your data. If you wish to exercise these rights or have questions about our privacy practices, please contact us at privacy@ktrconsultants.in.
               </p>
             </div>
           </div>
