@@ -68,12 +68,12 @@ const CibilHero = () => {
       setAppliedCoupon('Team50');
       setCouponFeedback({
         type: 'success',
-        text: '🎉 Coupon "Team50" applied! 50% discount activated.'
+        text: '🎉 50% discount coupon applied successfully!'
       });
     } else {
       setCouponFeedback({
         type: 'error',
-        text: '❌ Invalid coupon code. Enter "Team50" for 50% discount.'
+        text: '❌ Invalid coupon code.'
       });
     }
   };
@@ -228,14 +228,8 @@ const CibilHero = () => {
             </div>
           </div>
           
-          <div className="bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/20 flex items-center gap-2 flex-shrink-0 self-stretch md:self-auto justify-center">
-            <span className="text-xs text-gray-200">Use Coupon:</span>
-            <button
-              onClick={() => handleApplyCoupon('Team50')}
-              className="bg-[#de9e48] hover:bg-[#f1ae55] text-[#020d1c] font-black text-xs px-2.5 py-1 rounded transition-all active:scale-95 shadow"
-            >
-              Team50 (50% OFF)
-            </button>
+          <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-white/20 flex items-center gap-2 flex-shrink-0 self-stretch md:self-auto justify-center">
+            <span className="text-xs text-yellow-300 font-semibold">⚡ Instant PDF Download After Payment</span>
           </div>
         </div>
 
@@ -681,7 +675,7 @@ const CibilHero = () => {
                             setCouponInput(e.target.value);
                             setCouponFeedback(null);
                           }}
-                          placeholder='Enter coupon (e.g. Team50)'
+                          placeholder='Enter coupon code'
                           className="flex-1 h-9 bg-gray-900/90 border border-gray-700 rounded-lg text-xs px-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#de9e48] uppercase"
                         />
                         <button

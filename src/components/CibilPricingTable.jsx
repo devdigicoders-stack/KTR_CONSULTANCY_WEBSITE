@@ -78,14 +78,13 @@ const CibilPricingTable = () => {
             Compare Credit Report Plans & Bureaus
           </h2>
           <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-            Get 100% genuine official credit reports directly from RBI authorized credit bureaus. Apply coupon code <span className="font-bold text-[#020d1c] bg-[#de9e48]/20 px-2 py-0.5 rounded">Team50</span> for a flat 50% discount.
+            Get 100% genuine official credit reports directly from RBI authorized credit bureaus with unmasked bank account numbers and instant PDF download.
           </p>
         </div>
 
         {/* 4 Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {bureaus.map((item) => {
-            const discountedPrice = Math.round(item.basePrice * 0.5);
             return (
               <div
                 key={item.id}
@@ -123,13 +122,12 @@ const CibilPricingTable = () => {
                       </span>
                     </div>
 
-                    {/* With Coupon Team50 */}
                     <div className="mt-2 pt-2 border-t border-gray-700/40 flex items-center justify-between">
-                      <span className="text-[11px] font-semibold text-green-500">
-                        With Code Team50:
+                      <span className="text-[11px] font-medium text-gray-400">
+                        Generation Time:
                       </span>
-                      <span className={`text-sm font-black ${item.recommended ? 'text-white' : 'text-[#020d1c]'}`}>
-                        ₹{discountedPrice} <span className="text-[10px] text-green-500">(50% OFF)</span>
+                      <span className={`text-xs font-bold ${item.recommended ? 'text-green-400' : 'text-green-600'}`}>
+                        Instant PDF
                       </span>
                     </div>
                   </div>

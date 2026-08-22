@@ -90,11 +90,11 @@ const CibilInfo = () => {
             <div className="mt-6 pt-6 border-t border-gray-100">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-[#de9e48]/20 flex items-center justify-center text-[#de9e48] font-bold">
-                  %
+                  ✓
                 </div>
                 <div>
-                  <h5 className="font-bold text-xs text-[#020d1c]">Discount Offer Active</h5>
-                  <p className="text-[11.5px] text-gray-500">Apply coupon <strong>Team50</strong> for 50% discount</p>
+                  <h5 className="font-bold text-xs text-[#020d1c]">Official Bureau Gateway</h5>
+                  <p className="text-[11.5px] text-gray-500">100% Genuine & Legally Recognized PDF</p>
                 </div>
               </div>
             </div>

@@ -65,14 +65,14 @@ export function evaluateCoupon(code, basePrice) {
       valid: true,
       discountPercent: 50,
       discountAmount,
-      message: '🎉 Coupon "Team50" applied! 50% discount has been deducted.'
+      message: '🎉 50% discount coupon applied successfully!'
     };
   }
   return {
     valid: false,
     discountPercent: 0,
     discountAmount: 0,
-    message: 'Invalid coupon code. Use "Team50" for 50% discount.'
+    message: 'Invalid coupon code.'
   };
 }
 
