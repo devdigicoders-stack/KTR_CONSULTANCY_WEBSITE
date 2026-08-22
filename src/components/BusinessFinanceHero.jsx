@@ -1,35 +1,36 @@
 import { Link } from 'react-router-dom';
 
-const ServicesHero = () => {
+const BusinessFinanceHero = () => {
   return (
-    <section className="bg-white pt-10 pb-16 md:pt-12 md:pb-20 lg:pt-16 lg:pb-24 font-sans overflow-hidden">
+    <section className="bg-white pt-6 pb-10 md:pt-8 md:pb-12 lg:pt-10 lg:pb-14 font-sans overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 xl:gap-16">
           
           {/* Left Content */}
-          <div className="w-full lg:w-[45%] xl:w-[50%] flex flex-col justify-center">
+          <div className="w-full lg:w-[45%] xl:w-[50%] flex flex-col justify-center relative z-10">
             
             {/* Breadcrumbs */}
-            <div className="flex items-center gap-2 text-gray-500 text-[13px] font-medium mb-10">
+            <div className="flex items-center gap-2 text-gray-500 text-[13px] font-medium mb-6">
               <Link to="/" className="hover:text-[#de9e48] transition-colors">Home</Link>
               <span className="text-gray-400">›</span>
-              <span className="text-[#020d1c]">Loans</span>
+              <span className="text-[#020d1c]">Business Finance</span>
             </div>
 
             {/* Subtitle */}
-            <h3 className="text-[#de9e48] text-[13px] font-bold tracking-wide uppercase mb-3">
-              LOAN SERVICES
+            <h3 className="text-[#de9e48] text-[13px] font-bold tracking-wide uppercase mb-2">
+              BUSINESS FINANCE
             </h3>
             
+            
             {/* Title */}
-            <h1 className="text-[#020d1c] text-4xl md:text-5xl lg:text-[44px] xl:text-[54px] font-bold font-serif leading-[1.15] mb-6">
-              All Your Loan Needs <br />
-              <span className="text-[#de9e48]">Under One Roof</span>
+            <h1 className="text-[#020d1c] text-4xl md:text-5xl lg:text-[42px] xl:text-[50px] font-bold font-serif leading-[1.15] mb-4">
+              Fuel Your Business Growth <br />
+              <span className="text-[#de9e48]">With Smart Financing</span>
             </h1>
             
             {/* Paragraph */}
-            <p className="text-gray-600 text-[13.5px] lg:text-[15px] leading-relaxed mb-10 max-w-[500px]">
-              From personal to business, we provide end-to-end loan assistance with the best bank options, expert guidance and fast processing.
+            <p className="text-gray-600 text-[13.5px] lg:text-[14.5px] leading-relaxed mb-6 max-w-[500px]">
+              End-to-end financial solutions for businesses of all sizes. From working capital to project finance, we help you achieve your business goals.
             </p>
             
             {/* Buttons */}
@@ -59,11 +60,11 @@ const ServicesHero = () => {
           </div>
           
           {/* Right Image Content */}
-          <div className="w-full lg:w-[55%] xl:w-[50%] flex justify-center lg:justify-end">
+          <div className="w-full lg:w-[55%] xl:w-[50%] flex justify-center lg:justify-end relative z-0">
             <img 
-              src="/hero.png" 
-              alt="Loan Services" 
-              className="w-full max-w-[600px] xl:max-w-[750px] h-auto object-contain"
+              src="/bussiness.png" 
+              alt="Business Finance" 
+              className="w-full max-w-[500px] xl:max-w-[650px] h-auto object-contain"
             />
           </div>
 
@@ -73,4 +74,4 @@ const ServicesHero = () => {
   );
 };
 
-export default ServicesHero;
+export default BusinessFinanceHero;

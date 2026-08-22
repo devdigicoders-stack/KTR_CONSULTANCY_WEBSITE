@@ -2,6 +2,9 @@ import React from 'react';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
 import StatsBanner from '../components/StatsBanner';
+import ServicesGrid from '../components/ServicesGrid';
+import HowItWorks from '../components/HowItWorks';
+import CompanyStats from '../components/CompanyStats';
 import WhyChooseUs from '../components/WhyChooseUs';
 import Testimonials from '../components/Testimonials';
 import TrustedBy from '../components/TrustedBy';
@@ -13,6 +16,9 @@ const Home = () => {
       <Hero />
       <Services />
       <StatsBanner />
+      <ServicesGrid />
+      <HowItWorks />
+      <CompanyStats />
       <WhyChooseUs />
       <Testimonials />
       <TrustedBy />

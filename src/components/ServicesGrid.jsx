@@ -1,130 +1,138 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
-const services = [
+const loanServices = [
   {
-    title: 'Business Strategy',
-    desc: 'Strategic planning and advisory to achieve long-term growth and competitive advantage.',
+    title: "Home Loan",
+    desc: "Purchase, construction, plot purchase + construction and related housing finance assistance.",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 21h18" />
+      <svg className="w-[26px] h-[26px] text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
       </svg>
-    )
+    ),
+    link: "/services/home-loan"
   },
   {
-    title: 'Digital Transformation',
-    desc: 'Leverage technology to drive innovation, streamline operations and accelerate growth.',
+    title: "Plot + Construction Loan",
+    desc: "Finance assistance for eligible plot purchase and construction requirements.",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m14-6h2m-2 6h2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+      <svg className="w-[26px] h-[26px] text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
       </svg>
-    )
+    ),
+    link: "/services/plot-construction-loan"
   },
   {
-    title: 'Operations Consulting',
-    desc: 'Optimizing operations to improve efficiency, productivity and overall performance.',
+    title: "Construction Loan",
+    desc: "Construction finance for eligible residential properties.",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <svg className="w-[26px] h-[26px] text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
       </svg>
-    )
+    ),
+    link: "/services/construction-loan"
   },
   {
-    title: 'Data & Analytics',
-    desc: 'Turning data into actionable insights for better decisions and business outcomes.',
+    title: "Balance Transfer / Takeover",
+    desc: "Transfer of existing home/property loans to another lender where eligible.",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+      <svg className="w-[26px] h-[26px] text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
       </svg>
-    )
+    ),
+    link: "/services/balance-transfer"
   },
   {
-    title: 'Risk Management',
-    desc: 'Identify, assess and mitigate risks to protect your business and ensure compliance.',
+    title: "Top-Up Loan",
+    desc: "Additional finance on eligible existing loans/properties.",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      <svg className="w-[26px] h-[26px] text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth={1.5} />
       </svg>
-    )
+    ),
+    link: "/services/top-up-loan"
   },
   {
-    title: 'Change Management',
-    desc: 'Helping organizations adapt to change and thrive in a rapidly evolving environment.',
+    title: "Loan Against Property (LAP)",
+    desc: "Secured finance against eligible property.",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+      <svg className="w-[26px] h-[26px] text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 9a2 2 0 100-4 2 2 0 000 4z" />
       </svg>
-    )
+    ),
+    link: "/services/lap"
   },
   {
-    title: 'Human Capital Advisory',
-    desc: 'Optimizing your workforce strategy to attract, develop and retain top talent.',
+    title: "OD / DOD / Property-backed Facilities",
+    desc: "Property-backed overdraft / DOD-style facilities where available.",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+      <svg className="w-[26px] h-[26px] text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
-    )
+    ),
+    link: "/services/od-dod"
   },
   {
-    title: 'M&A Advisory',
-    desc: 'End-to-end advisory for mergers, acquisitions and strategic partnerships.',
+    title: "Personal Loan",
+    desc: "Quick personal loans for your various needs.",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+      <svg className="w-[26px] h-[26px] text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
       </svg>
-    )
+    ),
+    link: "/services/personal-loan"
   }
 ];
 
 const ServicesGrid = () => {
   return (
-    <section className="bg-[#fafafa] py-20 lg:py-24 font-sans">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <section className="bg-[#fcfcfd] py-16 md:py-20 font-sans">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
         
         {/* Header */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <h2 className="text-[#020d1c] text-3xl md:text-4xl lg:text-[2.5rem] font-bold font-serif leading-tight mb-5 tracking-tight">
-            Expert Consulting Services <br className="hidden md:block" /> for Every Business Need
+        <div className="flex items-center justify-center gap-4 mb-12">
+          <div className="h-[2px] bg-[#de9e48]/40 w-10 md:w-16"></div>
+          <h2 className="text-[#020d1c] font-bold text-[16px] md:text-[18px] tracking-[0.1em] uppercase">
+            OUR LOAN SERVICES
           </h2>
-          <div className="w-12 h-1 bg-[#de9e48] mx-auto mb-6"></div>
-          <p className="text-gray-600 text-[15px] leading-relaxed font-light">
-            From strategy to execution, we provide end-to-end solutions that drive growth, improve performance and create lasting impact.
-          </p>
+          <div className="h-[2px] bg-[#de9e48]/40 w-10 md:w-16"></div>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-5">
+          {loanServices.map((service, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-2xl p-7 lg:p-8 border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-all duration-300 group flex flex-col h-full"
+              className="bg-white border border-gray-100 rounded-2xl p-5 md:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-200 transition-all duration-300"
             >
-              {/* Icon */}
-              <div className="w-14 h-14 rounded-full bg-[#fbf5ee] flex items-center justify-center text-[#020d1c] mb-6 group-hover:bg-[#de9e48] group-hover:text-white transition-colors duration-300">
-                {service.icon}
+              <div className="flex gap-4">
+                
+                {/* Left Icon */}
+                <div className="w-[52px] h-[52px] rounded-full bg-[#fdf8f2] flex items-center justify-center flex-shrink-0">
+                  {service.icon}
+                </div>
+
+                {/* Right Content */}
+                <div className="flex flex-col pt-1.5">
+                  <h3 className="text-[#020d1c] font-bold text-[14px] md:text-[15px] leading-tight mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-500 text-[12px] md:text-[13px] leading-relaxed font-medium mb-4 pr-2">
+                    {service.desc}
+                  </p>
+                  <Link 
+                    to={service.link} 
+                    className="inline-flex items-center text-[#de9e48] font-bold text-[13px] hover:text-[#c98e41] transition-colors mt-auto group w-max"
+                  >
+                    Know More 
+                    <svg className="w-3.5 h-3.5 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </Link>
+                </div>
+
               </div>
-              
-              {/* Content */}
-              <h3 className="text-[#020d1c] font-bold text-[17px] mb-3 leading-snug">
-                {service.title}
-              </h3>
-              <p className="text-gray-500 text-[13.5px] leading-relaxed font-light mb-8 flex-grow">
-                {service.desc}
-              </p>
-              
-              {/* Link */}
-              <Link 
-                to={`/services/${service.title.toLowerCase().replace(/ & /g, '-').replace(/\s+/g, '-')}`} 
-                className="inline-flex items-center text-[#020d1c] font-bold text-[13px] group-hover:text-[#de9e48] transition-colors mt-auto"
-              >
-                Learn More
-                <svg className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
             </div>
           ))}
         </div>

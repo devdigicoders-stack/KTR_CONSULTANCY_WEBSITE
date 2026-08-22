@@ -1,15 +1,20 @@
-import React from 'react';
 import ContactHero from '../components/ContactHero';
-import ContactForm from '../components/ContactForm';
+import ContactFormSection from '../components/ContactFormSection';
+import ContactFeatures from '../components/ContactFeatures';
+import ContactLocations from '../components/ContactLocations';
 import ContactFAQ from '../components/ContactFAQ';
+import ContactBottomCTA from '../components/ContactBottomCTA';
 
 const Contact = () => {
   return (
-    <>
+    <div className="bg-white">
       <ContactHero />
-      <ContactForm />
+      <ContactFormSection />
+      <ContactFeatures />
+      <ContactLocations />
       <ContactFAQ />
-    </>
+      <ContactBottomCTA />
+    </div>
   );
 };
 

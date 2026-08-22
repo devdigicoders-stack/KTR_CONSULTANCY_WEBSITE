@@ -2,50 +2,57 @@ import { Link } from 'react-router-dom';
 
 const AboutHero = () => {
   return (
-    <section className="relative w-full bg-[#020d1c] min-h-[450px] lg:min-h-[500px] flex items-center py-16 md:py-20 font-sans">
-      {/* Background Image with Gradient Overlay */}
-      <div 
-        className="absolute inset-0 w-full h-full bg-cover bg-[center_15%] md:bg-[right_10%] bg-no-repeat"
-        style={{ 
-          backgroundImage: `url('/images/aboutushero.png')` 
-        }}
-      >
-        {/* Gradient that fades from solid dark blue on the left to transparent on the right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020d1c] via-[#020d1c]/95 to-[#020d1c]/20"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
-        <div className="max-w-xl">
-          {/* Subtitle */}
-          <h3 className="text-[#de9e48] text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase mb-3">
-            ABOUT US
-          </h3>
+    <section className="bg-white py-10 lg:py-14 font-sans overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-12 xl:gap-16">
           
-          {/* Title */}
-          <h1 className="text-4xl lg:text-[3.5rem] font-bold font-serif text-white leading-tight mb-5 tracking-tight">
-            We're Here to Help <br />
-            You <span className="text-[#de9e48]">Grow Better</span>
-          </h1>
-          
-          {/* Golden Separator */}
-          <div className="w-12 h-[2px] bg-[#de9e48] mb-5"></div>
-          
-          {/* Paragraph */}
-          <p className="text-gray-300 text-sm md:text-base font-light leading-relaxed mb-8 max-w-[480px]">
-            At KTR Consultants, we partner with businesses to unlock their full potential with innovative strategies, technology and expert guidance.
-          </p>
-          
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-sm font-medium">
-            <Link to="/" className="text-white hover:text-[#de9e48] transition-colors flex items-center gap-1.5 font-light text-[13px]">
-              <svg className="w-4 h-4 mb-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          {/* Left Content */}
+          <div className="w-full lg:w-[45%] flex flex-col items-start xl:pr-4">
+            {/* Breadcrumbs */}
+            <div className="text-[13px] text-gray-400 font-medium mb-6">
+              <Link to="/" className="hover:text-[#de9e48] transition-colors">Home</Link>
+              <span className="mx-2 font-light">›</span>
+              <span className="text-[#de9e48]">About Us</span>
+            </div>
+            
+            {/* Subtitle */}
+            <h3 className="text-[#de9e48] font-bold text-[13px] tracking-[0.1em] uppercase mb-3">
+              ABOUT KTR CONSULTANTS
+            </h3>
+            
+            {/* Title */}
+            <h1 className="text-[36px] md:text-[44px] lg:text-[48px] xl:text-[56px] font-bold font-serif text-[#020d1c] leading-[1.1] mb-5 tracking-tight">
+              Your Growth,<br />Our <span className="text-[#de9e48]">Expertise.</span>
+            </h1>
+            
+            {/* Paragraph */}
+            <p className="text-gray-600 text-[14px] md:text-[15px] leading-[1.6] mb-8 max-w-[500px]">
+              KTR Consultants is a single-window solution for all your financial & property needs. We are committed to provide fast, transparent and reliable services with complete dedication.
+            </p>
+            
+            {/* Button */}
+            <Link 
+              to="/contact" 
+              className="inline-flex items-center justify-center bg-[#020d1c] hover:bg-[#031326] text-white font-semibold py-3.5 px-8 rounded-md transition-all duration-300 shadow-[0_4px_14px_0_rgba(2,13,28,0.39)] hover:-translate-y-0.5 text-[14px]"
+            >
+              Get Free Consultation
+              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-              Home
             </Link>
-            <span className="text-[#de9e48] mx-1">›</span>
-            <span className="text-gray-300 font-light text-[13px]">About Us</span>
           </div>
+
+          {/* Right Image */}
+          <div className="w-full lg:w-[55%] relative mt-6 lg:mt-0">
+            <div className="relative rounded-[24px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+              <img 
+                src="/images/aboutus.png" 
+                alt="KTR Consultants Office" 
+                className="w-full h-auto max-h-[420px] object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </div>
+          
         </div>
       </div>
     </section>

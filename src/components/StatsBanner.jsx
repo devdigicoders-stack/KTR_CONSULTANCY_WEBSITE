@@ -1,79 +1,114 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const stats = [
+const features = [
   {
     icon: (
-      <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <circle cx="12" cy="10" r="3" strokeWidth={1.5} />
+      <svg className="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Bank Icon */}
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.3} d="M3 21h18M3 10h18M5 6l7-3 7 3v4H5V6z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.3} d="M7 21v-7m3 7v-7m4 7v-7m3 7v-7" />
+        <circle cx="12" cy="15.5" r="1.5" fill="currentColor" stroke="none" className="text-[#de9e48]" />
       </svg>
     ),
-    value: "10+",
-    label: "Years of Experience"
+    label: (
+      <>
+        Nationalized Bank <br /> Focused
+      </>
+    )
   },
   {
     icon: (
-      <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth={1.5} />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 16v-4m4 4v-6m4 6V8" />
+      <svg className="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Stopwatch */}
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.3} d="M12 22a9 9 0 100-18 9 9 0 000 18z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.3} d="M10 2h4M12 4v2" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} className="text-[#de9e48]" d="M12 9v4l2.5 2.5" />
       </svg>
     ),
-    value: "250+",
-    label: "Projects Completed"
+    label: (
+      <>
+        Minimum Practical <br /> TAT
+      </>
+    )
   },
   {
     icon: (
-      <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      <svg className="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Window/Puzzle */}
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.3} d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.3} d="M12 4v16M4 12h16" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} className="text-[#de9e48]" d="M15 15a2 2 0 11-4 0 2 2 0 014 0z" />
       </svg>
     ),
-    value: "150+",
-    label: "Happy Clients"
+    label: (
+      <>
+        One-Window <br /> Solutions
+      </>
+    )
   },
   {
     icon: (
-      <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-        <circle cx="12" cy="14" r="2" strokeWidth={1.5} />
+      <svg className="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Transparent Process / Shield */}
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.3} d="M3 12l9-9 9 9M5 10v10a2 2 0 002 2h10a2 2 0 002-2V10" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.3} className="text-[#de9e48]" d="M9 14l2 2 4-4" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.3} d="M12 19v.01" />
       </svg>
     ),
-    value: "25+",
-    label: "Expert Consultants"
-  },
-  {
-    icon: (
-      <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15a5 5 0 100-10 5 5 0 000 10z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.21 13.89L7 21l5-2 5 2-1.21-7.11" />
-      </svg>
-    ),
-    value: "98%",
-    label: "Client Satisfaction"
+    label: (
+      <>
+        100% Transparent <br /> Process
+      </>
+    )
   }
 ];
 
 const StatsBanner = () => {
   return (
-    <section className="bg-[#fafafa] pb-24 font-sans">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="bg-[#030e21] rounded-xl px-2 py-8 lg:px-4 shadow-xl border border-gray-800/30">
-          <div className="flex flex-col lg:flex-row justify-between items-center divide-y lg:divide-y-0 lg:divide-x divide-gray-700/60">
-            {stats.map((stat, index) => (
-              <div key={index} className="flex items-center gap-4 flex-1 py-4 lg:py-0 px-4 xl:px-6 w-full lg:w-auto justify-center lg:justify-start">
-                <div className="text-[#de9e48] flex-shrink-0">
-                  {stat.icon}
+    <section className="bg-[#fcfcfd] pb-16 lg:pb-24 font-sans relative z-10 pt-4">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
+        <div className="bg-[#030d1c] rounded-xl shadow-xl flex flex-col xl:flex-row items-center justify-between py-5 px-6 md:px-8 xl:px-10 gap-6 xl:gap-0 border border-gray-800">
+          
+          {/* Left Text Area */}
+          <div className="flex-shrink-0 w-full xl:w-[32%] 2xl:w-[28%] flex items-center xl:border-r border-gray-700/60 xl:pr-6 text-center xl:text-left h-full">
+            <div className="w-full">
+              <h3 className="text-white text-[14px] md:text-[15px] font-semibold leading-[1.4] mb-2 text-opacity-95">
+                Specialized assistance for <br className="hidden lg:block"/> eligible non-approved <br className="hidden lg:block"/> society properties.
+              </h3>
+              <p className="text-gray-400 text-[10px] md:text-[11px]">
+                Subject to bank policy and eligibility.
+              </p>
+            </div>
+          </div>
+
+          {/* Middle Icons Area */}
+          <div className="flex-1 w-full grid grid-cols-2 md:grid-cols-4 gap-4 xl:gap-2 xl:px-6 2xl:px-8">
+            {features.map((feature, index) => (
+              <div key={index} className="flex flex-col items-center text-center gap-2">
+                <div className="text-[#de9e48]">
+                  {feature.icon}
                 </div>
-                <div className="flex flex-col text-left">
-                  <span className="text-white font-bold text-2xl lg:text-3xl leading-none mb-1.5 tracking-tight">
-                    {stat.value}
-                  </span>
-                  <span className="text-gray-300 text-[11.5px] lg:text-[13px] font-light tracking-wide">
-                    {stat.label}
-                  </span>
-                </div>
+                <span className="text-white text-[10px] md:text-[11px] font-medium leading-snug text-opacity-80 max-w-[110px]">
+                  {feature.label}
+                </span>
               </div>
             ))}
           </div>
+
+          {/* Right Button Area */}
+          <div className="flex-shrink-0 w-full xl:w-auto flex justify-center xl:justify-end xl:pl-4 2xl:pl-6">
+            <Link 
+              to="/about" 
+              className="inline-flex items-center justify-center bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-semibold py-2.5 px-5 rounded transition-all duration-300 hover:-translate-y-0.5 text-[12px] whitespace-nowrap"
+            >
+              Know More About Us
+              <svg className="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
+          </div>
+
         </div>
       </div>
     </section>

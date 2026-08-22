@@ -8,6 +8,10 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
 import ServiceDetail from './pages/ServiceDetail';
+import BusinessFinance from './pages/BusinessFinance';
+import CibilServices from './pages/CibilServices';
+import PropertyServices from './pages/PropertyServices';
+import ApplyOnline from './pages/ApplyOnline';
 
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
@@ -25,6 +29,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/business-finance" element={<BusinessFinance />} />
+          <Route path="/cibil-services" element={<CibilServices />} />
+          <Route path="/property-services" element={<PropertyServices />} />
+          <Route path="/apply-online" element={<ApplyOnline />} />
+          <Route path="/loans" element={<Services />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
