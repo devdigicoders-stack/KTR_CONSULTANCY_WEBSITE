@@ -132,9 +132,9 @@ const CibilHero = () => {
       // 2. PAYMENT IS 100% SUCCESSFUL! Save payment ID
       setPaymentSuccessData(paymentResult);
 
-      // 3. NOW trigger Surepass API
+      // 3. NOW trigger Bureau API
       setIsProcessing(true);
-      setProcessingStage(`Payment Verified (${paymentResult.paymentId}). Connecting to Surepass KYC Gateway...`);
+      setProcessingStage(`Payment Verified (${paymentResult.paymentId}). Connecting to Credit Bureau Gateway...`);
       
       await new Promise(r => setTimeout(r, 600));
       setProcessingStage(`Querying official ${bureau.name} database for PAN: ${formData.pan}...`);
@@ -320,45 +320,6 @@ const CibilHero = () => {
                     </div>
                   );
                 })}
-              </div>
-            </div>
-
-            {/* Features Highlight Icons */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#fef8f0] border border-[#de9e48]/40 flex items-center justify-center text-[#de9e48] flex-shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h5 className="font-bold text-xs text-[#020d1c]">Razorpay Live</h5>
-                  <p className="text-[11px] text-gray-500">100% Secure Checkout</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#fef8f0] border border-[#de9e48]/40 flex items-center justify-center text-[#de9e48] flex-shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </div>
-                <div>
-                  <h5 className="font-bold text-xs text-[#020d1c]">Surepass KYC</h5>
-                  <p className="text-[11px] text-gray-500">Direct Bureau Gateway</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#fef8f0] border border-[#de9e48]/40 flex items-center justify-center text-[#de9e48] flex-shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                </div>
-                <div>
-                  <h5 className="font-bold text-xs text-[#020d1c]">Direct PDF Link</h5>
-                  <p className="text-[11px] text-gray-500">Instant Download</p>
-                </div>
               </div>
             </div>
 
@@ -733,7 +694,7 @@ const CibilHero = () => {
                       className="mt-0.5 w-4 h-4 text-[#de9e48] bg-gray-900 border-gray-700 rounded focus:ring-[#de9e48] accent-[#de9e48] cursor-pointer"
                     />
                     <label htmlFor="cibil_consent" className="text-gray-400 text-[11px] leading-tight cursor-pointer">
-                      I authorize KTR Consultancy & Surepass to fetch my official credit report from {BUREAU_CONFIGS[selectedBureau].name}.
+                      I authorize KTR Consultancy to fetch my official credit report from {BUREAU_CONFIGS[selectedBureau].name}.
                     </label>
                   </div>
                   {formErrors.consent && (
