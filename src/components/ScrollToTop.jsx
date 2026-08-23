@@ -37,16 +37,12 @@ const ScrollToTop = () => {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-8 right-8 z-50 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] w-12 h-12 rounded shadow-[0_4px_14px_0_rgba(222,158,72,0.4)] flex items-center justify-center transition-all duration-300 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+      className={`fixed bottom-6 right-6 z-40 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] w-12 h-12 rounded-xl shadow-[0_4px_14px_0_rgba(222,158,72,0.4)] flex items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer ${
+        isVisible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-6 pointer-events-none'
       }`}
-      style={{
-        // Add a slight lift on hover when visible
-        transform: isVisible ? '' : 'translateY(40px)'
-      }}
       aria-label="Scroll to top"
     >
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
       </svg>
     </button>
