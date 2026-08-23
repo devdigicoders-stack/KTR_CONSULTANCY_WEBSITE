@@ -36,22 +36,22 @@ const CibilBottomCTA = () => {
             {/* Text */}
             <div>
               <h3 className="text-[#de9e48] font-bold text-[20px] lg:text-[22px] xl:text-[24px] mb-2">
-                Have Questions About CIBIL?
+                Need Assistance with Your Credit Profile?
               </h3>
               <p className="text-gray-300 text-[14px] lg:text-[15px]">
-                Our experts are ready to help you understand your credit health.
+                Whether you need to dispute report discrepancies, rectify overdue records, or optimize loan eligibility, our specialists are here to help.
               </p>
             </div>
           </div>
 
           {/* Right Content - Buttons */}
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
-            {/* Consultation Button */}
+            {/* Write to Us Button */}
             <Link 
               to="/contact"
-              className="w-full sm:w-auto bg-[#de9e48] hover:bg-[#c98e41] text-white font-semibold text-[14.5px] px-8 py-3.5 rounded-md transition-colors flex items-center justify-center shadow-md whitespace-nowrap"
+              className="w-full sm:w-auto bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-[14.5px] px-8 py-3.5 rounded-xl transition-all flex items-center justify-center shadow-md whitespace-nowrap active:scale-95"
             >
-              Get Free Consultation
+              Write to Us / Contact Us
               <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>

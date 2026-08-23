@@ -39,7 +39,7 @@ export async function processRazorpayPayment({
       key: RAZORPAY_KEY_ID,
       amount: Math.round(amountInRupees * 100), // amount in paise
       currency: 'INR',
-      name: 'KTR Consultancy',
+      name: 'KTR Consultants',
       description: `${bureauName} Credit Report Fee`,
       image: '/favicon.svg',
       prefill: {

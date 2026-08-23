@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { BUREAU_CONFIGS, calculatePricing, fetchCreditReportFromSurepass } from '../services/surepassApi';
 import { processRazorpayPayment } from '../services/razorpay';
 
-const CibilHero = () => {
-  // Bureau selection
-  const [selectedBureau, setSelectedBureau] = useState('cibil');
+const CibilHero = ({
+  selectedBureauProp,
+  setSelectedBureauProp,
+  handleBureauSelectProp,
+  formRefProp,
+  highlightFormProp
+}) => {
+  const localFormRef = useRef(null);
+  const [localHighlightForm, setLocalHighlightForm] = useState(false);
+  const [localSelectedBureau, setLocalSelectedBureau] = useState('cibil');
+
+  const formRef = formRefProp || localFormRef;
+  const highlightForm = highlightFormProp !== undefined ? highlightFormProp : localHighlightForm;
+  const selectedBureau = selectedBureauProp || localSelectedBureau;
+  const setSelectedBureau = setSelectedBureauProp || setLocalSelectedBureau;
   
   // Form fields
   const [formData, setFormData] = useState({
@@ -33,6 +45,32 @@ const CibilHero = () => {
 
   // Pricing calculations
   const pricing = calculatePricing(selectedBureau, appliedCoupon);
+
+  // Handle Bureau Card Selection & Auto-Scroll
+  const handleBureauSelect = (bureauId) => {
+    if (handleBureauSelectProp) {
+      handleBureauSelectProp(bureauId);
+    } else {
+      setSelectedBureau(bureauId);
+      setLocalHighlightForm(true);
+      
+      setTimeout(() => {
+        if (formRef.current) {
+          const yOffset = -25;
+          const elementPosition = formRef.current.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset + yOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 60);
+
+      setTimeout(() => {
+        setLocalHighlightForm(false);
+      }, 2200);
+    }
+  };
 
   // Handle Form Change
   const handleInputChange = (e) => {
@@ -64,11 +102,18 @@ const CibilHero = () => {
       setCouponFeedback({ type: 'error', text: 'Please enter a coupon code.' });
       return;
     }
-    if (code.trim().toUpperCase() === 'TEAM50') {
+    const clean = code.trim().toUpperCase();
+    if (clean === 'FLAT25') {
+      setAppliedCoupon('Flat25');
+      setCouponFeedback({
+        type: 'success',
+        text: '🎉 Flat25 applied: 25% discount applied successfully!'
+      });
+    } else if (clean === 'TEAM50') {
       setAppliedCoupon('Team50');
       setCouponFeedback({
         type: 'success',
-        text: '🎉 50% discount coupon applied successfully!'
+        text: '🎉 TEAM50 applied: 50% discount applied successfully!'
       });
     } else {
       setCouponFeedback({
@@ -266,7 +311,7 @@ const CibilHero = () => {
                   return (
                     <div
                       key={bureau.id}
-                      onClick={() => setSelectedBureau(bureau.id)}
+                      onClick={() => handleBureauSelect(bureau.id)}
                       className={`relative p-4 rounded-xl cursor-pointer transition-all duration-200 border-2 ${
                         isSelected
                           ? 'border-[#de9e48] bg-[#fdf9f2] shadow-md ring-2 ring-[#de9e48]/30'
@@ -285,7 +330,7 @@ const CibilHero = () => {
                             type="radio"
                             name="bureau_select"
                             checked={isSelected}
-                            onChange={() => setSelectedBureau(bureau.id)}
+                            onChange={() => handleBureauSelect(bureau.id)}
                             className="w-4 h-4 text-[#de9e48] focus:ring-[#de9e48] accent-[#de9e48] cursor-pointer"
                           />
                           <h4 className="font-bold text-[#020d1c] text-[15px]">
@@ -307,7 +352,7 @@ const CibilHero = () => {
                             <div className="flex items-center gap-1.5">
                               <span className="line-through text-xs text-gray-400 font-medium">₹{bureau.basePrice}</span>
                               <span className="font-black text-[#020d1c] text-sm">
-                                ₹{priceInfo.discountedBase} <span className="text-[10px] text-green-600 font-bold">(50% OFF)</span>
+                                ₹{priceInfo.discountedBase} <span className="text-[10px] text-green-600 font-bold">({priceInfo.couponResult.discountPercent}% OFF)</span>
                               </span>
                             </div>
                           ) : (
@@ -321,12 +366,98 @@ const CibilHero = () => {
                   );
                 })}
               </div>
+
+              {/* Mobile Quick Action Indicator */}
+              <div className="block lg:hidden mt-4">
+                <button
+                  type="button"
+                  onClick={() => handleBureauSelect(selectedBureau)}
+                  className="w-full bg-[#020d1c] hover:bg-[#071933] text-white border border-[#de9e48]/50 font-semibold text-xs py-3 px-4 rounded-xl flex items-center justify-between shadow-md active:scale-[0.98] transition-all"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#de9e48] animate-ping"></span>
+                    <span className="text-gray-200">Selected: <strong className="text-[#de9e48]">{BUREAU_CONFIGS[selectedBureau]?.name}</strong></span>
+                  </div>
+                  <span className="flex items-center gap-1 text-[#de9e48] font-bold text-xs bg-[#de9e48]/15 px-2.5 py-1 rounded-lg border border-[#de9e48]/30">
+                    Fill Details ↓
+                  </span>
+                </button>
+              </div>
+
+              {/* Support & Dispute Assistance ("Write to Us") Card */}
+              <div className="mt-6 bg-gradient-to-br from-[#fffdf9] to-[#fbf5eb] border border-[#e8d5b7] rounded-2xl p-4 sm:p-5 shadow-sm">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-[#020d1c] text-[#de9e48] flex items-center justify-center flex-shrink-0 shadow-md">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      <h4 className="text-sm font-bold text-[#020d1c]">
+                        Facing Inaccuracies or Issues with Your Credit Report?
+                      </h4>
+                      <span className="bg-[#de9e48]/20 text-[#020d1c] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#de9e48]/40">
+                        Dispute & Advisory Support
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-600 leading-relaxed mb-3.5">
+                      If you identify erroneous loan records, outdated overdue marks, score discrepancies, or experience report generation difficulties, submit an inquiry or reach out to our credit advisory specialists.
+                    </p>
+                    
+                    <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+                      <Link
+                        to="/fake-loan-removal"
+                        className="inline-flex items-center gap-1.5 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-black text-xs px-3.5 py-2 rounded-lg shadow-sm transition-all active:scale-95"
+                      >
+                        <span>⚖️ Fake Loan Removal (₹1,000 Assessment)</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </Link>
+
+                      <Link
+                        to="/contact"
+                        className="inline-flex items-center gap-1.5 bg-[#020d1c] hover:bg-[#0b1d38] text-white font-bold text-xs px-3 py-2 rounded-lg border border-gray-700 transition-all shadow-sm active:scale-95"
+                      >
+                        <svg className="w-3.5 h-3.5 text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Write to Us
+                      </Link>
+
+                      <a
+                        href="https://wa.me/919918699696?text=Hi%20KTR%20Consultants%2C%20I%20have%20an%20inquiry%20regarding%20my%20credit%20report%20discrepancies."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#128C7E] font-bold text-xs px-3 py-2 rounded-lg border border-[#25D366]/30 transition-all active:scale-95"
+                      >
+                        <svg className="w-3.5 h-3.5 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                        </svg>
+                        WhatsApp
+                      </a>
+
+                      <a
+                        href="tel:+919918699696"
+                        className="text-xs font-semibold text-gray-700 hover:text-[#de9e48] transition-colors py-1 flex items-center gap-1"
+                      >
+                        📞 +91 99186 99696
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
           </div>
 
           {/* Right Form / Result Container */}
-          <div className="w-full lg:w-[46%] xl:w-[42%] max-w-[480px] mx-auto flex-shrink-0 relative">
+          <div 
+            ref={formRef} 
+            id="cibil-form-section" 
+            className="w-full lg:w-[46%] xl:w-[42%] max-w-[480px] mx-auto flex-shrink-0 relative scroll-mt-8"
+          >
             
             {/* If Processing (After payment success) */}
             {isProcessing && (
@@ -420,6 +551,22 @@ const CibilHero = () => {
                       Download Official PDF Report
                     </a>
 
+                    {/* Report Dispute / Issue Help Link */}
+                    <div className="mt-4 p-3 bg-gray-900/90 border border-gray-800 rounded-xl text-center">
+                      <p className="text-[11.5px] text-gray-300 mb-1.5">
+                        Notice any inaccuracies or wish to dispute an account entry in this report?
+                      </p>
+                      <Link
+                        to="/contact"
+                        className="inline-flex items-center gap-1 text-[#de9e48] hover:text-yellow-300 text-xs font-bold transition-colors"
+                      >
+                        <span>Write to Us / Request Dispute Assistance</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </Link>
+                    </div>
+
                     <button
                       onClick={handleReset}
                       className="w-full mt-3 text-xs text-gray-400 hover:text-white py-2 transition-colors text-center block"
@@ -481,6 +628,19 @@ const CibilHero = () => {
                       </a>
                     ) : null}
 
+                    {/* Support Help Link for 422 */}
+                    <div className="mt-3 p-3 bg-gray-900/90 border border-gray-800 rounded-xl text-center">
+                      <p className="text-[11.5px] text-gray-300 mb-1.5">
+                        Need guidance or have questions regarding your credit profile?
+                      </p>
+                      <Link
+                        to="/contact"
+                        className="inline-flex items-center gap-1 text-[#de9e48] hover:text-yellow-300 text-xs font-bold transition-colors"
+                      >
+                        <span>Write to Us / Contact Credit Advisory →</span>
+                      </Link>
+                    </div>
+
                     <button
                       onClick={handleReset}
                       className="w-full mt-3 bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold text-xs py-2.5 rounded-xl transition-colors text-center"
@@ -494,7 +654,11 @@ const CibilHero = () => {
 
             {/* Main Form (when not processing and no result) */}
             {!isProcessing && !apiResult && (
-              <div className="bg-[#020d1c] rounded-2xl p-6 sm:p-7 shadow-[0_15px_50px_-10px_rgba(0,0,0,0.6)] border border-gray-800 relative">
+              <div className={`bg-[#020d1c] rounded-2xl p-6 sm:p-7 shadow-[0_15px_50px_-10px_rgba(0,0,0,0.6)] border relative transition-all duration-500 ${
+                highlightForm 
+                  ? 'border-[#de9e48] ring-4 ring-[#de9e48]/40 shadow-[0_0_35px_rgba(222,158,72,0.35)] scale-[1.01]' 
+                  : 'border-gray-800'
+              }`}>
                 
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -609,15 +773,42 @@ const CibilHero = () => {
 
                   {/* Coupon Code Section */}
                   <div className="pt-2 border-t border-gray-800">
-                    <label className="text-gray-300 text-xs font-medium block mb-1">
-                      Have a Coupon Code?
-                    </label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-gray-300 text-xs font-medium block">
+                        Have a Coupon Code?
+                      </label>
+                      {!appliedCoupon && (
+                        <span className="text-[10.5px] text-[#de9e48] font-bold">
+                          Promo Available: <strong className="bg-[#de9e48]/20 text-[#de9e48] px-1.5 py-0.5 rounded border border-[#de9e48]/40">Flat25</strong>
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Quick 1-Click Coupon Offer Box */}
+                    {!appliedCoupon && (
+                      <div className="mb-2.5 bg-gradient-to-r from-[#de9e48]/15 via-[#de9e48]/10 to-transparent border border-[#de9e48]/40 rounded-lg p-2 flex items-center justify-between">
+                        <div className="flex items-center gap-1.5 text-[11px] text-gray-200">
+                          <span className="text-[#de9e48] font-bold">🏷️ 25% OFF:</span>
+                          <span>Apply code <strong className="text-[#de9e48] font-black">Flat25</strong></span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCouponInput('Flat25');
+                            handleApplyCoupon('Flat25');
+                          }}
+                          className="text-[10.5px] font-black bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] px-2.5 py-1 rounded transition-colors shadow-sm cursor-pointer"
+                        >
+                          Apply Flat25
+                        </button>
+                      </div>
+                    )}
                     
                     {appliedCoupon ? (
                       <div className="flex items-center justify-between bg-green-950/60 border border-green-700/80 px-3 py-2 rounded-lg">
                         <div className="flex items-center gap-2">
                           <span className="text-green-400 text-xs font-bold">✓ {appliedCoupon}</span>
-                          <span className="text-[11px] text-green-300 font-semibold">(50% Discount Applied)</span>
+                          <span className="text-[11px] text-green-300 font-semibold">({pricing.couponResult.discountPercent}% Discount Applied)</span>
                         </div>
                         <button
                           type="button"
@@ -636,13 +827,13 @@ const CibilHero = () => {
                             setCouponInput(e.target.value);
                             setCouponFeedback(null);
                           }}
-                          placeholder='Enter coupon code'
-                          className="flex-1 h-9 bg-gray-900/90 border border-gray-700 rounded-lg text-xs px-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#de9e48] uppercase"
+                          placeholder="Enter coupon (e.g. Flat25)"
+                          className="flex-1 h-9 bg-gray-900/90 border border-gray-700 rounded-lg text-xs px-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#de9e48] uppercase font-semibold tracking-wider"
                         />
                         <button
                           type="button"
                           onClick={() => handleApplyCoupon()}
-                          className="h-9 px-3.5 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-xs rounded-lg transition-colors"
+                          className="h-9 px-3.5 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-xs rounded-lg transition-colors cursor-pointer"
                         >
                           Apply
                         </button>
@@ -667,7 +858,7 @@ const CibilHero = () => {
 
                     {pricing.couponResult.valid && (
                       <div className="flex justify-between text-green-400 font-semibold">
-                        <span>Coupon Discount (50% OFF):</span>
+                        <span>Coupon Discount ({pricing.couponResult.discountPercent}% OFF - {appliedCoupon}):</span>
                         <span>-₹{pricing.couponResult.discountAmount}</span>
                       </div>
                     )}
@@ -694,7 +885,7 @@ const CibilHero = () => {
                       className="mt-0.5 w-4 h-4 text-[#de9e48] bg-gray-900 border-gray-700 rounded focus:ring-[#de9e48] accent-[#de9e48] cursor-pointer"
                     />
                     <label htmlFor="cibil_consent" className="text-gray-400 text-[11px] leading-tight cursor-pointer">
-                      I authorize KTR Consultancy to fetch my official credit report from {BUREAU_CONFIGS[selectedBureau].name}.
+                      I authorize KTR Consultants to fetch my official credit report from {BUREAU_CONFIGS[selectedBureau].name}.
                     </label>
                   </div>
                   {formErrors.consent && (
@@ -716,6 +907,20 @@ const CibilHero = () => {
                     <span>🔒 Razorpay Live Gateway</span>
                     <span>•</span>
                     <span>Direct Bureau PDF API</span>
+                  </div>
+
+                  {/* Write to Us prompt at bottom of form */}
+                  <div className="mt-3.5 pt-3 border-t border-gray-800/80 flex items-center justify-between text-[11px] text-gray-400">
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-[#de9e48]">💬</span>
+                      <span>Facing issues with your credit report?</span>
+                    </span>
+                    <Link
+                      to="/contact"
+                      className="text-[#de9e48] hover:text-yellow-300 font-bold hover:underline transition-colors whitespace-nowrap"
+                    >
+                      Write to Us →
+                    </Link>
                   </div>
 
                 </form>

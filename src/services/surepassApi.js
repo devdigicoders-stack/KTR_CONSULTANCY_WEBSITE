@@ -59,6 +59,15 @@ export function evaluateCoupon(code, basePrice) {
     return { valid: false, discountPercent: 0, discountAmount: 0, message: '' };
   }
   const cleanCode = code.trim().toUpperCase();
+  if (cleanCode === 'FLAT25') {
+    const discountAmount = Math.round(basePrice * 0.25);
+    return {
+      valid: true,
+      discountPercent: 25,
+      discountAmount,
+      message: '🎉 25% discount coupon (Flat25) applied successfully!'
+    };
+  }
   if (cleanCode === 'TEAM50') {
     const discountAmount = Math.round(basePrice * 0.5);
     return {

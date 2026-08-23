@@ -1,7 +1,7 @@
 import React from 'react';
 import { BUREAU_CONFIGS } from '../services/surepassApi';
 
-const CibilPricingTable = () => {
+const CibilPricingTable = ({ selectedBureau, onSelectBureau }) => {
   const bureaus = [
     {
       ...BUREAU_CONFIGS.cibil,
@@ -154,20 +154,25 @@ const CibilPricingTable = () => {
                   </ul>
                 </div>
 
-                {/* CTA Link to Top Form */}
-                <a
-                  href="#cibil-form-top"
+                {/* CTA Button to Select Bureau & Smooth Scroll */}
+                <button
+                  type="button"
                   onClick={() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    if (onSelectBureau) {
+                      onSelectBureau(item.id);
+                    } else {
+                      const el = document.getElementById('cibil-form-section');
+                      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                   }}
-                  className={`w-full py-3 rounded-xl font-bold text-xs text-center transition-all block ${
-                    item.recommended
+                  className={`w-full py-3 rounded-xl font-bold text-xs text-center transition-all cursor-pointer block active:scale-95 ${
+                    item.recommended || selectedBureau === item.id
                       ? 'bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] shadow-lg shadow-[#de9e48]/20'
                       : 'bg-[#020d1c] hover:bg-gray-800 text-white'
                   }`}
                 >
-                  Download {item.shortName} Report
-                </a>
+                  {selectedBureau === item.id ? `✓ ${item.shortName} Selected • Fill Form ↑` : `Get ${item.shortName} Report & Score`}
+                </button>
 
               </div>
             );

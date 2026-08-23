@@ -11,6 +11,7 @@ const Footer = () => {
     { name: 'Loans', path: '/loans' },
     { name: 'Business Finance', path: '/business-finance' },
     { name: 'CIBIL Services', path: '/cibil-services' },
+    { name: 'Fake Loan Removal', path: '/fake-loan-removal' },
     { name: 'Property Services', path: '/property-services' }
   ];
 
@@ -145,11 +146,17 @@ const Footer = () => {
         {/* Copyright & Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left relative z-10">
           <p className="text-gray-400 text-[12px] font-light">
-            © 2026 KTR Consultants. All Rights Reserved.
+            © {new Date().getFullYear()} KTR Consultants. All Rights Reserved.
           </p>
-          <p className="text-gray-400 text-[12px] font-light flex items-center gap-1.5">
-            Crafted with <span className="text-red-500">❤️</span> by <span className="text-[#de9e48] font-bold hover:text-underline"><a href="https://www.digicoders.in" target="_blank" rel="noopener noreferrer">Team Digicoders</a></span>
-          </p>
+          <div className="flex items-center gap-6 text-[12px] text-gray-400 font-light">
+            <Link to="/privacy-policy" className="hover:text-[#de9e48] transition-colors">
+              Privacy Policy
+            </Link>
+            <span>•</span>
+            <Link to="/terms" className="hover:text-[#de9e48] transition-colors">
+              Terms & Conditions
+            </Link>
+          </div>
         </div>
         
       </div>

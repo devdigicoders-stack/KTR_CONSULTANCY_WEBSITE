@@ -17,6 +17,7 @@ import ApplyOnline from './pages/ApplyOnline';
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import FakeLoanRemoval from './pages/FakeLoanRemoval';
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/business-finance" element={<BusinessFinance />} />
           <Route path="/cibil-services" element={<CibilServices />} />
+          <Route path="/fake-loan-removal" element={<FakeLoanRemoval />} />
+          <Route path="/cibil-fake-loan-removal" element={<FakeLoanRemoval />} />
           <Route path="/property-services" element={<PropertyServices />} />
           <Route path="/apply-online" element={<ApplyOnline />} />
           <Route path="/loans" element={<Services />} />
