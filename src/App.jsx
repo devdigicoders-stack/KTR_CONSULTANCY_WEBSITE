@@ -12,6 +12,9 @@ import ServiceDetail from './pages/ServiceDetail';
 import BusinessFinance from './pages/BusinessFinance';
 import CibilServices from './pages/CibilServices';
 import PropertyServices from './pages/PropertyServices';
+import PropertyLegalServices from './pages/PropertyLegalServices';
+import PropertyAssessmentMap from './pages/PropertyAssessmentMap';
+import AssessmentMapForm from './pages/AssessmentMapForm';
 import ApplyOnline from './pages/ApplyOnline';
 
 import Contact from './pages/Contact';
@@ -36,6 +39,9 @@ function App() {
           <Route path="/fake-loan-removal" element={<FakeLoanRemoval />} />
           <Route path="/cibil-fake-loan-removal" element={<FakeLoanRemoval />} />
           <Route path="/property-services" element={<PropertyServices />} />
+          <Route path="/property-legal-services" element={<PropertyLegalServices />} />
+          <Route path="/property-assessment-map" element={<PropertyAssessmentMap />} />
+          <Route path="/property-assessment-map/apply" element={<AssessmentMapForm />} />
           <Route path="/apply-online" element={<ApplyOnline />} />
           <Route path="/loans" element={<Services />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />

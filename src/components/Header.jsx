@@ -21,7 +21,15 @@ const Header = () => {
       name: 'CIBIL Services', 
       path: '/cibil-services'
     },
-    { name: 'Property Services', path: '/property-services' },
+    { 
+      name: 'Property Services', 
+      path: '/property-services',
+      dropdown: [
+        { name: 'General Property Services', path: '/property-services' },
+        { name: 'Property Legal Services', path: '/property-legal-services' },
+        { name: 'Assessment & Map Services', path: '/property-assessment-map' }
+      ]
+    },
     { 
       name: 'Contact Us', 
       path: '/contact'
@@ -95,7 +103,38 @@ const Header = () => {
           {navLinks.map((link, index) => {
             const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
             
-            return (
+            return link.dropdown ? (
+              <div key={index} className="relative group h-full flex items-center">
+                <Link 
+                  to={link.path} 
+                  className={`${
+                    isActive
+                      ? 'text-[#de9e48]' 
+                      : 'text-gray-800 hover:text-[#de9e48]'
+                  } font-semibold text-[13.5px] xl:text-[14.5px] flex items-center transition-colors duration-200 h-full whitespace-nowrap`}
+                >
+                  {link.name}
+                  <svg className="w-3.5 h-3.5 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  
+                  {isActive && (
+                    <span className="absolute left-0 bottom-[26px] w-5 h-[3px] rounded-full bg-[#de9e48]"></span>
+                  )}
+                </Link>
+
+                {/* Dropdown Menu */}
+                <div className="absolute top-[80%] left-0 w-56 bg-white border border-gray-100 shadow-xl rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+                  {link.dropdown.map((dropItem, idx) => (
+                    <Link 
+                      key={idx}
+                      to={dropItem.path}
+                      className="block px-4 py-2.5 text-[14px] font-medium text-gray-700 hover:bg-orange-50 hover:text-[#de9e48] transition-colors"
+                    >
+                      {dropItem.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
               <div key={index} className="relative group h-full flex items-center">
                 <Link 
                   to={link.path} 
@@ -107,7 +146,6 @@ const Header = () => {
                 >
                   {link.name}
                   
-                  {/* Active Indicator (short underline as in image) */}
                   {isActive && (
                     <span className="absolute left-0 bottom-[26px] w-5 h-[3px] rounded-full bg-[#de9e48]"></span>
                   )}
@@ -175,19 +213,41 @@ const Header = () => {
               const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
               return (
                 <div key={index}>
-                  <Link 
-                    to={link.path} 
-                    className={`block px-4 py-3.5 text-[15px] font-semibold rounded-lg transition-colors ${
-                      isActive
-                        ? 'bg-orange-50 text-[#de9e48]' 
-                        : 'text-gray-800 hover:bg-gray-50 hover:text-[#de9e48]'
-                    }`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <div className="flex items-center justify-between">
-                      {link.name}
-                    </div>
-                  </Link>
+                  <div className="flex flex-col">
+                    <Link 
+                      to={link.path} 
+                      className={`block px-4 py-3.5 text-[15px] font-semibold rounded-lg transition-colors ${
+                        isActive && !link.dropdown
+                          ? 'bg-orange-50 text-[#de9e48]' 
+                          : 'text-gray-800 hover:bg-gray-50 hover:text-[#de9e48]'
+                      }`}
+                      onClick={() => !link.dropdown && setIsMobileMenuOpen(false)}
+                    >
+                      <div className="flex items-center justify-between">
+                        {link.name}
+                      </div>
+                    </Link>
+                    
+                    {/* Mobile Dropdown items */}
+                    {link.dropdown && (
+                      <div className="pl-6 mt-1 mb-2 space-y-1 border-l-2 border-gray-100 ml-4">
+                        {link.dropdown.map((dropItem, idx) => (
+                          <Link 
+                            key={idx}
+                            to={dropItem.path}
+                            className={`block px-4 py-2.5 text-[14px] font-medium rounded-lg transition-colors ${
+                              currentPath === dropItem.path 
+                                ? 'text-[#de9e48] bg-orange-50/50' 
+                                : 'text-gray-600 hover:text-[#de9e48] hover:bg-gray-50'
+                            }`}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {dropItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             })}
