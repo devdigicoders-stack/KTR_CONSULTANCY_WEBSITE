@@ -50,19 +50,21 @@ const ApplyHero = () => {
       <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8 relative z-10">
         
         {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 text-[12px] md:text-[13px] text-gray-500 mb-6">
+        <div className="flex items-center justify-center lg:justify-start gap-2 text-[12px] md:text-[13px] text-gray-500 mb-6">
           <Link to="/" className="hover:text-[#de9e48] transition-colors">Home</Link>
           <span>›</span>
           <span className="text-[#020d1c] font-medium">Apply Online</span>
         </div>
 
         {/* Headings */}
-        <h1 className="text-[#020d1c] font-bold font-serif text-[32px] md:text-[38px] lg:text-[42px] leading-tight mb-2">
-          Apply Online
-        </h1>
-        <p className="text-[#de9e48] text-[15px] lg:text-[16px] font-bold mb-10">
-          Start your application in just a few simple steps
-        </p>
+        <div className="text-center lg:text-left">
+          <h1 className="text-[#020d1c] font-bold font-serif text-[32px] md:text-[38px] lg:text-[42px] leading-tight mb-2">
+            Apply Online
+          </h1>
+          <p className="text-[#de9e48] text-[15px] lg:text-[16px] font-bold mb-10">
+            Start your application in just a few simple steps
+          </p>
+        </div>
 
         {/* Horizontal Steps */}
         <div className="hidden md:flex items-center justify-between relative max-w-[800px]">
@@ -90,7 +92,7 @@ const ApplyHero = () => {
         </div>
         
         {/* Mobile Steps Display */}
-        <div className="md:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center justify-center gap-3">
           <div className="w-10 h-10 rounded-full bg-[#de9e48] text-white flex items-center justify-center font-bold">
             1
           </div>

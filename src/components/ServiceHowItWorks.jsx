@@ -78,11 +78,23 @@ const ServiceHowItWorks = () => {
           {steps.map((step, index) => (
             <div key={index} className="relative flex flex-col items-center">
               
-              {/* Dotted Line Arrow (Desktop Only) */}
+              {/* Connector Arrows */}
               {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-12 left-[60%] w-[80%] border-t border-dashed border-gray-300 z-0">
-                  <div className="absolute -right-1 -top-[4px] w-2 h-2 border-t-2 border-r-2 border-gray-300 rotate-45"></div>
-                </div>
+                <>
+                  {/* Desktop Horizontal Arrow */}
+                  <div className="hidden lg:block absolute top-12 left-[60%] w-[80%] border-t border-dashed border-gray-300 z-0">
+                    <div className="absolute -right-1 -top-[4px] w-2 h-2 border-t-2 border-r-2 border-gray-300 rotate-45"></div>
+                  </div>
+                  
+                  {/* Mobile Vertical Arrow */}
+                  <div className="lg:hidden absolute top-full left-1/2 -translate-x-1/2 h-[48px] w-0 border-l-[1.5px] border-dashed border-gray-300 z-0 pointer-events-none mt-[4px]">
+                    <div className="absolute -bottom-1 -left-[5.5px] text-gray-300">
+                      <svg className="w-3 h-3 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                </>
               )}
 
               {/* Circle Icon */}

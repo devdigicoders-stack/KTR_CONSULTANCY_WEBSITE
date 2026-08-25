@@ -34,7 +34,7 @@ const ContactFAQ = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           
           {/* Left Column: Content & Illustration */}
-          <div className="flex flex-col md:flex-row gap-8 items-start lg:items-center">
+          <div className="flex flex-col md:flex-row gap-8 items-center lg:items-center text-center md:text-left">
             
             {/* Custom SVG Illustration (Headset & Speech Bubble) */}
             <div className="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 relative">
@@ -64,7 +64,7 @@ const ContactFAQ = () => {
                 We're <span className="text-[#de9e48]">Here to Help!</span>
               </h3>
               
-              <p className="text-[#020d1c] text-[14.5px] font-medium leading-relaxed max-w-[320px] mb-8">
+              <p className="text-[#020d1c] text-[14.5px] font-medium leading-relaxed max-w-[320px] mx-auto md:mx-0 mb-8">
                 If you have any questions or need more information about our services, feel free to reach out to us anytime.
               </p>
 

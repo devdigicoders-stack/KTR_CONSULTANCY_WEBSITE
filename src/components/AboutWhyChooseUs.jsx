@@ -52,7 +52,7 @@ const AboutWhyChooseUs = () => {
             />
             
             {/* Floating Card */}
-            <div className="absolute -bottom-8 lg:-bottom-12 -right-2 lg:-right-10 xl:-right-12 bg-white p-6 lg:p-8 rounded-[20px] shadow-[0_10px_40px_rgba(0,0,0,0.08)] w-[290px] lg:w-[320px] z-10 border border-gray-50">
+            <div className="relative mt-[-40px] mx-auto lg:absolute lg:-bottom-12 lg:-right-10 xl:-right-12 bg-white p-6 lg:p-8 rounded-[20px] shadow-[0_10px_40px_rgba(0,0,0,0.08)] w-[90%] sm:w-[320px] lg:w-[320px] z-10 border border-gray-50">
               <h4 className="text-[#de9e48] font-bold text-[12px] lg:text-[13px] tracking-wide uppercase mb-3">
                 OUR COMMITMENT
               </h4>

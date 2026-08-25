@@ -270,8 +270,8 @@ const AssessmentMapForm = () => {
               </button>
             </div>
             
-            <div className="p-6 md:p-8 overflow-y-auto max-h-[80vh]">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-4 md:p-8 overflow-y-auto max-h-[80vh]">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {/* Example 1 */}
                 <div className="flex flex-col gap-3">
                   <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group aspect-[3/4] bg-gray-50">

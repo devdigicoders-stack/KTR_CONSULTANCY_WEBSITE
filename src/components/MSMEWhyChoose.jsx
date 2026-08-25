@@ -102,7 +102,7 @@ const MSMEWhyChoose = () => {
         <div className="relative bg-gradient-to-r from-[#fffaf2] via-[#fff3de] to-[#fffaf2] border border-[#f5d098] rounded-xl overflow-hidden shadow-sm flex flex-col md:flex-row items-center min-h-[110px]">
           
           {/* Right Image Background */}
-          <div className="absolute right-0 bottom-0 h-full w-[40%] md:w-[35%] flex justify-end items-end opacity-80 pointer-events-none mix-blend-multiply">
+          <div className="absolute right-0 bottom-0 h-[80px] md:h-full w-[80%] md:w-[35%] flex justify-end items-end opacity-40 md:opacity-80 pointer-events-none mix-blend-multiply">
              <img 
                src="/mahal.png" 
                alt="Cityscape" 
@@ -111,7 +111,7 @@ const MSMEWhyChoose = () => {
           </div>
 
           {/* Left Content */}
-          <div className="relative z-10 flex items-start md:items-center p-5 md:p-6 gap-4 lg:gap-6 w-full md:w-[85%] lg:w-[80%]">
+          <div className="relative z-10 flex items-start md:items-center p-5 pb-12 md:p-6 md:pb-6 gap-4 lg:gap-6 w-full md:w-[85%] lg:w-[80%]">
             
             {/* Warning Icon */}
             <div className="flex-shrink-0 bg-white rounded-full p-1.5 shadow-sm border border-[#de9e48]/30">

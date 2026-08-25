@@ -26,18 +26,18 @@ const Footer = () => {
       <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
         
         {/* Top Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-y-10 lg:gap-0 lg:divide-x divide-gray-800/80 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-y-10 gap-x-6 lg:gap-x-0 lg:divide-x divide-gray-800/80 mb-8">
           
           {/* Column 1: Brand & About */}
-          <div className="lg:pr-8 flex flex-col items-start">
+          <div className="col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-1 lg:pr-8 flex flex-col items-start">
             <Link to="/" className="inline-block mb-4">
               <img 
                 src="/images/logo.png" 
                 alt="Logo" 
-                className="h-[72px] w-auto object-contain" 
+                className="h-[60px] md:h-[72px] w-auto object-contain" 
               />
             </Link>
-            <p className="text-gray-300 text-[12px] leading-relaxed mb-6 font-light max-w-[250px]">
+            <p className="text-gray-300 text-[12px] md:text-[13px] leading-relaxed mb-6 font-light max-w-sm lg:max-w-[250px]">
               KTR Consultants is a one-window solution for all your financial & property needs. We are committed to provide fast, transparent and reliable services.
             </p>
             
@@ -63,7 +63,7 @@ const Footer = () => {
           </div>
           
           {/* Column 2: Quick Links */}
-          <div className="lg:px-8 xl:px-10">
+          <div className="col-span-1 lg:px-8 xl:px-10">
             <h4 className="text-white font-bold text-[13px] mb-5 uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((item, i) => (
@@ -77,7 +77,7 @@ const Footer = () => {
           </div>
           
           {/* Column 3: Our Services */}
-          <div className="lg:px-8 xl:px-10">
+          <div className="col-span-1 lg:px-8 xl:px-10">
             <h4 className="text-white font-bold text-[13px] mb-5 uppercase tracking-wider">Our Services</h4>
             <ul className="space-y-3">
               {servicesLinks.map((item, i) => (
@@ -91,7 +91,7 @@ const Footer = () => {
           </div>
 
           {/* Column 4: Useful Links */}
-          <div className="lg:px-8 xl:px-10">
+          <div className="col-span-1 lg:px-8 xl:px-10">
             <h4 className="text-white font-bold text-[13px] mb-5 uppercase tracking-wider">Useful Links</h4>
             <ul className="space-y-3">
               {usefulLinks.map((item, i) => (
@@ -105,7 +105,7 @@ const Footer = () => {
           </div>
           
           {/* Column 5: Contact Info */}
-          <div className="lg:pl-8 xl:pl-10">
+          <div className="col-span-1 sm:col-span-2 md:col-span-1 lg:pl-8 xl:pl-10">
             <h4 className="text-white font-bold text-[13px] mb-5 uppercase tracking-wider">Contact Info</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">

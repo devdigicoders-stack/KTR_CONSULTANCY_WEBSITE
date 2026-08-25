@@ -46,7 +46,7 @@ const ContactFormSection = () => {
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           
           {/* Left Column: Form */}
-          <div className="w-full lg:w-[42%] xl:w-[40%] bg-[#020d1c] rounded-2xl p-6 lg:p-8 shadow-2xl relative overflow-hidden">
+          <div className="w-full lg:w-[42%] xl:w-[40%] bg-[#020d1c] rounded-2xl p-5 md:p-6 lg:p-8 shadow-2xl relative overflow-hidden">
             {/* Subtle glow effect */}
             <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-[#de9e48]/5 rounded-full blur-3xl pointer-events-none"></div>
 

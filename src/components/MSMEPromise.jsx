@@ -7,7 +7,7 @@ const MSMEPromise = () => {
         <div className="relative bg-gradient-to-r from-[#fffaf2] via-[#fff3de] to-[#fffaf2] border border-[#f5d098] rounded-[20px] overflow-hidden shadow-sm flex flex-col md:flex-row items-center min-h-[140px]">
           
           {/* Right Image Background */}
-          <div className="absolute right-0 bottom-0 h-[100%] w-[50%] md:w-[45%] flex justify-end items-end opacity-90 pointer-events-none mix-blend-multiply">
+          <div className="absolute right-0 bottom-0 h-[80px] md:h-[100%] w-[80%] md:w-[45%] flex justify-end items-end opacity-40 md:opacity-90 pointer-events-none mix-blend-multiply">
             {/* 
               Using object-cover and alignment to make it sit properly 
               The screenshot shows the buildings aligned to the bottom right
@@ -20,7 +20,7 @@ const MSMEPromise = () => {
           </div>
 
           {/* Left Content */}
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center p-6 md:p-7 lg:px-10 lg:py-8 gap-5 lg:gap-8 w-full md:w-[75%] lg:w-[70%]">
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center p-6 pb-12 md:pb-7 md:p-7 lg:px-10 lg:py-8 gap-5 lg:gap-8 w-full md:w-[75%] lg:w-[70%]">
             
             {/* Handshake Icon */}
             <div className="flex-shrink-0 bg-white/50 p-2 rounded-full shadow-sm border border-[#de9e48]/20">

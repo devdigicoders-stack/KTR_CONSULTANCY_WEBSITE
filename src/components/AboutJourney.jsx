@@ -79,37 +79,39 @@ const AboutJourney = () => {
             <div className="h-px bg-[#de9e48]/40 w-12"></div>
           </div>
 
-          {/* Timeline Wrapper (Scrollable on mobile) */}
-          <div className="w-full overflow-x-auto pb-2 no-scrollbar">
-            <div className="relative w-full min-w-[900px] lg:min-w-0">
+          {/* Timeline Wrapper */}
+          <div className="w-full pb-2">
+            <div className="relative w-full">
               
-              {/* Background Horizontal Line */}
-              <div className="absolute top-[28px] left-[8%] right-[8%] h-px bg-[#de9e48]/40 z-0"></div>
+              {/* Background Line (Vertical on mobile, Horizontal on desktop) */}
+              <div className="absolute left-[28px] lg:left-[8%] lg:right-[8%] top-[28px] bottom-[28px] lg:bottom-auto w-px lg:w-auto lg:h-px bg-[#de9e48]/40 z-0"></div>
 
               {/* Flex Container for Nodes */}
-              <div className="flex justify-between relative z-10 w-full">
+              <div className="flex flex-col lg:flex-row justify-between relative z-10 w-full gap-8 lg:gap-0">
                 {journeyData.map((item, index) => (
-                  <div key={index} className="flex flex-col items-center w-[16%] relative">
+                  <div key={index} className="flex flex-row lg:flex-col items-start lg:items-center w-full lg:w-[16%] relative">
                     
-                    {/* Small Dot connecting to the next item */}
+                    {/* Small Dot connecting to the next item (Desktop Only) */}
                     {index < journeyData.length - 1 && (
-                      <div className="absolute top-[28px] left-[50%] w-full flex items-center justify-center pointer-events-none z-0">
+                      <div className="hidden lg:flex absolute top-[28px] left-[50%] w-full items-center justify-center pointer-events-none z-0">
                         <div className="w-[6px] h-[6px] bg-[#de9e48] rounded-full translate-x-[50%] -translate-y-1/2"></div>
                       </div>
                     )}
 
                     {/* Node Circle */}
-                    <div className="w-[56px] h-[56px] rounded-full bg-white border border-[#de9e48] flex items-center justify-center mb-5 relative z-10 shadow-sm">
+                    <div className="w-[56px] h-[56px] flex-shrink-0 rounded-full bg-white border border-[#de9e48] flex items-center justify-center mr-5 lg:mr-0 lg:mb-5 relative z-10 shadow-sm">
                       {item.icon}
                     </div>
 
                     {/* Content */}
-                    <h4 className="text-[#020d1c] font-bold text-[14px] xl:text-[15px] mb-2 text-center whitespace-nowrap">
-                      {item.year}
-                    </h4>
-                    <p className="text-gray-500 text-[11px] xl:text-[12px] text-center leading-snug px-1 lg:px-2">
-                      {item.title}
-                    </p>
+                    <div className="flex flex-col pt-2 lg:pt-0 w-full">
+                      <h4 className="text-[#020d1c] font-bold text-[14px] xl:text-[15px] mb-1.5 lg:mb-2 text-left lg:text-center whitespace-nowrap">
+                        {item.year}
+                      </h4>
+                      <p className="text-gray-500 text-[12px] lg:text-[11px] xl:text-[12px] text-left lg:text-center leading-relaxed lg:leading-snug pr-4 lg:pr-0 lg:px-2">
+                        {item.title}
+                      </p>
+                    </div>
 
                   </div>
                 ))}

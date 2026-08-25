@@ -46,7 +46,7 @@ const PropertyAssessmentMap = () => {
   return (
     <div className="bg-[#fafafa] min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-[#020d1c] py-20 lg:py-28 overflow-hidden">
+      <section className="relative bg-[#020d1c] py-16 md:py-20 lg:py-28 overflow-hidden">
         {/* Subtle glow */}
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#de9e48]/10 to-transparent pointer-events-none rounded-bl-full blur-3xl"></div>
         <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8 relative z-10 text-center">
@@ -64,7 +64,7 @@ const PropertyAssessmentMap = () => {
         <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {services.map((service) => (
-              <div key={service.id} className="bg-white rounded-2xl border border-gray-100 p-8 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] hover:shadow-xl transition-all group flex flex-col h-full relative overflow-hidden">
+              <div key={service.id} className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] hover:shadow-xl transition-all group flex flex-col h-full relative overflow-hidden">
                 {/* Background Number */}
                 <div className="absolute -right-4 -bottom-4 text-[120px] font-bold text-gray-50 opacity-50 select-none group-hover:text-orange-50 transition-colors">
                   {service.number}

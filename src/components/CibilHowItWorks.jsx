@@ -74,10 +74,10 @@ const CibilHowItWorks = () => {
             </div>
 
             {/* Steps Flow */}
-            <div className="flex flex-col md:flex-row items-start justify-between w-full relative">
+            <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between w-full relative">
               
               {steps.map((step, idx) => (
-                <div key={idx} className="flex-1 flex flex-col items-center text-center relative group px-2 mb-8 md:mb-0">
+                <div key={idx} className="flex-1 flex flex-col items-center text-center relative group px-2 mb-12 lg:mb-0">
                   
                   {/* Icon Circle */}
                   <div className="w-[64px] h-[64px] rounded-full border-[1.5px] border-[#de9e48]/50 flex items-center justify-center text-[#020d1c] bg-white mb-4 group-hover:scale-105 transition-transform duration-300 group-hover:border-[#de9e48] group-hover:shadow-md relative z-10">
@@ -99,18 +99,29 @@ const CibilHowItWorks = () => {
                     {step.desc}
                   </p>
 
-                  {/* Connector Arrow (Hide on mobile, show on md and above) */}
+                  {/* Connector Arrow */}
                   {idx < steps.length - 1 && (
-                    <div className="hidden md:block absolute top-[32px] left-[calc(50%+36px)] w-[calc(100%-72px)] z-0 pointer-events-none">
-                      <div className="w-full h-0 border-t-[1.5px] border-dashed border-[#de9e48]/70 relative">
-                        {/* Arrow Head */}
-                        <div className="absolute -right-2 -top-[11px] text-[#de9e48]/70">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <>
+                      {/* Desktop Horizontal Arrow */}
+                      <div className="hidden lg:block absolute top-[32px] left-[calc(50%+36px)] w-[calc(100%-72px)] z-0 pointer-events-none">
+                        <div className="w-full h-0 border-t-[1.5px] border-dashed border-[#de9e48]/70 relative">
+                          <div className="absolute -right-2 -top-[11px] text-[#de9e48]/70">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Mobile Vertical Arrow */}
+                      <div className="lg:hidden absolute top-full left-1/2 -translate-x-1/2 h-[32px] mt-2 w-0 border-l-[1.5px] border-dashed border-[#de9e48]/70 z-0 pointer-events-none">
+                        <div className="absolute -bottom-1 -left-[5.5px] text-[#de9e48]/70">
+                          <svg className="w-3 h-3 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                         </div>
                       </div>
-                    </div>
+                    </>
                   )}
                 </div>
               ))}

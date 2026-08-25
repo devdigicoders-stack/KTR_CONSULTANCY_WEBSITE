@@ -41,11 +41,11 @@ const PropertyLegalHero = () => {
             </p>
             
             {/* Features Bottom Row */}
-            <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
               
               {/* Feature 1 */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full border border-[#de9e48] flex items-center justify-center flex-shrink-0">
+              <div className="flex items-center gap-3 bg-gray-50/50 sm:bg-transparent p-3 sm:p-0 rounded-lg sm:rounded-none border border-gray-100 sm:border-none">
+                <div className="w-9 h-9 rounded-full border border-[#de9e48] flex items-center justify-center flex-shrink-0 bg-white">
                   <svg className="w-4 h-4 text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -56,12 +56,10 @@ const PropertyLegalHero = () => {
                   <p className="text-[13px] text-[#020d1c] font-bold leading-tight mt-0.5">Lucknow</p>
                 </div>
               </div>
-
-              <div className="hidden sm:block w-px h-8 bg-gray-200"></div>
               
               {/* Feature 2 */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full border border-[#de9e48] flex items-center justify-center flex-shrink-0">
+              <div className="flex items-center gap-3 bg-gray-50/50 sm:bg-transparent p-3 sm:p-0 rounded-lg sm:rounded-none border border-gray-100 sm:border-none relative sm:before:content-[''] sm:before:absolute sm:before:-left-3 sm:before:top-1/2 sm:before:-translate-y-1/2 sm:before:w-px sm:before:h-8 sm:before:bg-gray-200">
+                <div className="w-9 h-9 rounded-full border border-[#de9e48] flex items-center justify-center flex-shrink-0 bg-white">
                   <svg className="w-4 h-4 text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -71,12 +69,10 @@ const PropertyLegalHero = () => {
                   <p className="text-[13px] text-[#020d1c] font-bold leading-tight mt-0.5">1 Working Day*</p>
                 </div>
               </div>
-
-              <div className="hidden sm:block w-px h-8 bg-gray-200"></div>
               
               {/* Feature 3 */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full border border-[#de9e48] flex items-center justify-center flex-shrink-0">
+              <div className="flex items-center gap-3 bg-gray-50/50 sm:bg-transparent p-3 sm:p-0 rounded-lg sm:rounded-none border border-gray-100 sm:border-none relative sm:before:content-[''] sm:before:absolute sm:before:-left-3 sm:before:top-1/2 sm:before:-translate-y-1/2 sm:before:w-px sm:before:h-8 sm:before:bg-gray-200">
+                <div className="w-9 h-9 rounded-full border border-[#de9e48] flex items-center justify-center flex-shrink-0 bg-white">
                   <svg className="w-4 h-4 text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>

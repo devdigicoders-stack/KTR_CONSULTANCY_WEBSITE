@@ -407,8 +407,8 @@ const ChainDeedForm = () => {
               </button>
             </div>
             
-            <div className="p-6 md:p-8 overflow-y-auto max-h-[80vh]">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-4 md:p-8 overflow-y-auto max-h-[80vh]">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {/* Example 1 */}
                 <div className="border border-gray-200 rounded-xl p-4 flex flex-col items-center bg-[#fdfdfd]">
                   <div className="bg-[#020d1c] text-white w-6 h-6 rounded-full flex items-center justify-center text-[12px] font-bold mb-3">1</div>
@@ -642,7 +642,8 @@ const ChainDeedForm = () => {
             </div>
 
             {/* Service Details */}
-            <table className="w-full mb-8">
+            <div className="overflow-x-auto">
+              <table className="w-full mb-8 min-w-[300px]">
               <thead>
                 <tr className="border-b-2 border-[#020d1c] text-left">
                   <th className="pb-3 text-[#020d1c] font-bold text-[13px] uppercase">Service Description</th>
@@ -660,7 +661,8 @@ const ChainDeedForm = () => {
                   </td>
                 </tr>
               </tbody>
-            </table>
+              </table>
+            </div>
 
             {/* Totals */}
             <div className="flex justify-end">

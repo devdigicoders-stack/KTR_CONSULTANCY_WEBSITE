@@ -65,7 +65,7 @@ const ApplyForm = () => {
       <div>
         <SectionTitle num="2" title="Your Basic Details" />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-bold text-[#020d1c]">Full Name <span className="text-red-500">*</span></label>
             <input type="text" placeholder="Enter your full name" className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400" />
@@ -143,7 +143,7 @@ const ApplyForm = () => {
       <div>
         <SectionTitle num="3" title="Service Requirement Details" />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 mb-6">
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-bold text-[#020d1c]">Loan / Service Amount (₹)</label>
             <input type="text" placeholder="Enter amount (Optional)" className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400" />

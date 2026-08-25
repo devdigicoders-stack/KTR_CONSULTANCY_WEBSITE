@@ -71,7 +71,7 @@ const ContactLocations = () => {
           </div>
 
           {/* Right Column: Map */}
-          <div className="w-full lg:w-[65%] xl:w-[68%] rounded-xl overflow-hidden shadow-sm border border-gray-100 h-[400px] lg:h-auto min-h-[400px] relative bg-gray-100">
+          <div className="w-full lg:w-[65%] xl:w-[68%] rounded-xl overflow-hidden shadow-sm border border-gray-100 h-[300px] lg:h-[400px] relative bg-gray-100">
              
             {/* Custom Interactive Map Overlay (Simulating the screenshot design) */}
             <iframe 

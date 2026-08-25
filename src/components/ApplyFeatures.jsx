@@ -1,4 +1,3 @@
-import React from 'react';
 
 const ApplyFeatures = () => {
   const features = [
@@ -47,14 +46,14 @@ const ApplyFeatures = () => {
     <section className="bg-white pb-12 lg:pb-20 border-t border-gray-100 pt-12">
       <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8">
         
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
           
           {features.map((feature, index) => (
             <div 
               key={index} 
-              className={`flex items-start gap-4 w-full lg:w-1/4 ${
-                index !== features.length - 1 ? 'lg:border-r lg:border-gray-100' : ''
-              } px-2 lg:px-6`}
+              className={`flex items-start gap-4 w-full px-4 py-5 lg:py-0 ${
+                index !== features.length - 1 ? 'border-b sm:border-b-0 sm:border-r border-gray-100' : ''
+              } lg:px-6`}
             >
               <div className="w-[50px] h-[50px] rounded-full bg-white border-2 border-gray-100 flex items-center justify-center flex-shrink-0 text-[#020d1c] shadow-sm relative">
                 {feature.icon}

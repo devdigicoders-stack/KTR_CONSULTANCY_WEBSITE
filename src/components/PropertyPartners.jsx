@@ -129,11 +129,11 @@ const PropertyPartners = () => {
         </div>
 
         {/* Partners Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4 lg:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-4 lg:gap-3">
           {partners.map((partner, index) => (
             <div 
               key={index} 
-              className="bg-white border border-gray-100 rounded-lg p-3 sm:p-4 h-[80px] sm:h-[90px] flex items-center justify-center hover:shadow-md transition-shadow duration-300 filter grayscale hover:grayscale-0 transition-all cursor-pointer"
+              className="bg-white border border-gray-100 rounded-lg p-2 sm:p-4 h-[64px] lg:h-[80px] flex items-center justify-center hover:shadow-md transition-shadow duration-300 filter grayscale hover:grayscale-0 transition-all cursor-pointer transform hover:-translate-y-0.5"
               title={partner.name}
             >
               {partner.render()}

@@ -81,9 +81,9 @@ const AboutWhoWeAre = () => {
           {/* Right Stats Box */}
           <div className="w-full xl:w-[65%] flex items-center justify-center mt-4 xl:mt-0">
             <div className="bg-[#020d1c] rounded-[16px] w-full py-8 lg:py-12 shadow-md">
-              <div className="flex flex-col sm:flex-row flex-wrap xl:flex-nowrap items-center justify-center w-full px-2 lg:px-4 gap-y-6 sm:gap-y-8 xl:gap-y-0 xl:divide-x divide-gray-700/60">
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:flex xl:flex-nowrap items-center justify-between w-full px-2 lg:px-4 gap-y-6 sm:gap-y-8 xl:gap-y-0 xl:divide-x divide-gray-700/60">
                 {statsData.map((stat, index) => (
-                  <div key={index} className="flex items-center gap-2 lg:gap-2.5 w-full sm:w-1/2 md:w-1/3 xl:w-auto xl:flex-1 justify-center px-1 lg:px-2">
+                  <div key={index} className="flex items-center gap-3 lg:gap-2.5 w-full xl:w-auto xl:flex-1 justify-start pl-6 sm:pl-10 xl:pl-4 xl:justify-center px-1 lg:px-2">
                     <div className="flex-shrink-0">
                       {React.cloneElement(stat.icon, { className: "w-[28px] h-[28px] lg:w-[32px] lg:h-[32px] text-[#de9e48]" })}
                     </div>
