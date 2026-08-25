@@ -14,7 +14,8 @@ const Header = () => {
       path: '/loans',
       dropdown: [
         { name: 'All Loan Services', path: '/loans' },
-        { name: 'Non-Approved Society Loans', path: '/non-approved-loans' }
+        { name: 'Non-Approved Society Loans', path: '/non-approved-loans' },
+        { name: 'MSME & Project Finance', path: '/msme-project-finance' }
       ]
     },
     { 

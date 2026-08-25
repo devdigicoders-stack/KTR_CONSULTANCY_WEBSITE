@@ -19,6 +19,7 @@ import CAServices from './pages/CAServices';
 import CAQuote from './pages/CAQuote';
 import ApplyOnline from './pages/ApplyOnline';
 import NonApprovedLoans from './pages/NonApprovedLoans';
+import MSMELoans from './pages/MSMELoans';
 
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
@@ -49,6 +50,7 @@ function App() {
           <Route path="/ca-quote" element={<CAQuote />} />
           <Route path="/apply-online" element={<ApplyOnline />} />
           <Route path="/non-approved-loans" element={<NonApprovedLoans />} />
+          <Route path="/msme-project-finance" element={<MSMELoans />} />
           <Route path="/loans" element={<Services />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/contact" element={<Contact />} />

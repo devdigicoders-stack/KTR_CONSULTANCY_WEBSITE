@@ -112,21 +112,21 @@ const Services = () => {
         {/* Outer Container for Services */}
         <div className="bg-white border border-gray-100 shadow-[0_4px_30px_rgba(0,0,0,0.04)] rounded-2xl p-4 md:p-6 lg:p-8">
           
-          {/* Scrollable / Grid Wrapper */}
-          <div className="flex overflow-x-auto pb-4 -mb-4 snap-x snap-mandatory lg:grid lg:grid-cols-4 xl:grid-cols-8 gap-3 md:gap-4 lg:overflow-visible lg:pb-0 lg:mb-0 lg:snap-none hide-scrollbar">
+          {/* Grid Wrapper */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-3 md:gap-4">
             {services.map((service, index) => (
               <Link 
                 to={service.link}
                 key={index} 
-                className="flex-shrink-0 w-[240px] lg:w-auto snap-center bg-white border border-gray-100 rounded-xl p-5 md:p-6 hover:shadow-lg hover:border-orange-100 transition-all duration-300 flex flex-col items-center text-center group"
+                className="bg-white border border-gray-100 rounded-xl p-4 lg:p-5 hover:shadow-lg hover:border-orange-100 transition-all duration-300 flex flex-col items-center text-center group"
               >
                 <div className="transition-transform duration-300 group-hover:-translate-y-1">
                   {service.icon}
                 </div>
-                <h4 className="text-[#020d1c] font-bold text-[13px] md:text-sm mb-2 leading-snug">
+                <h4 className="text-[#020d1c] font-bold text-[12px] md:text-[13px] lg:text-sm mb-2 leading-snug">
                   {service.title}
                 </h4>
-                <p className="text-gray-500 text-[11px] md:text-[12px] leading-relaxed font-medium">
+                <p className="text-gray-500 text-[10px] md:text-[11px] lg:text-[12px] leading-relaxed font-medium">
                   {service.desc}
                 </p>
               </Link>

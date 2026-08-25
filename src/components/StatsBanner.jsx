@@ -100,7 +100,7 @@ const StatsBanner = () => {
           <div className="flex-shrink-0 w-full xl:w-auto flex justify-center xl:justify-end xl:pl-4 2xl:pl-6">
             <Link 
               to="/about" 
-              className="inline-flex items-center justify-center bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-semibold py-2.5 px-5 rounded transition-all duration-300 hover:-translate-y-0.5 text-[12px] whitespace-nowrap"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-semibold py-3 sm:py-2.5 px-5 rounded transition-all duration-300 hover:-translate-y-0.5 text-[12px] whitespace-nowrap"
             >
               Know More About Us
               <svg className="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

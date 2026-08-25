@@ -1,4 +1,3 @@
-import React from 'react';
 import BusinessFinanceHero from '../components/BusinessFinanceHero';
 import BusinessFinanceGrid from '../components/BusinessFinanceGrid';
 import BusinessFinanceWhyChoose from '../components/BusinessFinanceWhyChoose';

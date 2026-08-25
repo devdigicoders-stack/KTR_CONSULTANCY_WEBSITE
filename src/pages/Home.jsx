@@ -1,6 +1,7 @@
 import React from 'react';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
+import HomeUSPBanner from '../components/HomeUSPBanner';
 import StatsBanner from '../components/StatsBanner';
 import ServicesGrid from '../components/ServicesGrid';
 import HowItWorks from '../components/HowItWorks';
@@ -15,6 +16,7 @@ const Home = () => {
     <>
       <Hero />
       <Services />
+      <HomeUSPBanner />
       <StatsBanner />
       <ServicesGrid />
       <HowItWorks />

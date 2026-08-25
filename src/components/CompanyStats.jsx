@@ -72,9 +72,9 @@ const CompanyStats = () => {
     <section className="bg-[#fcfcfd] py-10 font-sans">
       <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
         <div className="bg-white border border-gray-100 rounded-xl shadow-sm py-5 px-4 md:px-8">
-          <div className="flex flex-col lg:flex-row items-center justify-between divide-y lg:divide-y-0 lg:divide-x divide-gray-100">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:flex-row items-center justify-between gap-y-6 lg:gap-0 lg:divide-x divide-gray-100">
             {statsData.map((stat, index) => (
-              <div key={index} className="flex items-center gap-3 w-full lg:w-auto flex-1 justify-center py-4 lg:py-0 px-2 lg:px-4">
+              <div key={index} className="flex items-center gap-2 md:gap-3 w-full lg:w-auto flex-1 justify-center lg:py-0 px-2 lg:px-4">
                 <div className="flex-shrink-0">
                   {stat.icon}
                 </div>

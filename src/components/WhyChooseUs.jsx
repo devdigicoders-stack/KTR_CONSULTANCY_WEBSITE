@@ -42,7 +42,7 @@ const WhyChooseUs = () => {
             
             <Link 
               to="/about" 
-              className="inline-flex items-center justify-center bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-medium py-3 px-8 rounded transition-colors duration-200 text-sm shadow-md"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-medium py-3.5 sm:py-3 px-8 rounded transition-colors duration-200 text-sm shadow-md"
             >
               Learn More About Us
               <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

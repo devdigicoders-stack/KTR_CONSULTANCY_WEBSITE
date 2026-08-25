@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import ApplicationBottomCTA from '../components/ApplicationBottomCTA';
 
 const servicesConfig = {
   'nagar-nigam': {
@@ -57,6 +56,7 @@ const servicesConfig = {
 
 const AssessmentMapForm = () => {
   const [searchParams] = useSearchParams();
+  const [showGpsModal, setShowGpsModal] = useState(false);
   const navigate = useNavigate();
   
   // Get service from URL, default to nagar-nigam
@@ -189,69 +189,24 @@ const AssessmentMapForm = () => {
                     <h3 className="text-[#020d1c] font-bold text-[16px] mb-1">GPS Property Photograph <span className="text-red-500">*</span></h3>
                     <p className="text-gray-600 text-[13px]">Upload clear GPS-enabled photographs of your property. Ensure location details (Latitude, Longitude, Date/Time) are visible.</p>
                   </div>
-
-                  <div className="p-6 md:p-8 flex flex-col xl:flex-row gap-8 lg:gap-12">
+                  <div className="p-6 md:p-8 flex flex-col items-center justify-center text-center">
                     
-                    {/* Examples Section */}
-                    <div className="flex-1">
-                      <h4 className="text-[#020d1c] font-bold text-[14px] mb-5 uppercase tracking-wide border-b border-gray-100 pb-2">Examples / How to take GPS Photo</h4>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {/* Example 1 */}
-                        <div className="flex flex-col gap-3">
-                          <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group aspect-[3/4] bg-gray-50">
-                            <div className="absolute top-2 left-2 bg-[#de9e48] text-white text-[10px] font-bold px-2 py-1 rounded">Example 1</div>
-                            <img src="/gps1.jpg" alt="House/Building" className="w-full h-full object-cover" />
-                          </div>
-                          <div>
-                            <h5 className="font-bold text-[13px] text-[#020d1c]">House/Building</h5>
-                            <p className="text-[11.5px] text-gray-500 leading-snug mt-1">Property ka front/clear view GPS information ke saath.</p>
-                          </div>
-                        </div>
-
-                        {/* Example 2 */}
-                        <div className="flex flex-col gap-3">
-                          <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group aspect-[3/4] bg-gray-50">
-                            <div className="absolute top-2 left-2 bg-[#de9e48] text-white text-[10px] font-bold px-2 py-1 rounded">Example 2</div>
-                            <img src="/gps3.jpg" alt="Plot/Property" className="w-full h-full object-cover" />
-                          </div>
-                          <div>
-                            <h5 className="font-bold text-[13px] text-[#020d1c]">Plot/Property</h5>
-                            <p className="text-[11.5px] text-gray-500 leading-snug mt-1">Plot/property ki clear photograph GPS location details ke saath.</p>
-                          </div>
-                        </div>
-
-                        {/* Example 3 */}
-                        <div className="flex flex-col gap-3">
-                          <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group aspect-[3/4] bg-gray-50">
-                            <div className="absolute top-2 left-2 bg-[#de9e48] text-white text-[10px] font-bold px-2 py-1 rounded">Example 3</div>
-                            <img src="/gps4.jpg" alt="Property View" className="w-full h-full object-cover" />
-                          </div>
-                          <div>
-                            <h5 className="font-bold text-[13px] text-[#020d1c]">Property View</h5>
-                            <p className="text-[11.5px] text-gray-500 leading-snug mt-1">Different angle se property ki photograph, GPS details visible hon.</p>
-                          </div>
-                        </div>
+                    <div className="w-full max-w-md mx-auto bg-gray-50 border-2 border-dashed border-[#de9e48] rounded-2xl p-8 hover:bg-orange-50/50 transition-colors flex flex-col items-center justify-center text-center group cursor-pointer relative">
+                      <div className="w-16 h-16 bg-[#de9e48]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg className="w-8 h-8 text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                       </div>
+                      <h4 className="text-[#020d1c] font-bold text-[16px] mb-2">Upload GPS Photos</h4>
+                      <p className="text-gray-500 text-[13px] mb-6">Select multiple photos</p>
+                      <span className="bg-[#020d1c] text-white px-6 py-2.5 rounded-lg text-[13.5px] font-bold shadow-sm group-hover:bg-[#de9e48] transition-colors relative z-10">
+                        Browse Files
+                      </span>
+                      <input type="file" required multiple accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
                     </div>
 
-                    {/* Divider for desktop */}
-                    <div className="hidden xl:block w-px bg-gray-100"></div>
-
-                    {/* Upload Section */}
-                    <div className="xl:w-[350px] flex flex-col justify-center">
-                      <div className="relative border-2 border-dashed border-[#de9e48] rounded-2xl p-8 hover:bg-orange-50/50 transition-colors flex flex-col items-center justify-center text-center group cursor-pointer h-full min-h-[250px]">
-                        <div className="w-16 h-16 bg-[#de9e48]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                          <svg className="w-8 h-8 text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                        </div>
-                        <h4 className="text-[#020d1c] font-bold text-[16px] mb-2">Upload GPS Photos</h4>
-                        <p className="text-gray-500 text-[13px] mb-6">Select multiple photos</p>
-                        <span className="bg-[#020d1c] text-white px-6 py-2.5 rounded-lg text-[13.5px] font-bold shadow-sm group-hover:bg-[#de9e48] transition-colors">
-                          Browse Files
-                        </span>
-                        <input type="file" required multiple accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                      </div>
-                    </div>
+                    <button type="button" onClick={() => setShowGpsModal(true)} className="mt-6 text-[#de9e48] hover:text-[#c98e41] font-bold text-[14px] flex items-center gap-2 transition-colors">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      How to take GPS Photo? View Examples
+                    </button>
 
                   </div>
                 </div>
@@ -303,6 +258,66 @@ const AssessmentMapForm = () => {
           
         </div>
       </section>
+
+      {/* GPS Sample Modal */}
+      {showGpsModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowGpsModal(false)}>
+          <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full overflow-hidden animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+            <div className="bg-[#020d1c] px-6 py-4 flex justify-between items-center text-white">
+              <h3 className="font-bold text-[15px] tracking-wide uppercase">How to take GPS Photo</h3>
+              <button onClick={() => setShowGpsModal(false)} className="text-gray-400 hover:text-white transition-colors">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            
+            <div className="p-6 md:p-8 overflow-y-auto max-h-[80vh]">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Example 1 */}
+                <div className="flex flex-col gap-3">
+                  <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group aspect-[3/4] bg-gray-50">
+                    <div className="absolute top-2 left-2 bg-[#de9e48] text-white text-[10px] font-bold px-2 py-1 rounded">Example 1</div>
+                    <img src="/new_gps1.jpg" alt="House/Building" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-[14px] text-[#020d1c]">House/Building</h5>
+                    <p className="text-[12px] text-gray-500 leading-snug mt-1">Property ka front/clear view GPS information ke saath.</p>
+                  </div>
+                </div>
+
+                {/* Example 2 */}
+                <div className="flex flex-col gap-3">
+                  <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group aspect-[3/4] bg-gray-50">
+                    <div className="absolute top-2 left-2 bg-[#de9e48] text-white text-[10px] font-bold px-2 py-1 rounded">Example 2</div>
+                    <img src="/new_gps2.jpg" alt="Plot/Property" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-[14px] text-[#020d1c]">Plot/Property</h5>
+                    <p className="text-[12px] text-gray-500 leading-snug mt-1">Plot/property ki clear photograph GPS location details ke saath.</p>
+                  </div>
+                </div>
+
+                {/* Example 3 */}
+                <div className="flex flex-col gap-3">
+                  <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group aspect-[3/4] bg-gray-50">
+                    <div className="absolute top-2 left-2 bg-[#de9e48] text-white text-[10px] font-bold px-2 py-1 rounded">Example 3</div>
+                    <img src="/new_gps3.jpg" alt="Property View" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-[14px] text-[#020d1c]">Property View</h5>
+                    <p className="text-[12px] text-gray-500 leading-snug mt-1">Different angle se property ki photograph, GPS details visible hon.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8 flex justify-center">
+                <button type="button" onClick={() => setShowGpsModal(false)} className="bg-[#020d1c] hover:bg-gray-800 text-white font-bold px-8 py-3 rounded-xl transition-all shadow-md">
+                  Got it, Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

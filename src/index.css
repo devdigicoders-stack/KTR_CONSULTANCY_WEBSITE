@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+@media print {
+  body.printing #root {
+    display: none !important;
+  }
+  
+  body.printing #floating-whatsapp {
+    display: none !important;
+  }
+  
+  #print-clone {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+  }
+
+  /* Force background colors to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  @page {
+    margin: 0.5cm;
+  }
+}
