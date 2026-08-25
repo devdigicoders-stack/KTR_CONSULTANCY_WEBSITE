@@ -21,10 +21,10 @@ const LoansBottomCTA = () => {
             
             <div className="flex flex-col">
               <h2 className="text-white text-2xl lg:text-[28px] font-bold font-serif mb-2 tracking-wide">
-                Ready to Get Started?
+                Not sure what you need?
               </h2>
               <p className="text-gray-300 text-[13px] md:text-[14px]">
-                Apply online or talk to our experts for the best loan solution.
+                Share your requirement and let our team help identify the appropriate financing option.
               </p>
             </div>
           </div>
@@ -36,7 +36,7 @@ const LoansBottomCTA = () => {
               to="/apply-online" 
               className="w-full sm:w-auto inline-flex items-center justify-center bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-[13px] py-3.5 px-8 rounded-md transition-all duration-300 shadow-sm"
             >
-              Apply Online
+              Apply for Loan
               <svg className="w-3.5 h-3.5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>

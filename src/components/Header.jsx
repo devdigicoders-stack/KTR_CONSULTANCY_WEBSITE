@@ -11,11 +11,19 @@ const Header = () => {
     { name: 'About Us', path: '/about' },
     { 
       name: 'Loans', 
-      path: '/loans'
+      path: '/loans',
+      dropdown: [
+        { name: 'All Loan Services', path: '/loans' },
+        { name: 'Non-Approved Society Loans', path: '/non-approved-loans' }
+      ]
     },
     { 
       name: 'Business Finance', 
-      path: '/business-finance'
+      path: '/business-finance',
+      dropdown: [
+        { name: 'General Business Finance', path: '/business-finance' },
+        { name: 'CA Services', path: '/ca-services' }
+      ]
     },
     { 
       name: 'CIBIL Services', 

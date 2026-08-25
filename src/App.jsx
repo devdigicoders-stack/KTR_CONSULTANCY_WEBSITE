@@ -15,7 +15,10 @@ import PropertyServices from './pages/PropertyServices';
 import PropertyLegalServices from './pages/PropertyLegalServices';
 import PropertyAssessmentMap from './pages/PropertyAssessmentMap';
 import AssessmentMapForm from './pages/AssessmentMapForm';
+import CAServices from './pages/CAServices';
+import CAQuote from './pages/CAQuote';
 import ApplyOnline from './pages/ApplyOnline';
+import NonApprovedLoans from './pages/NonApprovedLoans';
 
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
@@ -42,7 +45,10 @@ function App() {
           <Route path="/property-legal-services" element={<PropertyLegalServices />} />
           <Route path="/property-assessment-map" element={<PropertyAssessmentMap />} />
           <Route path="/property-assessment-map/apply" element={<AssessmentMapForm />} />
+          <Route path="/ca-services" element={<CAServices />} />
+          <Route path="/ca-quote" element={<CAQuote />} />
           <Route path="/apply-online" element={<ApplyOnline />} />
+          <Route path="/non-approved-loans" element={<NonApprovedLoans />} />
           <Route path="/loans" element={<Services />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/contact" element={<Contact />} />
