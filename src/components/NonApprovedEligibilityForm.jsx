@@ -1,6 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const NonApprovedEligibilityForm = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    mobile: '',
+    location: '',
+    propertyName: '',
+    propertyType: '',
+    loanRequirement: '',
+    propertyStatus: '',
+    existingDocs: '',
+    additionalDetails: ''
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError('');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!formData.fullName || !formData.mobile || !formData.location || !formData.propertyType || !formData.loanRequirement) {
+      setError('Please fill in all required fields marked with *');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+      const payload = {
+        fullName: formData.fullName,
+        mobile: formData.mobile,
+        location: formData.location,
+        propertyName: formData.propertyName,
+        propertyType: formData.propertyType,
+        loanRequirement: formData.loanRequirement,
+        propertyStatus: formData.propertyStatus,
+        existingDocs: formData.existingDocs,
+        additionalDetails: formData.additionalDetails
+      };
+
+      const res = await fetch(`${BACKEND_URL}/eligibility-checks/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await res.json();
+      
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setError(result.message || 'Something went wrong.');
+      }
+    } catch (err) {
+      setError('Failed to connect to server. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="bg-white py-16 lg:py-20 font-sans">
       <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
@@ -44,21 +108,44 @@ const NonApprovedEligibilityForm = () => {
 
           {/* Right Panel - Form */}
           <div className="lg:w-[65%] xl:w-[68%] p-8 lg:p-10 xl:p-12 bg-white">
-            <form className="space-y-5">
+            {submitted ? (
+              <div className="flex flex-col items-center justify-center py-10 h-full text-center">
+                <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mb-5 text-green-500 border-4 border-green-100">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-[#020d1c] mb-2">Details Submitted Successfully!</h3>
+                <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">
+                  Thank you for submitting your property details. Our experts will review your case and get back to you within 24-48 hours.
+                </p>
+                <button 
+                  onClick={() => {
+                    setSubmitted(false);
+                    setFormData({ fullName: '', mobile: '', location: '', propertyName: '', propertyType: '', loanRequirement: '', propertyStatus: '', existingDocs: '', additionalDetails: '' });
+                  }} 
+                  className="bg-[#de9e48] hover:bg-[#c88d3e] text-white px-6 py-2.5 rounded-lg text-sm font-bold transition-colors"
+                >
+                  Submit Another Request
+                </button>
+              </div>
+            ) : (
+            <form className="space-y-5" onSubmit={handleSubmit}>
+              {error && <div className="bg-red-50 text-red-500 p-3 rounded-lg text-sm font-semibold">{error}</div>}
               
               {/* Row 1 */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
                   <label className="block text-[12.5px] font-bold text-[#020d1c] mb-2">Full Name <span className="text-red-500">*</span></label>
-                  <input type="text" placeholder="Enter your full name" className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
+                  <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Enter your full name" className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
                 </div>
                 <div>
                   <label className="block text-[12.5px] font-bold text-[#020d1c] mb-2">Mobile Number <span className="text-red-500">*</span></label>
-                  <input type="tel" placeholder="Enter your mobile number" className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
+                  <input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} placeholder="Enter your mobile number" className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
                 </div>
                 <div>
                   <label className="block text-[12.5px] font-bold text-[#020d1c] mb-2">Property Location <span className="text-red-500">*</span></label>
-                  <input type="text" placeholder="Enter city / locality" className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
+                  <input type="text" name="location" value={formData.location} onChange={handleChange} placeholder="Enter city / locality" className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
                 </div>
               </div>
 
@@ -66,11 +153,11 @@ const NonApprovedEligibilityForm = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
                   <label className="block text-[12.5px] font-bold text-[#020d1c] mb-2">Property / Society Name</label>
-                  <input type="text" placeholder="Enter society / property name" className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
+                  <input type="text" name="propertyName" value={formData.propertyName} onChange={handleChange} placeholder="Enter society / property name" className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
                 </div>
                 <div className="relative">
                   <label className="block text-[12.5px] font-bold text-[#020d1c] mb-2">Property Type <span className="text-red-500">*</span></label>
-                  <select className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] text-gray-600 focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48] appearance-none bg-white">
+                  <select name="propertyType" value={formData.propertyType} onChange={handleChange} className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] text-gray-600 focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48] appearance-none bg-white">
                     <option value="">Select Property Type</option>
                     <option value="Residential Plot">Residential Plot</option>
                     <option value="Built-up House">Built-up House</option>
@@ -83,7 +170,7 @@ const NonApprovedEligibilityForm = () => {
                 </div>
                 <div className="relative">
                   <label className="block text-[12.5px] font-bold text-[#020d1c] mb-2">Loan Requirement (₹) <span className="text-red-500">*</span></label>
-                  <select className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] text-gray-600 focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48] appearance-none bg-white">
+                  <select name="loanRequirement" value={formData.loanRequirement} onChange={handleChange} className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] text-gray-600 focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48] appearance-none bg-white">
                     <option value="">Select Loan Requirement</option>
                     <option value="Upto 20 Lakhs">Upto 20 Lakhs</option>
                     <option value="20 Lakhs - 50 Lakhs">20 Lakhs - 50 Lakhs</option>
@@ -100,7 +187,7 @@ const NonApprovedEligibilityForm = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div className="relative">
                   <label className="block text-[12.5px] font-bold text-[#020d1c] mb-2">Property Status</label>
-                  <select className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] text-gray-600 focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48] appearance-none bg-white">
+                  <select name="propertyStatus" value={formData.propertyStatus} onChange={handleChange} className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] text-gray-600 focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48] appearance-none bg-white">
                     <option value="">Select Status</option>
                     <option value="Registry Done">Registry Done</option>
                     <option value="Agreement to Sale">Agreement to Sale</option>
@@ -112,7 +199,7 @@ const NonApprovedEligibilityForm = () => {
                 </div>
                 <div className="relative">
                   <label className="block text-[12.5px] font-bold text-[#020d1c] mb-2">Existing Property Documents</label>
-                  <select className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] text-gray-600 focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48] appearance-none bg-white">
+                  <select name="existingDocs" value={formData.existingDocs} onChange={handleChange} className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] text-gray-600 focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48] appearance-none bg-white">
                     <option value="">Select</option>
                     <option value="Chain Deed Available">Chain Deed Available</option>
                     <option value="Map Approved">Map Approved</option>
@@ -124,27 +211,30 @@ const NonApprovedEligibilityForm = () => {
                 </div>
                 <div>
                   <label className="block text-[12.5px] font-bold text-[#020d1c] mb-2">Additional Details (Optional)</label>
-                  <input type="text" placeholder="Any other details..." className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
+                  <input type="text" name="additionalDetails" value={formData.additionalDetails} onChange={handleChange} placeholder="Any other details..." className="w-full border border-gray-200 rounded-md px-4 py-3 text-[13.5px] focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48]" />
                 </div>
               </div>
 
               {/* Footer */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-5 mt-4">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-5 mt-4 border-t border-gray-100">
                 <div className="flex items-center gap-2 text-gray-500">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                   <span className="text-[12.5px]">Your information is safe with us and will not be shared.</span>
                 </div>
-                <button type="button" className="w-full sm:w-auto bg-[#c88d3e] hover:bg-[#b57d32] text-white font-bold text-[14px] py-3 px-8 rounded-md transition-colors flex items-center justify-center gap-2 shadow-sm">
-                  Submit & Check Eligibility
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
+                <button type="submit" disabled={loading} className="w-full sm:w-auto bg-[#c88d3e] hover:bg-[#b57d32] disabled:opacity-50 text-white font-bold text-[14px] py-3 px-8 rounded-md transition-colors flex items-center justify-center gap-2 shadow-sm">
+                  {loading ? 'Submitting...' : 'Submit & Check Eligibility'}
+                  {!loading && (
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  )}
                 </button>
               </div>
 
             </form>
+            )}
           </div>
 
         </div>

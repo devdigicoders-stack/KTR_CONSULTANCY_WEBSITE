@@ -25,6 +25,7 @@ const servicesConfig = {
     title: 'LDA Map Submission',
     description: 'We provide assistance with LDA Map Submission through approved architects and valuers.',
     fields: [
+      { id: 'name', label: 'Full Name', type: 'text', placeholder: 'Enter your full name' },
       { id: 'mobile', label: 'Mobile Number', type: 'tel', placeholder: 'Enter your mobile number' },
       { id: 'email', label: 'E-mail ID', type: 'email', placeholder: 'Enter your email address' },
       { id: 'dimensions', label: 'Property Length × Breadth', type: 'text', placeholder: 'e.g., 30 ft x 40 ft' },
@@ -65,6 +66,11 @@ const AssessmentMapForm = () => {
     servicesConfig[serviceParam] ? serviceParam : 'nagar-nigam'
   );
 
+  const [formData, setFormData] = useState({});
+  const [fileData, setFileData] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedApp, setSubmittedApp] = useState(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [activeServiceId]);
@@ -74,13 +80,127 @@ const AssessmentMapForm = () => {
   const handleServiceChange = (e) => {
     const newService = e.target.value;
     setActiveServiceId(newService);
+    setFormData({}); // Clear form data on service change
+    setFileData({}); // Clear files on service change
     navigate(`/property-assessment-map/apply?service=${newService}`, { replace: true });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Application submitted successfully!");
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
+
+  const handleFileChange = (e, fieldId, isMultiple = false) => {
+    if (e.target.files && e.target.files.length > 0) {
+      if (isMultiple) {
+        setFileData(prev => ({ ...prev, [fieldId]: Array.from(e.target.files) }));
+      } else {
+        setFileData(prev => ({ ...prev, [fieldId]: e.target.files[0] }));
+      }
+    }
+  };
+
+  const removeFile = (e, fieldId) => {
+    e.stopPropagation();
+    setFileData(prev => {
+      const newFiles = { ...prev };
+      delete newFiles[fieldId];
+      return newFiles;
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const fd = new FormData();
+      
+      fd.append('serviceType', activeServiceId);
+      
+      // Append text fields
+      Object.keys(formData).forEach(key => {
+        if (formData[key]) fd.append(key, formData[key]);
+      });
+
+      // Append files
+      Object.keys(fileData).forEach(key => {
+        const fileOrFiles = fileData[key];
+        if (Array.isArray(fileOrFiles)) {
+          fileOrFiles.forEach(file => fd.append(key, file));
+        } else if (fileOrFiles) {
+          fd.append(key, fileOrFiles);
+        }
+      });
+
+      const res = await fetch(`${BACKEND_URL}/property-assessments/submit`, {
+        method: 'POST',
+        body: fd
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setSubmittedApp(data.data);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error(data.message || 'Failed to submit application.');
+      }
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (submittedApp) {
+    return (
+      <div className="bg-[#fafafa] min-h-screen py-20 px-4">
+        <div className="max-w-[700px] mx-auto text-center">
+          <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-green-200">
+            <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+          </div>
+          <h2 className="text-[#020d1c] text-3xl font-bold font-serif mb-4">Application Submitted!</h2>
+          <p className="text-gray-600 text-[16px] mb-8 leading-relaxed">
+            Your application for <span className="font-bold text-[#020d1c]">{activeConfig.title}</span> has been received successfully.
+          </p>
+          
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden mb-10 text-left">
+             <div className="bg-[#020d1c] px-6 py-4">
+               <h3 className="text-white font-bold tracking-wide">Application Summary</h3>
+             </div>
+             <div className="p-6 grid gap-4 text-[14px]">
+               <div className="flex justify-between border-b border-gray-100 pb-3">
+                 <span className="text-gray-500 font-medium">Application ID</span>
+                 <span className="font-bold font-mono text-[#020d1c]">{submittedApp.applicationId}</span>
+               </div>
+               <div className="flex justify-between border-b border-gray-100 pb-3">
+                 <span className="text-gray-500 font-medium">Service</span>
+                 <span className="font-bold text-[#020d1c]">{activeConfig.title}</span>
+               </div>
+               <div className="flex justify-between border-b border-gray-100 pb-3">
+                 <span className="text-gray-500 font-medium">Mobile Number</span>
+                 <span className="font-bold text-[#020d1c]">{submittedApp.customerDetails?.mobile}</span>
+               </div>
+               <div className="flex justify-between pb-1">
+                 <span className="text-gray-500 font-medium">Status</span>
+                 <span className="font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-md text-[12px]">{submittedApp.status}</span>
+               </div>
+             </div>
+          </div>
+          
+          <p className="text-gray-500 text-[14px] mb-8">Our team will review your application and contact you soon regarding the next steps and applicable charges.</p>
+          
+          <button 
+            onClick={() => { setSubmittedApp(null); setFormData({}); setFileData({}); window.scrollTo({top: 0, behavior: 'smooth'}); }}
+            className="bg-[#020d1c] hover:bg-gray-800 text-white font-bold text-[15px] px-8 py-3.5 rounded-xl transition-all shadow-md"
+          >
+            Submit Another Request
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#fafafa] min-h-screen">
@@ -141,6 +261,9 @@ const AssessmentMapForm = () => {
                     </label>
                     <input 
                       type={field.type}
+                      name={field.id}
+                      value={formData[field.id] || ''}
+                      onChange={handleInputChange}
                       required
                       placeholder={field.placeholder}
                       className="w-full bg-[#f8f9fa] border border-gray-200 text-gray-800 text-[14px] rounded-xl px-4 py-3.5 outline-none focus:border-[#de9e48] focus:bg-white focus:ring-1 focus:ring-[#de9e48] transition-all"
@@ -168,15 +291,30 @@ const AssessmentMapForm = () => {
                     <h4 className="text-[#020d1c] font-bold text-[14px] mb-1">{doc.label}</h4>
                     <p className="text-gray-400 text-[12px] leading-tight mb-4 flex-1">{doc.desc}</p>
                     
-                    <div className="text-[#de9e48] text-[13px] font-semibold flex items-center gap-1 group-hover:text-[#c98e41]">
-                      Choose File
-                    </div>
-                    {/* Invisible File Input covering the entire box */}
-                    <input 
-                      type="file" 
-                      required
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    />
+                    {fileData[doc.id] ? (
+                      <div className="absolute inset-0 bg-white z-10 flex flex-col items-center justify-center p-4 rounded-xl border border-green-500">
+                        <div className="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center mb-3 text-green-600">
+                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <p className="text-[12px] font-bold text-gray-700 text-center truncate w-full px-2">{fileData[doc.id].name}</p>
+                        <button type="button" onClick={(e) => removeFile(e, doc.id)} className="mt-3 text-[12px] font-bold text-red-500 hover:text-red-700 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors z-20">
+                          Remove
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="text-[#de9e48] text-[13px] font-semibold flex items-center gap-1 group-hover:text-[#c98e41]">
+                          Choose File
+                        </div>
+                        <input 
+                          type="file" 
+                          required
+                          onChange={(e) => handleFileChange(e, doc.id, false)}
+                          accept="image/*,.pdf"
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        />
+                      </>
+                    )}
                   </div>
                 ))}
               </div>
@@ -192,15 +330,29 @@ const AssessmentMapForm = () => {
                   <div className="p-6 md:p-8 flex flex-col items-center justify-center text-center">
                     
                     <div className="w-full max-w-md mx-auto bg-gray-50 border-2 border-dashed border-[#de9e48] rounded-2xl p-8 hover:bg-orange-50/50 transition-colors flex flex-col items-center justify-center text-center group cursor-pointer relative">
-                      <div className="w-16 h-16 bg-[#de9e48]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg className="w-8 h-8 text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                      </div>
-                      <h4 className="text-[#020d1c] font-bold text-[16px] mb-2">Upload GPS Photos</h4>
-                      <p className="text-gray-500 text-[13px] mb-6">Select multiple photos</p>
-                      <span className="bg-[#020d1c] text-white px-6 py-2.5 rounded-lg text-[13.5px] font-bold shadow-sm group-hover:bg-[#de9e48] transition-colors relative z-10">
-                        Browse Files
-                      </span>
-                      <input type="file" required multiple accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
+                      {fileData['gps-photo']?.length > 0 ? (
+                        <div className="flex flex-col items-center">
+                           <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mb-3 text-green-600">
+                             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                           </div>
+                           <h4 className="text-[#020d1c] font-bold text-[16px] mb-1">{fileData['gps-photo'].length} File(s) Selected</h4>
+                           <button type="button" onClick={(e) => removeFile(e, 'gps-photo')} className="mt-4 text-[13px] font-bold text-red-500 hover:text-red-700 relative z-30">
+                             Remove All & Reselect
+                           </button>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="w-16 h-16 bg-[#de9e48]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <svg className="w-8 h-8 text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                          </div>
+                          <h4 className="text-[#020d1c] font-bold text-[16px] mb-2">Upload GPS Photos</h4>
+                          <p className="text-gray-500 text-[13px] mb-6">Select multiple photos</p>
+                          <span className="bg-[#020d1c] text-white px-6 py-2.5 rounded-lg text-[13.5px] font-bold shadow-sm group-hover:bg-[#de9e48] transition-colors relative z-10">
+                            Browse Files
+                          </span>
+                          <input type="file" required multiple onChange={(e) => handleFileChange(e, 'gps-photo', true)} accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
+                        </>
+                      )}
                     </div>
 
                     <button type="button" onClick={() => setShowGpsModal(true)} className="mt-6 text-[#de9e48] hover:text-[#c98e41] font-bold text-[14px] flex items-center gap-2 transition-colors">
@@ -246,10 +398,11 @@ const AssessmentMapForm = () => {
                 
                 <button 
                   type="submit"
-                  className="w-full md:w-[300px] bg-[#d69f4c] hover:bg-[#c98e41] text-white font-bold text-[15px] py-4 rounded-xl transition-all shadow-[0_4px_15px_-3px_rgba(214,159,76,0.4)] flex justify-center items-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full md:w-[300px] bg-[#d69f4c] hover:bg-[#c98e41] text-white font-bold text-[15px] py-4 rounded-xl transition-all shadow-[0_4px_15px_-3px_rgba(214,159,76,0.4)] flex justify-center items-center gap-2 disabled:opacity-70"
                 >
-                  Submit Application 
-                  <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                  {isSubmitting ? 'Submitting...' : 'Submit Application'} 
+                  {!isSubmitting && <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>}
                 </button>
               </div>
 

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { processRazorpayPayment } from '../services/razorpay';
 
 const ChainDeedForm = () => {
   const [step, setStep] = useState(1);
@@ -48,12 +49,53 @@ const ChainDeedForm = () => {
     setStep(2);
   };
 
-  const handlePayment = () => {
-    setStep(3);
-    setTimeout(() => {
-      setStep(4);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 2500);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [submittedApp, setSubmittedApp] = useState(null);
+
+  const handlePayment = async () => {
+    try {
+      setIsProcessing(true);
+      setStep(3); // Processing UI
+      
+      const paymentResponse = await processRazorpayPayment({
+        amountInRupees: totalAmount,
+        bureauName: `Property Legal Service: ${selectedService.label}`,
+        customerName: formData.name,
+        customerMobile: formData.mobile,
+        customerEmail: formData.email
+      });
+
+      // API Call
+      const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const fd = new FormData();
+      fd.append('deedType', formData.deedType);
+      fd.append('name', formData.name);
+      fd.append('mobile', formData.mobile);
+      fd.append('email', formData.email);
+      fd.append('paymentId', paymentResponse.razorpay_payment_id || `PAY_${Date.now()}`);
+      fd.append('amountPaid', totalAmount);
+      fd.append('registryDocument', selectedFile);
+
+      const res = await fetch(`${BACKEND_URL}/chain-deeds/submit`, {
+        method: 'POST',
+        body: fd
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setSubmittedApp(data.data);
+        setStep(4); // Success UI
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error(data.message || 'Failed to submit application to server.');
+      }
+
+    } catch (err) {
+      alert(err.message || 'Payment was cancelled or failed. Please try again.');
+      setStep(2); // Go back to review step
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handlePrint = () => {
@@ -94,11 +136,10 @@ const ChainDeedForm = () => {
   const gstAmount = Math.round(basePrice * 0.18);
   const totalAmount = basePrice + gstAmount;
   
-  // Format dates for invoice
+  // Date for Invoice
   const today = new Date();
   const dateString = today.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
   const timeString = today.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-  const txId = `TXN${Math.floor(Math.random() * 100000000).toString().padStart(8, '0')}`;
 
   // ==========================================
   // RENDER: STEP 1 (APPLICATION FORM)
@@ -620,8 +661,10 @@ const ChainDeedForm = () => {
               <p className="text-[#de9e48] text-[13px] font-medium mt-1">Application Summary</p>
             </div>
             <div className="text-right">
-              <p className="text-gray-300 text-[12px]">Transaction ID</p>
-              <p className="font-bold font-mono text-[15px]">{txId}</p>
+              <p className="text-gray-300 text-[12px]">Application ID</p>
+              <p className="font-bold font-mono text-[15px]">{submittedApp?.applicationId}</p>
+              <p className="text-gray-300 text-[12px] mt-1">Payment ID</p>
+              <p className="font-bold font-mono text-[12px]">{submittedApp?.paymentId}</p>
             </div>
           </div>
 

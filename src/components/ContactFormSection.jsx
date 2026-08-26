@@ -1,4 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+const SUBJECTS = [
+  'General Inquiry',
+  'Loan Assistance',
+  'Property Consultation',
+  'CIBIL Services',
+  'Loan Enquiry',
+  'Application Status',
+  'Document Support',
+  'Interest Rate Query',
+  'Eligibility Check',
+  'Complaint / Feedback',
+  'Other'
+];
+
+const LOAN_SERVICES = [
+  'Home Loan',
+  'Plot + Construction (P+C)',
+  'Construction Loan',
+  'Loan Against Property (LAP)',
+  'LAP Takeover + Top-Up',
+  'MSME / Business Loan',
+  'Mudra Loan',
+  'CC / OD – Working Capital',
+  'Project Finance / Project Loan',
+  'Term Loan',
+  'Business Loan Takeover + Top-Up',
+  'Home Loan Balance Transfer + Top-Up',
+  'Property Purchase Loan',
+  'Commercial Property Loan',
+  'Other'
+];
 
 const ContactFormSection = () => {
   const features = [
@@ -40,6 +72,51 @@ const ContactFormSection = () => {
     }
   ];
 
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    subject: '',
+    serviceInterested: '',
+    message: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError('');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.fullName || !formData.phone || !formData.subject || !formData.message) {
+      setError('Please fill in all required fields (Name, Phone, Subject, Message).');
+      return;
+    }
+    try {
+      setLoading(true);
+      const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const res = await fetch(`${BACKEND_URL}/enquiries/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const result = await res.json();
+      if (result.success) {
+        setSubmitted(true);
+        setFormData({ fullName: '', email: '', phone: '', subject: '', serviceInterested: '', message: '' });
+      } else {
+        setError(result.message || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      setError('Failed to connect to server. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="bg-[#fafafa] py-12 lg:py-16">
       <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8">
@@ -61,59 +138,147 @@ const ContactFormSection = () => {
               Fill out the form below and we'll get back to you.
             </p>
 
-            <form className="flex flex-col gap-4 relative z-10">
-              {/* Full Name */}
-              <div className="flex flex-col gap-1">
-                <label className="text-gray-300 text-[12px]">Full Name</label>
-                <input type="text" placeholder="Enter your full name" className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-800 text-[13.5px] placeholder-gray-400" />
-              </div>
-
-              {/* Email & Phone */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex flex-col gap-1 w-full">
-                  <label className="text-gray-300 text-[12px]">Email Address</label>
-                  <input type="email" placeholder="Enter your email" className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-800 text-[13.5px] placeholder-gray-400" />
-                </div>
-                <div className="flex flex-col gap-1 w-full">
-                  <label className="text-gray-300 text-[12px]">Phone Number</label>
-                  <input type="tel" placeholder="Enter your phone number" className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-800 text-[13.5px] placeholder-gray-400" />
-                </div>
-              </div>
-
-              {/* Subject */}
-              <div className="flex flex-col gap-1">
-                <label className="text-gray-300 text-[12px]">Subject</label>
-                <div className="relative">
-                  <select className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-600 text-[13.5px] appearance-none cursor-pointer">
-                    <option value="" disabled selected>Select a subject</option>
-                    <option value="General Inquiry">General Inquiry</option>
-                    <option value="Loan Assistance">Loan Assistance</option>
-                    <option value="Property Consultation">Property Consultation</option>
-                    <option value="CIBIL Services">CIBIL Services</option>
-                  </select>
-                  <svg className="w-4 h-4 text-gray-400 absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                </div>
-              </div>
-
-              {/* Message */}
-              <div className="flex flex-col gap-1 mb-2">
-                <label className="text-gray-300 text-[12px]">Message</label>
-                <textarea 
-                  placeholder="Type your message here..." 
-                  className="w-full p-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-800 text-[13.5px] placeholder-gray-400 min-h-[90px] resize-none"
-                ></textarea>
-              </div>
-
-              {/* Submit Button */}
-              <div className="flex justify-center mt-1">
-                <button type="button" className="bg-[#de9e48] hover:bg-[#c98e41] text-white font-bold text-[14px] px-8 py-2.5 rounded-md transition-colors flex items-center justify-center gap-2 shadow-sm w-[220px]">
-                  Send Message
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            {submitted ? (
+              /* Success State */
+              <div className="relative z-10 flex flex-col items-center justify-center py-10 text-center">
+                <div className="w-14 h-14 rounded-full bg-green-500/20 border-2 border-green-400/40 flex items-center justify-center mb-4">
+                  <svg className="w-7 h-7 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
+                </div>
+                <h4 className="text-white font-bold text-[18px] mb-2">Message Sent!</h4>
+                <p className="text-gray-400 text-[13px] leading-relaxed mb-6 max-w-[240px]">
+                  Thank you for reaching out. Our team will get back to you within 24–48 business hours.
+                </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="bg-[#de9e48] hover:bg-[#c98e41] text-white font-bold text-[13px] px-6 py-2.5 rounded-md transition-colors"
+                >
+                  Send Another Message
                 </button>
               </div>
-            </form>
+            ) : (
+              <form className="flex flex-col gap-4 relative z-10" onSubmit={handleSubmit}>
+                
+                {/* Error */}
+                {error && (
+                  <div className="bg-red-500/20 border border-red-400/30 text-red-300 text-[12px] font-medium px-3 py-2.5 rounded-md">
+                    {error}
+                  </div>
+                )}
+
+                {/* Full Name */}
+                <div className="flex flex-col gap-1">
+                  <label className="text-gray-300 text-[12px]">Full Name <span className="text-[#de9e48]">*</span></label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    placeholder="Enter your full name"
+                    className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-800 text-[13.5px] placeholder-gray-400"
+                  />
+                </div>
+
+                {/* Email & Phone */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col gap-1 w-full">
+                    <label className="text-gray-300 text-[12px]">Email Address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Enter your email"
+                      className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-800 text-[13.5px] placeholder-gray-400"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1 w-full">
+                    <label className="text-gray-300 text-[12px]">Phone Number <span className="text-[#de9e48]">*</span></label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="Enter your phone number"
+                      className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-800 text-[13.5px] placeholder-gray-400"
+                    />
+                  </div>
+                </div>
+
+                {/* Subject */}
+                <div className="flex flex-col gap-1">
+                  <label className="text-gray-300 text-[12px]">Subject <span className="text-[#de9e48]">*</span></label>
+                  <div className="relative">
+                    <select
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-600 text-[13.5px] appearance-none cursor-pointer"
+                    >
+                      <option value="">Select a subject</option>
+                      {SUBJECTS.map(s => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                    <svg className="w-4 h-4 text-gray-400 absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  </div>
+                </div>
+
+                {/* Service Interested */}
+                <div className="flex flex-col gap-1">
+                  <label className="text-gray-300 text-[12px]">Service Interested In</label>
+                  <div className="relative">
+                    <select
+                      name="serviceInterested"
+                      value={formData.serviceInterested}
+                      onChange={handleChange}
+                      className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-600 text-[13.5px] appearance-none cursor-pointer"
+                    >
+                      <option value="">Select a service (optional)</option>
+                      {LOAN_SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                    <svg className="w-4 h-4 text-gray-400 absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="flex flex-col gap-1 mb-2">
+                  <label className="text-gray-300 text-[12px]">Message <span className="text-[#de9e48]">*</span></label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Type your message here..."
+                    className="w-full p-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-800 text-[13.5px] placeholder-gray-400 min-h-[90px] resize-none"
+                  ></textarea>
+                </div>
+
+                {/* Submit */}
+                <div className="flex justify-center mt-1">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-[#de9e48] hover:bg-[#c98e41] disabled:opacity-70 text-white font-bold text-[14px] px-8 py-2.5 rounded-md transition-colors flex items-center justify-center gap-2 shadow-sm w-[220px]"
+                  >
+                    {loading ? (
+                      <>
+                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
 
           {/* Right Column: Why Choose Us + Image Container */}

@@ -31,6 +31,94 @@ const CAQuoteForm = () => {
     }
   }, [location, services]);
 
+  const [formData, setFormData] = useState({
+    fullName: '',
+    mobile: '',
+    email: '',
+    city: '',
+    businessName: '',
+    businessConstitution: '',
+    message: ''
+  });
+  
+  const [loading, setLoading] = useState(false);
+  const [submittedQuote, setSubmittedQuote] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: '' });
+    }
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
+    if (!formData.mobile.trim()) {
+      newErrors.mobile = 'Mobile number is required';
+    } else if (!/^\d{10}$/.test(formData.mobile)) {
+      newErrors.mobile = 'Enter valid 10-digit mobile number';
+    }
+    if (!formData.city.trim()) newErrors.city = 'City is required';
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setApiError('');
+    if (!validate()) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      
+      const payload = {
+        ...formData,
+        serviceType: selectedService
+      };
+
+      const res = await fetch(`${BACKEND_URL}/ca-quotes/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        setSubmittedQuote(data.data);
+      } else {
+        setApiError(data.message || 'Failed to submit quote request. Please try again.');
+      }
+    } catch (error) {
+      setApiError('Network error. Please check your connection and try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetForm = () => {
+    setSubmittedQuote(null);
+    setFormData({
+      fullName: '',
+      mobile: '',
+      email: '',
+      city: '',
+      businessName: '',
+      businessConstitution: '',
+      message: ''
+    });
+    setErrors({});
+  };
+
   const SectionTitle = ({ title, num }) => (
     <div className="flex items-center gap-2 mb-6">
       <div className="w-1.5 h-5 bg-[#de9e48] rounded-sm"></div>
@@ -40,9 +128,48 @@ const CAQuoteForm = () => {
     </div>
   );
 
+  if (submittedQuote) {
+    return (
+      <div className="bg-white rounded-2xl border-2 border-[#de9e48] shadow-2xl p-8 md:p-12 text-center max-w-3xl mx-auto">
+        <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className="text-3xl font-bold font-serif text-[#020d1c] mb-2">Quote Request Received!</h3>
+        <p className="text-gray-500 mb-6 text-lg">Thank you, {submittedQuote.fullName}. Your request ID is <strong className="text-[#020d1c] font-mono">{submittedQuote.quoteId}</strong>.</p>
+        
+        <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 text-left mb-8 max-w-xl mx-auto space-y-3">
+          <div className="flex justify-between border-b pb-2"><span className="text-gray-500">Service:</span> <span className="font-bold text-[#020d1c] text-right">{submittedQuote.serviceType}</span></div>
+          <div className="flex justify-between border-b pb-2"><span className="text-gray-500">Mobile:</span> <span className="font-bold text-[#020d1c]">{submittedQuote.mobile}</span></div>
+          <div className="flex justify-between border-b pb-2"><span className="text-gray-500">City:</span> <span className="font-bold text-[#020d1c]">{submittedQuote.city}</span></div>
+          {submittedQuote.businessConstitution && (
+             <div className="flex justify-between"><span className="text-gray-500">Entity Type:</span> <span className="font-bold text-[#020d1c]">{submittedQuote.businessConstitution}</span></div>
+          )}
+        </div>
+
+        <p className="text-gray-600 text-sm mb-8 leading-relaxed max-w-xl mx-auto">Our CA advisory team is reviewing your requirements and will contact you shortly with a personalized consultation and quotation.</p>
+
+        <button 
+          onClick={resetForm}
+          className="bg-[#de9e48] hover:bg-[#c98e41] text-white font-bold px-8 py-3 rounded-lg shadow-md transition-colors"
+        >
+          Submit Another Request
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-12">
+    <form onSubmit={handleSubmit} className="space-y-12 relative">
       
+      {apiError && (
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg font-medium text-sm flex items-center gap-2">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          {apiError}
+        </div>
+      )}
+
       {/* 1. Select the CA Service */}
       <div>
         <SectionTitle num="1" title="Select the CA Service You Need" />
@@ -83,37 +210,81 @@ const CAQuoteForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-bold text-[#020d1c]">Full Name <span className="text-red-500">*</span></label>
-            <input type="text" placeholder="Enter your full name" className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400" />
+            <input 
+              type="text" 
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              placeholder="Enter your full name" 
+              className={`w-full h-11 px-4 border rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400 transition-colors ${errors.fullName ? 'border-red-400 bg-red-50/30' : 'border-gray-200 bg-white'}`}
+            />
+            {errors.fullName && <span className="text-red-500 text-xs font-medium">{errors.fullName}</span>}
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-bold text-[#020d1c]">Mobile Number <span className="text-red-500">*</span></label>
-            <div className="flex h-11 border border-gray-200 rounded-lg focus-within:border-[#de9e48] overflow-hidden">
-               <select className="bg-gray-50 border-r border-gray-200 px-3 text-[14px] text-gray-700 outline-none h-full font-medium">
-                  <option>+91</option>
-               </select>
-               <input type="tel" placeholder="Enter mobile number" className="flex-1 px-4 outline-none text-[14px] text-gray-700 placeholder-gray-400" />
+            <div className={`flex h-11 border rounded-lg focus-within:border-[#de9e48] overflow-hidden transition-colors ${errors.mobile ? 'border-red-400 bg-red-50/30' : 'border-gray-200 bg-white'}`}>
+               <div className="bg-gray-50 border-r border-gray-200 px-3 flex items-center justify-center text-[14px] text-gray-700 font-medium">
+                  +91
+               </div>
+               <input 
+                 type="tel" 
+                 name="mobile"
+                 maxLength="10"
+                 value={formData.mobile}
+                 onChange={handleChange}
+                 placeholder="Enter mobile number" 
+                 className="flex-1 px-4 outline-none text-[14px] text-gray-700 placeholder-gray-400 bg-transparent" 
+               />
             </div>
+            {errors.mobile && <span className="text-red-500 text-xs font-medium">{errors.mobile}</span>}
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-bold text-[#020d1c]">Email Address</label>
-            <input type="email" placeholder="Enter email address" className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400" />
+            <input 
+              type="email" 
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter email address" 
+              className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400 bg-white" 
+            />
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-bold text-[#020d1c]">City <span className="text-red-500">*</span></label>
-            <input type="text" placeholder="Enter your city" className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400" />
+            <input 
+              type="text" 
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              placeholder="Enter your city" 
+              className={`w-full h-11 px-4 border rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400 transition-colors ${errors.city ? 'border-red-400 bg-red-50/30' : 'border-gray-200 bg-white'}`}
+            />
+            {errors.city && <span className="text-red-500 text-xs font-medium">{errors.city}</span>}
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-bold text-[#020d1c]">Company / Business Name (Optional)</label>
-            <input type="text" placeholder="Enter business name" className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400" />
+            <input 
+              type="text" 
+              name="businessName"
+              value={formData.businessName}
+              onChange={handleChange}
+              placeholder="Enter business name" 
+              className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400 bg-white" 
+            />
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-bold text-[#020d1c]">Business Constitution</label>
-            <select className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 bg-white">
-               <option value="" disabled selected>Select Option</option>
-               <option>Individual / Proprietorship</option>
-               <option>Partnership Firm</option>
-               <option>Private Limited / LLP</option>
-               <option>Not Applicable</option>
+            <select 
+              name="businessConstitution"
+              value={formData.businessConstitution}
+              onChange={handleChange}
+              className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 bg-white cursor-pointer"
+            >
+               <option value="" disabled>Select Option</option>
+               <option value="Individual / Proprietorship">Individual / Proprietorship</option>
+               <option value="Partnership Firm">Partnership Firm</option>
+               <option value="Private Limited / LLP">Private Limited / LLP</option>
+               <option value="Not Applicable">Not Applicable</option>
             </select>
           </div>
         </div>
@@ -126,23 +297,42 @@ const CAQuoteForm = () => {
         <div className="flex flex-col gap-1.5 mb-8">
           <label className="text-[13px] font-bold text-[#020d1c]">Message or Specific Requirement (Optional)</label>
           <textarea 
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
             placeholder="Briefly describe what you need help with..." 
-            className="w-full p-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400 resize-none min-h-[120px]"
+            className="w-full p-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400 resize-none min-h-[120px] bg-white"
           ></textarea>
         </div>
 
         {/* Submit Button */}
         <div className="flex justify-center xl:justify-start">
-           <button className="bg-[#de9e48] hover:bg-[#c98e41] text-white font-bold text-[14.5px] px-8 py-3.5 rounded-md transition-colors w-full sm:w-[300px] flex items-center justify-center gap-2 shadow-md">
-             Request a Quote
-             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-             </svg>
+           <button 
+             type="submit"
+             disabled={loading}
+             className="bg-[#de9e48] hover:bg-[#c98e41] disabled:opacity-75 disabled:cursor-not-allowed text-white font-bold text-[14.5px] px-8 py-3.5 rounded-md transition-colors w-full sm:w-[300px] flex items-center justify-center gap-2 shadow-md relative overflow-hidden group"
+           >
+             {loading ? (
+               <>
+                  <svg className="w-5 h-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                  </svg>
+                  Processing...
+               </>
+             ) : (
+               <>
+                 Request a Quote
+                 <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                 </svg>
+               </>
+             )}
            </button>
         </div>
       </div>
 
-    </div>
+    </form>
   );
 };
 

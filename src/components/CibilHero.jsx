@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { BUREAU_CONFIGS, calculatePricing, fetchCreditReportFromSurepass } from '../services/surepassApi';
-import { processRazorpayPayment } from '../services/razorpay';
+import { BUREAU_CONFIGS, calculatePricing } from '../services/surepassApi';
 
 const CibilHero = ({
   selectedBureauProp,
@@ -194,35 +194,66 @@ const CibilHero = ({
 
       setIsProcessing(false);
 
+      // Helper function to save to backend
+      const saveReportToBackend = async (payload) => {
+        try {
+          const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+          await fetch(`${backendUrl}/cibil-reports/save`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } catch (err) {
+          console.error("Failed to save report to backend:", err);
+        }
+      };
+
       if (response.success && response.data?.credit_report_link) {
         // Success case with PDF link
-        setApiResult({
+        const successData = {
           status: 'success',
           score: response.data.credit_score || '750',
           client_id: response.data.client_id,
           name: response.data.name || formData.name,
           pan: response.data.pan || formData.pan,
           mobile: response.data.mobile || formData.mobile,
+          gender: formData.gender,
           pdfLink: response.data.credit_report_link,
           bureau: bureau.name,
           paymentId: paymentResult.paymentId,
           date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
-        });
+        };
+        setApiResult(successData);
+        saveReportToBackend(successData);
       } else if (response.statusCode === 422 || response.httpStatus === 422) {
         // Consumer not found in bureau
-        setApiResult({
+        const notFoundData = {
           status: 'notFound',
           message: response.message || 'Consumer Not Found In Bureau database.',
           client_id: response.data?.client_id || 'REQ_' + Math.floor(100000 + Math.random() * 900000),
           name: formData.name,
           pan: formData.pan,
           mobile: formData.mobile,
+          gender: formData.gender,
           bureau: bureau.name,
           paymentId: paymentResult.paymentId,
           pdfLink: response.data?.credit_report_link || null
-        });
+        };
+        setApiResult(notFoundData);
+        saveReportToBackend(notFoundData);
       } else {
-        setApiError(response.message || 'Failed to fetch report from bureau. Please contact support.');
+        const errorMsg = response.message || 'Failed to fetch report from bureau. Please contact support.';
+        setApiError(errorMsg);
+        saveReportToBackend({
+          status: 'failed',
+          message: errorMsg,
+          name: formData.name,
+          pan: formData.pan,
+          mobile: formData.mobile,
+          gender: formData.gender,
+          bureau: bureau.name,
+          paymentId: paymentResult.paymentId
+        });
       }
 
     } catch (err) {

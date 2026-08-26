@@ -66,41 +66,7 @@ const ApplyHero = () => {
           </p>
         </div>
 
-        {/* Horizontal Steps */}
-        <div className="hidden md:flex items-center justify-between relative max-w-[800px]">
-           {/* Dashed Line Background */}
-           <div className="absolute top-6 left-[60px] right-[60px] h-[1px] border-t-2 border-dashed border-gray-200 z-0"></div>
-           
-           {/* Orange Dashed Line between step 1 and 2 (simulation) */}
-           <div className="absolute top-6 left-[60px] w-[20%] h-[1px] border-t-2 border-dashed border-[#de9e48] z-0 opacity-50"></div>
-           
-           {steps.map((step, index) => (
-              <div key={index} className="flex flex-col items-center relative z-10 bg-white px-2">
-                 {/* Circle */}
-                 <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center mb-3 transition-colors ${
-                    step.active ? 'bg-[#de9e48] border-[#de9e48] text-white' : 'bg-white border-gray-300 text-gray-400'
-                 }`}>
-                   {step.icon}
-                 </div>
-                 {/* Text */}
-                 <div className="flex flex-col items-center">
-                   <span className={`text-[12px] font-bold ${step.active ? 'text-[#de9e48]' : 'text-[#020d1c]'}`}>Step {step.num}</span>
-                   <span className="text-[12px] text-[#020d1c]">{step.label}</span>
-                 </div>
-              </div>
-           ))}
-        </div>
-        
-        {/* Mobile Steps Display */}
-        <div className="md:hidden flex items-center justify-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#de9e48] text-white flex items-center justify-center font-bold">
-            1
-          </div>
-          <div>
-            <p className="text-[12px] text-[#de9e48] font-bold">Step 1 of 5</p>
-            <p className="text-[14px] text-[#020d1c] font-bold">Select Service</p>
-          </div>
-        </div>
+
         
       </div>
     </section>

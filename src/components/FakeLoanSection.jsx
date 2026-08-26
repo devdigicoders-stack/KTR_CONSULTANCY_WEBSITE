@@ -109,7 +109,7 @@ const FakeLoanSection = () => {
     setIsProcessing(true);
 
     try {
-      // Trigger Razorpay payment for ₹1,000 + 18% GST (₹1,180) Consultation & Assessment Fee
+      // Trigger Razorpay payment for ₹1,000 + 18% GST (₹1,180)
       const paymentResponse = await processRazorpayPayment({
         amountInRupees: 1180,
         bureauName: 'Fake Loan Assessment & Consultation (₹1,000 + GST)',
@@ -118,17 +118,33 @@ const FakeLoanSection = () => {
         customerPan: formData.pan
       });
 
-      const caseId = `KTR-FLR-${Math.floor(100000 + Math.random() * 900000)}`;
+      // After successful payment, save case to backend
+      const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const fd = new FormData();
+      fd.append('name', formData.name);
+      fd.append('mobile', formData.mobile);
+      fd.append('pan', formData.pan);
+      fd.append('lenderName', formData.lenderName || '');
+      fd.append('disputedAmount', formData.disputedAmount || '');
+      fd.append('accountNumber', formData.accountNumber || '');
+      fd.append('notes', formData.notes || '');
+      fd.append('paymentId', paymentResponse.razorpay_payment_id || ('PAY_' + Date.now()));
+      if (panFile) fd.append('panFile', panFile);
+
+      const res = await fetch(`${BACKEND_URL}/cibil-cases/submit`, {
+        method: 'POST',
+        body: fd
+      });
+      const result = await res.json();
+
+      const savedCase = result.success ? result.data : null;
 
       setSubmittedCase({
-        caseId,
-        paymentId: paymentResponse.razorpay_payment_id || 'PAY_' + Date.now(),
+        caseId: savedCase?.caseId || `KTR-FLR-${Date.now().toString().slice(-6)}`,
+        paymentId: paymentResponse.razorpay_payment_id || ('PAY_' + Date.now()),
         date: new Date().toLocaleDateString('en-IN', {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
+          day: '2-digit', month: 'short', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
         }),
         ...formData,
         panFileName
