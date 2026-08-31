@@ -1,7 +1,7 @@
 
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { BUREAU_CONFIGS, calculatePricing } from '../services/surepassApi';
+import { BUREAU_CONFIGS, calculatePricing, fetchCreditReportFromSurepass } from '../services/surepassApi';
 import { processRazorpayPayment } from '../services/razorpay';
 
 const CibilHero = ({
