@@ -41,7 +41,7 @@ export async function processRazorpayPayment({
       currency: 'INR',
       name: 'KTR Consultants',
       description: `${bureauName} Credit Report Fee`,
-      image: '/favicon.svg',
+      image: '/main.png',
       prefill: {
         name: customerName,
         contact: customerMobile
