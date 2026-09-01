@@ -59,7 +59,9 @@ function App() {
           <Route path="/apply-online" element={<ApplyOnline />} />
           <Route path="/non-approved-loans" element={<NonApprovedLoans />} />
           <Route path="/msme-project-finance" element={<MSMELoans />} />
+          <Route path="/msme-mudra-finance" element={<MSMELoans />} />
           <Route path="/loans" element={<Services />} />
+          <Route path="/property-loans" element={<Services />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
