@@ -8,11 +8,12 @@ const Footer = () => {
   ];
 
   const servicesLinks = [
-    { name: 'Loans', path: '/loans' },
-    { name: 'Business Finance', path: '/business-finance' },
-    { name: 'CIBIL Services', path: '/cibil-services' },
-    { name: 'Fake Loan Removal', path: '/fake-loan-removal' },
-    { name: 'Property Services', path: '/property-services' }
+    { name: 'Loans & MSME Finance', path: '/loans' },
+    { name: 'Business & CA Services', path: '/business-finance' },
+    { name: 'CIBIL Enquiry & Score', path: '/cibil-services' },
+    { name: 'Property & TDS Services', path: '/property-services' },
+    { name: 'Insurance (Life/Health/Auto)', path: '/insurance-services' },
+    { name: 'Investment & Retirement', path: '/investment-retirement' }
   ];
 
   const usefulLinks = [

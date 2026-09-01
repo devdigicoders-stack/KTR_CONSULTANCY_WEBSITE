@@ -15,6 +15,7 @@ import PropertyServices from './pages/PropertyServices';
 import PropertyLegalServices from './pages/PropertyLegalServices';
 import PropertyAssessmentMap from './pages/PropertyAssessmentMap';
 import AssessmentMapForm from './pages/AssessmentMapForm';
+import PropertyValuationTDS from './pages/PropertyValuationTDS';
 import CAServices from './pages/CAServices';
 import CAQuote from './pages/CAQuote';
 import ApplyOnline from './pages/ApplyOnline';
@@ -25,6 +26,8 @@ import Contact from './pages/Contact';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import FakeLoanRemoval from './pages/FakeLoanRemoval';
+import InsuranceServices from './pages/InsuranceServices';
+import InvestmentRetirement from './pages/InvestmentRetirement';
 
 function App() {
   return (
@@ -40,12 +43,17 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/business-finance" element={<BusinessFinance />} />
           <Route path="/cibil-services" element={<CibilServices />} />
+          <Route path="/cibil-enquiry" element={<CibilServices />} />
           <Route path="/fake-loan-removal" element={<FakeLoanRemoval />} />
           <Route path="/cibil-fake-loan-removal" element={<FakeLoanRemoval />} />
           <Route path="/property-services" element={<PropertyServices />} />
           <Route path="/property-legal-services" element={<PropertyLegalServices />} />
           <Route path="/property-assessment-map" element={<PropertyAssessmentMap />} />
           <Route path="/property-assessment-map/apply" element={<AssessmentMapForm />} />
+          <Route path="/property-valuation-tds" element={<PropertyValuationTDS />} />
+          <Route path="/insurance-services" element={<InsuranceServices />} />
+          <Route path="/insurance" element={<InsuranceServices />} />
+          <Route path="/investment-retirement" element={<InvestmentRetirement />} />
           <Route path="/ca-services" element={<CAServices />} />
           <Route path="/ca-quote" element={<CAQuote />} />
           <Route path="/apply-online" element={<ApplyOnline />} />

@@ -28,7 +28,11 @@ const Header = () => {
     },
     { 
       name: 'CIBIL Services', 
-      path: '/cibil-services'
+      path: '/cibil-services',
+      dropdown: [
+        { name: 'CIBIL Enquiry & Score Check', path: '/cibil-services' },
+        { name: 'Fake Loan Removal Services', path: '/fake-loan-removal' }
+      ]
     },
     { 
       name: 'Property Services', 
@@ -36,7 +40,16 @@ const Header = () => {
       dropdown: [
         { name: 'General Property Services', path: '/property-services' },
         { name: 'Property Legal Services', path: '/property-legal-services' },
-        { name: 'Assessment & Map Services', path: '/property-assessment-map' }
+        { name: 'Assessment & Map Services', path: '/property-assessment-map' },
+        { name: 'Valuation & TDS Services', path: '/property-valuation-tds' }
+      ]
+    },
+    { 
+      name: 'Insurance', 
+      path: '/insurance-services',
+      dropdown: [
+        { name: 'Life, Health & Vehicle Insurance', path: '/insurance-services' },
+        { name: 'Investment & Retirement Solutions', path: '/investment-retirement' }
       ]
     },
     { 
@@ -108,7 +121,7 @@ const Header = () => {
         </div>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden xl:flex items-center gap-4 xl:gap-5 h-full flex-1 justify-center">
+        <nav className="hidden xl:flex items-center gap-3 xl:gap-3.5 2xl:gap-5 h-full flex-1 justify-center">
           {navLinks.map((link, index) => {
             const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
             
@@ -120,7 +133,7 @@ const Header = () => {
                     isActive
                       ? 'text-[#de9e48]' 
                       : 'text-gray-800 hover:text-[#de9e48]'
-                  } font-semibold text-[13.5px] xl:text-[14.5px] flex items-center transition-colors duration-200 h-full whitespace-nowrap`}
+                  } font-semibold text-[13px] xl:text-[13.5px] 2xl:text-[14.5px] flex items-center transition-colors duration-200 h-full whitespace-nowrap`}
                 >
                   {link.name}
                   <svg className="w-3.5 h-3.5 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -131,7 +144,7 @@ const Header = () => {
                 </Link>
 
                 {/* Dropdown Menu */}
-                <div className="absolute top-[80%] left-0 w-56 bg-white border border-gray-100 shadow-xl rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+                <div className="absolute top-[80%] left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
                   {link.dropdown.map((dropItem, idx) => (
                     <Link 
                       key={idx}

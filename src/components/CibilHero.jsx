@@ -278,13 +278,6 @@ const CibilHero = ({
       <div className="absolute left-0 top-0 w-full h-[350px] bg-gradient-to-b from-[#de9e48]/10 via-[#de9e48]/5 to-transparent pointer-events-none z-0"></div>
 
       <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12 relative z-10">
-        
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-gray-500 text-[12.5px] font-medium mb-4">
-          <Link to="/" className="hover:text-[#de9e48] transition-colors">Home</Link>
-          <span className="text-gray-400">›</span>
-          <span className="text-[#020d1c] font-semibold">CIBIL & Credit Bureau Services</span>
-        </div>
 
         {/* Top USP Banner Alert */}
         <div className="mb-8 bg-gradient-to-r from-[#020d1c] via-[#0b1d38] to-[#020d1c] text-white p-4 sm:p-5 rounded-2xl border border-[#de9e48]/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">

@@ -85,11 +85,22 @@ const services = [
   {
     title: 'Property & Legal Services',
     desc: 'End-to-end property solutions',
-    link: '/services/property-legal-services',
+    link: '/property-services',
     icon: (
       <svg className="w-9 h-9 md:w-11 md:h-11 mb-3 text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} className="text-[#de9e48]" d="M11 12h2" />
+      </svg>
+    )
+  },
+  {
+    title: 'Insurance & Investment',
+    desc: 'Life, Health, Auto & ULIPs',
+    link: '/insurance-services',
+    icon: (
+      <svg className="w-9 h-9 md:w-11 md:h-11 mb-3 text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} className="text-[#de9e48]" d="M12 7v5l3 3" />
       </svg>
     )
   }

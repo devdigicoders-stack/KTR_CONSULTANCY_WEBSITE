@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import CibilServiceNav from '../components/CibilServiceNav';
 import CibilHero from '../components/CibilHero';
 import CibilPricingTable from '../components/CibilPricingTable';
 import FakeLoanSection from '../components/FakeLoanSection';
@@ -11,6 +12,13 @@ const CibilServices = () => {
   const [selectedBureau, setSelectedBureau] = useState('cibil');
   const [highlightForm, setHighlightForm] = useState(false);
   const formRef = useRef(null);
+
+  useEffect(() => {
+    // Only scroll to top if not an anchor link
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   const handleSelectBureauAndScroll = (bureauId) => {
     setSelectedBureau(bureauId);
@@ -35,6 +43,7 @@ const CibilServices = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <CibilServiceNav activeService="enquiry" />
       <CibilHero 
         selectedBureauProp={selectedBureau} 
         setSelectedBureauProp={setSelectedBureau}
