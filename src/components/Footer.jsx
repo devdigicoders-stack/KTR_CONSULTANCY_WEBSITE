@@ -18,6 +18,7 @@ const Footer = () => {
 
   const usefulLinks = [
     { name: 'Apply Online', path: '/apply-online' },
+    { name: 'Loan EMI Calculator', path: '/emi-calculator' },
     { name: 'Privacy Policy', path: '/privacy-policy' },
     { name: 'Terms & Conditions', path: '/terms' }
   ];

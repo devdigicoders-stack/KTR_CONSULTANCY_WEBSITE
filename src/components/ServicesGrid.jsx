@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import QuickLoanApplyModal from './QuickLoanApplyModal';
 
 const loanServices = [
   {
@@ -74,59 +75,80 @@ const loanServices = [
 ];
 
 const ServicesGrid = () => {
+  const [selectedService, setSelectedService] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleApplyClick = (service) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
   return (
-    <section className="bg-[#fcfcfd] py-16 md:py-20 font-sans">
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
-        
-        {/* Header */}
-        <div className="flex items-center justify-center gap-4 mb-12">
-          <div className="h-[2px] bg-[#de9e48]/40 w-10 md:w-16"></div>
-          <h2 className="text-[#020d1c] font-bold text-[16px] md:text-[18px] tracking-[0.1em] uppercase">
-            OUR LOAN SERVICES
-          </h2>
-          <div className="h-[2px] bg-[#de9e48]/40 w-10 md:w-16"></div>
-        </div>
+    <>
+      <section className="bg-[#fcfcfd] py-16 md:py-20 font-sans">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
+          
+          {/* Header */}
+          <div className="flex items-center justify-center gap-4 mb-12">
+            <div className="h-[2px] bg-[#de9e48]/40 w-10 md:w-16"></div>
+            <h2 className="text-[#020d1c] font-bold text-[16px] md:text-[18px] tracking-[0.1em] uppercase">
+              OUR LOAN SERVICES
+            </h2>
+            <div className="h-[2px] bg-[#de9e48]/40 w-10 md:w-16"></div>
+          </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-5">
-          {loanServices.map((service, index) => (
-            <div 
-              key={index} 
-              className="bg-white border border-gray-100 rounded-2xl p-5 md:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-200 transition-all duration-300"
-            >
-              <div className="flex gap-4">
-                
-                {/* Left Icon */}
-                <div className="w-[52px] h-[52px] rounded-full bg-[#fdf8f2] flex items-center justify-center flex-shrink-0">
-                  {service.icon}
+          {/* Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-5">
+            {loanServices.map((service, index) => (
+              <div 
+                key={index} 
+                className="bg-white border border-gray-100 rounded-2xl p-5 md:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-200 transition-all duration-300 flex flex-col justify-between"
+              >
+                <div className="flex gap-4">
+                  
+                  {/* Left Icon */}
+                  <div className="w-[52px] h-[52px] rounded-full bg-[#fdf8f2] flex items-center justify-center flex-shrink-0">
+                    {service.icon}
+                  </div>
+
+                  {/* Right Content */}
+                  <div className="flex flex-col pt-1.5 flex-1 min-w-0">
+                    <h3 className="text-[#020d1c] font-bold text-[14px] md:text-[15px] leading-tight mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-500 text-[12px] md:text-[13px] leading-relaxed font-medium mb-4 pr-2">
+                      {service.desc}
+                    </p>
+                    <button 
+                      type="button"
+                      onClick={() => handleApplyClick(service)}
+                      className="inline-flex items-center text-[#de9e48] font-bold text-[13px] hover:text-[#c98e41] transition-colors mt-auto group w-max cursor-pointer text-left active:scale-95"
+                    >
+                      <span>Apply Now</span>
+                      <svg className="w-3.5 h-3.5 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </button>
+                  </div>
+
                 </div>
-
-                {/* Right Content */}
-                <div className="flex flex-col pt-1.5">
-                  <h3 className="text-[#020d1c] font-bold text-[14px] md:text-[15px] leading-tight mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-500 text-[12px] md:text-[13px] leading-relaxed font-medium mb-4 pr-2">
-                    {service.desc}
-                  </p>
-                  <Link 
-                    to="/apply-online" 
-                    className="inline-flex items-center text-[#de9e48] font-bold text-[13px] hover:text-[#c98e41] transition-colors mt-auto group w-max"
-                  >
-                    Apply Now 
-                    <svg className="w-3.5 h-3.5 ml-1.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </Link>
-                </div>
-
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-      </div>
-    </section>
+        </div>
+      </section>
+
+      {/* Quick Loan Application Modal */}
+      <QuickLoanApplyModal 
+        isOpen={isModalOpen} 
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedService(null);
+        }} 
+        service={selectedService}
+      />
+    </>
   );
 };
 

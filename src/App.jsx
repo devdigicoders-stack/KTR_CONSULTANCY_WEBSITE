@@ -28,6 +28,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import FakeLoanRemoval from './pages/FakeLoanRemoval';
 import InsuranceServices from './pages/InsuranceServices';
 import InvestmentRetirement from './pages/InvestmentRetirement';
+import EMICalculatorPage from './pages/EMICalculatorPage';
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path="/msme-mudra-finance" element={<MSMELoans />} />
           <Route path="/loans" element={<Services />} />
           <Route path="/property-loans" element={<Services />} />
+          <Route path="/emi-calculator" element={<EMICalculatorPage />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
