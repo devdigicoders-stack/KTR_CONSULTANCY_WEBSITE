@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import CibilServiceNav from '../components/CibilServiceNav';
 import CibilHero from '../components/CibilHero';
 import CibilPricingTable from '../components/CibilPricingTable';
-import FakeLoanSection from '../components/FakeLoanSection';
 import CibilInfo from '../components/CibilInfo';
 import CibilBenefits from '../components/CibilBenefits';
 import CibilHowItWorks from '../components/CibilHowItWorks';
@@ -43,7 +41,6 @@ const CibilServices = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <CibilServiceNav activeService="enquiry" />
       <CibilHero 
         selectedBureauProp={selectedBureau} 
         setSelectedBureauProp={setSelectedBureau}
@@ -55,9 +52,6 @@ const CibilServices = () => {
         selectedBureau={selectedBureau}
         onSelectBureau={handleSelectBureauAndScroll}
       />
-      <div id="fake-loan-removal">
-        <FakeLoanSection />
-      </div>
       <CibilInfo />
       <CibilBenefits onSelectBureau={handleSelectBureauAndScroll} />
       <CibilHowItWorks />
