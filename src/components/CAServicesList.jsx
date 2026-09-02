@@ -1,8 +1,30 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import CADocumentsModal from './CADocumentsModal';
+import CAApplyModal from './CAApplyModal';
 
 const CAServicesList = () => {
+  const [selectedServiceForDocs, setSelectedServiceForDocs] = useState(null);
+  const [selectedServiceForApply, setSelectedServiceForApply] = useState(null);
+  const [isDocsModalOpen, setIsDocsModalOpen] = useState(false);
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+
+  const handleOpenDocsModal = (service) => {
+    setSelectedServiceForDocs(service);
+    setIsDocsModalOpen(true);
+  };
+
+  const handleOpenApplyModal = (service) => {
+    setSelectedServiceForApply(service);
+    setIsApplyModalOpen(true);
+  };
+
+  const handleApplyFromDocs = (service) => {
+    setIsDocsModalOpen(false);
+    setSelectedServiceForApply(service);
+    setIsApplyModalOpen(true);
+  };
+
   const services = [
     {
       id: "01",
@@ -117,92 +139,137 @@ const CAServicesList = () => {
   ];
 
   return (
-    <section className="bg-[#fafafa] py-16 font-sans">
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
-        
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h2 className="text-[#020d1c] text-3xl md:text-[34px] font-bold mb-3">
-            Our CA Services (11)
-          </h2>
-          <p className="text-gray-600 text-[14.5px] md:text-[15px] font-medium max-w-2xl mx-auto">
-            Comprehensive solutions for all your tax, compliance and financial documentation needs.
-          </p>
-          <div className="w-16 h-1 bg-[#de9e48] rounded-full mx-auto mt-4 relative">
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full border border-[#de9e48]"></div>
+    <>
+      <section className="bg-[#fafafa] py-16 font-sans">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
+          
+          {/* Header */}
+          <div className="text-center mb-10">
+            <h2 className="text-[#020d1c] text-3xl md:text-[34px] font-bold mb-3">
+              Our CA Services (11)
+            </h2>
+            <p className="text-gray-600 text-[14.5px] md:text-[15px] font-medium max-w-2xl mx-auto">
+              Comprehensive solutions for all your tax, compliance and financial documentation needs.
+            </p>
+            <div className="w-16 h-1 bg-[#de9e48] rounded-full mx-auto mt-4 relative">
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full border border-[#de9e48]"></div>
+            </div>
           </div>
-        </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-          {services.map((service, index) => (
-            <div 
-              key={index} 
-              className="bg-white rounded-xl p-6 border border-gray-100 shadow-[0_2px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.08)] transition-all duration-300 relative flex flex-col h-full group"
-            >
-              {/* Number */}
-              <div className="absolute top-5 left-5 text-[#de9e48] font-bold text-[13px]">
-                {service.id}
-              </div>
-              
-              {/* Icon Circle */}
-              <div className="w-16 h-16 mx-auto rounded-full bg-orange-50/70 group-hover:bg-orange-100/70 transition-colors flex items-center justify-center mb-5 mt-2">
-                {service.icon}
-              </div>
-              
-              {/* Title */}
-              <h3 className="text-[#020d1c] font-bold text-[15.5px] text-center leading-snug mb-3 min-h-[46px] flex items-center justify-center">
-                {service.title}
-              </h3>
-              
-              {/* Description */}
-              <p className="text-gray-600 text-[13px] text-center leading-relaxed mb-6 flex-grow">
-                {service.description}
-              </p>
-              
-              {/* Button */}
-              <Link 
-                to={`/ca-quote?service=${encodeURIComponent(service.title)}`}
-                className="w-full mt-auto py-2.5 rounded border border-[#de9e48] text-[#de9e48] font-bold text-[13px] hover:bg-[#de9e48] hover:text-[#020d1c] transition-colors flex items-center justify-center gap-2"
+          {/* Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            {services.map((service, index) => (
+              <div 
+                key={index} 
+                className="bg-white rounded-xl p-5 sm:p-6 border border-gray-100 shadow-[0_2px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.08)] transition-all duration-300 relative flex flex-col h-full group"
               >
-                Request a Quote
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
-            </div>
-          ))}
-
-          {/* Charges Banner */}
-          <div className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 bg-[#fdfaf6] border border-[#f5e3cd] rounded-xl px-6 md:px-8 xl:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-6 h-full shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
-            
-            <div className="flex items-start md:items-center gap-4 xl:gap-5 w-full md:w-auto">
-              <div className="flex-shrink-0">
-                <svg className="w-10 h-10 xl:w-12 xl:h-12 text-[#d68529]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9.5" strokeWidth={1.8} />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M12 16v-4m0-4h.01" />
-                </svg>
-              </div>
-              <div className="flex flex-col justify-center">
-                <h4 className="text-[#cc7b18] font-bold text-[17px] xl:text-[19px] mb-1.5 leading-snug">
-                  Charges: To be confirmed after discussion.
-                </h4>
-                <p className="text-[#4b5668] font-semibold text-[13px] xl:text-[14px] leading-relaxed max-w-[550px]">
-                  The scope of work, documents, timeline and professional fees will be confirmed after reviewing your case and documents.
+                {/* Number */}
+                <div className="absolute top-5 left-5 text-[#de9e48] font-bold text-[13px]">
+                  {service.id}
+                </div>
+                
+                {/* Icon Circle */}
+                <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full bg-orange-50/70 group-hover:bg-orange-100/70 transition-colors flex items-center justify-center mb-4 sm:mb-5 mt-2">
+                  {service.icon}
+                </div>
+                
+                {/* Title */}
+                <h3 className="text-[#020d1c] font-bold text-[14.5px] sm:text-[15.5px] text-center leading-snug mb-2.5 min-h-[44px] flex items-center justify-center">
+                  {service.title}
+                </h3>
+                
+                {/* Description */}
+                <p className="text-gray-600 text-[12.5px] sm:text-[13px] text-center leading-relaxed mb-5 flex-grow">
+                  {service.description}
                 </p>
+                
+                {/* Action Buttons: Documents Required + Apply Now */}
+                <div className="w-full mt-auto space-y-2 pt-2 border-t border-gray-100">
+                  
+                  {/* Button 1: Documents Required */}
+                  <button 
+                    type="button"
+                    onClick={() => handleOpenDocsModal(service)}
+                    className="w-full py-2 px-3 rounded-lg border border-gray-200 bg-gray-50/90 hover:bg-orange-50/70 hover:border-[#de9e48]/50 text-gray-700 hover:text-[#de9e48] font-bold text-[12px] sm:text-[12.5px] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs active:scale-98"
+                    title="View required documents list"
+                  >
+                    <span>📄 Documents Required</span>
+                  </button>
+
+                  {/* Button 2: Request Quote */}
+                  <button 
+                    type="button"
+                    onClick={() => handleOpenApplyModal(service)}
+                    className="w-full py-2.5 px-3 rounded-lg bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-black text-[12.5px] sm:text-[13px] transition-all shadow-xs hover:shadow flex items-center justify-center gap-1.5 cursor-pointer active:scale-98"
+                  >
+                    <span>Request Quote</span>
+                    <svg className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
+
+                </div>
+
               </div>
-            </div>
-            
-            <div className="flex-shrink-0 flex justify-center w-full md:w-auto">
-              <img src="/calculator.png" alt="Calculator" className="w-[180px] xl:w-[220px] h-auto object-contain" />
+            ))}
+
+            {/* Charges Banner */}
+            <div className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 bg-[#fdfaf6] border border-[#f5e3cd] rounded-xl px-6 md:px-8 xl:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-6 h-full shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+              
+              <div className="flex items-start md:items-center gap-4 xl:gap-5 w-full md:w-auto">
+                <div className="flex-shrink-0">
+                  <svg className="w-10 h-10 xl:w-12 xl:h-12 text-[#d68529]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9.5" strokeWidth={1.8} />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M12 16v-4m0-4h.01" />
+                  </svg>
+                </div>
+                <div className="flex flex-col justify-center">
+                  <h4 className="text-[#cc7b18] font-bold text-[17px] xl:text-[19px] mb-1.5 leading-snug">
+                    Charges: To be confirmed after discussion.
+                  </h4>
+                  <p className="text-[#4b5668] font-semibold text-[13px] xl:text-[14px] leading-relaxed max-w-[550px]">
+                    The scope of work, documents, timeline and professional fees will be confirmed after reviewing your case and documents.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex-shrink-0 flex justify-center w-full md:w-auto">
+                <img src="/calculator.png" alt="Calculator" className="w-[180px] xl:w-[220px] h-auto object-contain" />
+              </div>
+
             </div>
 
           </div>
 
         </div>
+      </section>
 
-      </div>
-    </section>
+      {/* Documents Required Checklist Modal */}
+      <CADocumentsModal
+        isOpen={isDocsModalOpen}
+        onClose={() => {
+          setIsDocsModalOpen(false);
+          setSelectedServiceForDocs(null);
+        }}
+        service={selectedServiceForDocs}
+        onApplyClick={handleApplyFromDocs}
+      />
+
+      {/* Direct Apply Now Modal */}
+      <CAApplyModal
+        isOpen={isApplyModalOpen}
+        onClose={() => {
+          setIsApplyModalOpen(false);
+          setSelectedServiceForApply(null);
+        }}
+        service={selectedServiceForApply}
+        onViewDocsClick={(svc) => {
+          setIsApplyModalOpen(false);
+          setSelectedServiceForDocs(svc);
+          setIsDocsModalOpen(true);
+        }}
+      />
+    </>
   );
 };
 

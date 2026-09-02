@@ -41,6 +41,7 @@ const CAQuoteForm = () => {
     message: ''
   });
   
+  const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [submittedQuote, setSubmittedQuote] = useState(null);
   const [errors, setErrors] = useState({});
@@ -51,6 +52,35 @@ const CAQuoteForm = () => {
     if (errors[e.target.name]) {
       setErrors({ ...errors, [e.target.name]: '' });
     }
+  };
+
+  const handleFileSelect = (e) => {
+    const selected = Array.from(e.target.files || []);
+    if (!selected.length) return;
+    const valid = [];
+    for (const f of selected) {
+      if (f.size > 15 * 1024 * 1024) {
+        setApiError(`File ${f.name} exceeds 15MB size limit.`);
+        return;
+      }
+      valid.push(f);
+    }
+    if (files.length + valid.length > 10) {
+      setApiError('Maximum 10 documents allowed.');
+      return;
+    }
+    setFiles(prev => [...prev, ...valid]);
+    setApiError('');
+  };
+
+  const removeFile = (index) => {
+    setFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const formatFileSize = (bytes) => {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   };
 
   const validate = () => {
@@ -78,25 +108,31 @@ const CAQuoteForm = () => {
       setLoading(true);
       const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       
-      const payload = {
-        ...formData,
-        serviceType: selectedService
-      };
+      const data = new FormData();
+      data.append('serviceType', selectedService);
+      data.append('fullName', formData.fullName.trim());
+      data.append('mobile', formData.mobile.trim());
+      data.append('email', formData.email ? formData.email.trim() : '');
+      data.append('city', formData.city.trim());
+      data.append('businessName', formData.businessName ? formData.businessName.trim() : '');
+      data.append('businessConstitution', formData.businessConstitution || '');
+      data.append('message', formData.message ? formData.message.trim() : '');
+
+      files.forEach(file => {
+        data.append('documents', file);
+      });
 
       const res = await fetch(`${BACKEND_URL}/ca-quotes/submit`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
+        body: data
       });
       
-      const data = await res.json();
+      const result = await res.json();
       
-      if (data.success) {
-        setSubmittedQuote(data.data);
+      if (result.success) {
+        setSubmittedQuote(result.data);
       } else {
-        setApiError(data.message || 'Failed to submit quote request. Please try again.');
+        setApiError(result.message || 'Failed to submit quote request. Please try again.');
       }
     } catch (error) {
       setApiError('Network error. Please check your connection and try again.');
@@ -107,6 +143,7 @@ const CAQuoteForm = () => {
 
   const resetForm = () => {
     setSubmittedQuote(null);
+    setFiles([]);
     setFormData({
       fullName: '',
       mobile: '',
@@ -290,9 +327,80 @@ const CAQuoteForm = () => {
         </div>
       </div>
 
-      {/* 3. Message */}
+      {/* 3. Document Upload (Optional) */}
       <div>
-        <SectionTitle num="3" title="Additional Requirements" />
+        <div className="flex items-center justify-between mb-4">
+          <SectionTitle num="3" title="Upload Relevant Documents (Optional)" />
+          <span className="text-[11px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded border border-emerald-200">
+            Optional
+          </span>
+        </div>
+
+        <p className="text-gray-500 text-[13px] mb-4 leading-relaxed">
+          You can submit with just basic contact details, or upload documents (PAN, Aadhaar, Bank Statement, Previous ITR/GST, Financials) right now for expedited processing.
+        </p>
+
+        {/* Dropzone */}
+        <label className="border-2 border-dashed border-gray-300 hover:border-[#de9e48] bg-gray-50/60 hover:bg-[#fdfaf5] rounded-xl p-6 text-center cursor-pointer transition-all block group">
+          <input
+            type="file"
+            onChange={handleFileSelect}
+            multiple
+            accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx,.zip"
+            className="hidden"
+          />
+          <div className="w-12 h-12 rounded-full bg-white group-hover:bg-[#de9e48]/15 text-gray-500 group-hover:text-[#de9e48] flex items-center justify-center mx-auto mb-3 transition-colors shadow-xs">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+          </div>
+          <p className="text-sm font-bold text-[#020d1c] group-hover:text-[#de9e48] transition-colors">
+            Click to browse or drag & drop files here
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
+            Supports PDF, JPG, PNG, DOCX, XLS (Up to 15MB each, max 10 files)
+          </p>
+        </label>
+
+        {/* Selected Files List */}
+        {files.length > 0 && (
+          <div className="mt-4 space-y-2">
+            <p className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+              Attached Files ({files.length}):
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+              {files.map((f, i) => (
+                <div 
+                  key={i} 
+                  className="bg-white border border-gray-200 rounded-lg p-3 flex items-center justify-between shadow-xs"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                    <span className="text-lg">📄</span>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-[#020d1c] truncate">{f.name}</p>
+                      <p className="text-[10px] text-gray-400">{formatFileSize(f.size)}</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeFile(i)}
+                    className="text-gray-400 hover:text-red-500 p-1 rounded transition-colors cursor-pointer"
+                    title="Remove file"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 4. Message */}
+      <div>
+        <SectionTitle num="4" title="Additional Requirements" />
         
         <div className="flex flex-col gap-1.5 mb-8">
           <label className="text-[13px] font-bold text-[#020d1c]">Message or Specific Requirement (Optional)</label>
@@ -310,7 +418,7 @@ const CAQuoteForm = () => {
            <button 
              type="submit"
              disabled={loading}
-             className="bg-[#de9e48] hover:bg-[#c98e41] disabled:opacity-75 disabled:cursor-not-allowed text-white font-bold text-[14.5px] px-8 py-3.5 rounded-md transition-colors w-full sm:w-[300px] flex items-center justify-center gap-2 shadow-md relative overflow-hidden group"
+             className="bg-[#de9e48] hover:bg-[#c98e41] disabled:opacity-75 disabled:cursor-not-allowed text-white font-bold text-[14.5px] px-8 py-3.5 rounded-md transition-colors w-full sm:w-[320px] flex items-center justify-center gap-2 shadow-md relative overflow-hidden group cursor-pointer"
            >
              {loading ? (
                <>
@@ -322,7 +430,11 @@ const CAQuoteForm = () => {
                </>
              ) : (
                <>
-                 Request a Quote
+                 <span>
+                   {files.length > 0
+                     ? `Submit with ${files.length} Document${files.length > 1 ? 's' : ''}`
+                     : 'Submit Application'}
+                 </span>
                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                  </svg>
