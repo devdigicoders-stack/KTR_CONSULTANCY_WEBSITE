@@ -9,8 +9,6 @@ const ApplyForm = () => {
     mobile: '',
     email: '',
     dob: '',
-    gender: '',
-    maritalStatus: '',
     source: '',
     loanAmount: '',
     purpose: '',
@@ -33,7 +31,7 @@ const ApplyForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.fullName || !formData.mobile || !formData.gender || !formData.purpose || !formData.employmentType) {
+    if (!formData.fullName || !formData.mobile || !formData.purpose || !formData.employmentType) {
       showNotification('Please fill in all required fields.', 'error');
       return;
     }
@@ -222,7 +220,7 @@ const ApplyForm = () => {
               <button
                 onClick={() => {
                   setSubmittedData(null);
-                  setFormData({ fullName: '', mobile: '', email: '', dob: '', gender: '', maritalStatus: '', source: '', loanAmount: '', purpose: '', otherPurpose: '', otherServiceType: '', employmentType: '', message: '' });
+                  setFormData({ fullName: '', mobile: '', email: '', dob: '', source: '', loanAmount: '', purpose: '', otherPurpose: '', otherServiceType: '', employmentType: '', message: '' });
                   setSelectedService('Home Loan');
                 }}
                 className="flex items-center gap-2 px-5 py-2.5 bg-[#de9e48] hover:bg-[#c98e41] text-white rounded-lg text-[13px] font-bold transition-colors"
@@ -300,29 +298,11 @@ const ApplyForm = () => {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-bold text-[#020d1c]">Date of Birth</label>
+            <label className="text-[13px] font-bold text-[#020d1c]">Date of Birth <span className="text-gray-400 font-normal text-[11px]">(Optional)</span></label>
             <div className="relative">
               <input type="date" name="dob" value={formData.dob} onChange={handleChange} className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 placeholder-gray-400" />
             </div>
           </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-bold text-[#020d1c]">Gender <span className="text-red-500">*</span></label>
-            <select name="gender" value={formData.gender} onChange={handleChange} required className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 bg-white">
-               <option value="" disabled>Select Gender</option>
-               <option value="Male">Male</option>
-               <option value="Female">Female</option>
-               <option value="Other">Other</option>
-            </select>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-bold text-[#020d1c]">Marital Status</label>
-            <select name="maritalStatus" value={formData.maritalStatus} onChange={handleChange} className="w-full h-11 px-4 border border-gray-200 rounded-lg outline-none focus:border-[#de9e48] text-[14px] text-gray-700 bg-white">
-               <option value="" disabled>Select Status</option>
-               <option value="Single">Single</option>
-               <option value="Married">Married</option>
-            </select>
-          </div>
-
 
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-bold text-[#020d1c]">How did you hear about us?</label>
