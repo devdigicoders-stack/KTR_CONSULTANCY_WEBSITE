@@ -41,7 +41,7 @@ const MSMEHero = () => {
             {/* Button */}
             <div className="mb-6 flex flex-col sm:flex-row items-center gap-4">
               <Link 
-                to="/apply-online" 
+                to="/apply-online?category=msme" 
                 className="w-full sm:w-auto inline-flex items-center justify-center bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-[13.5px] py-3.5 px-8 rounded-md transition-all duration-300 shadow-sm"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

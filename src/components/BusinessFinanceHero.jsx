@@ -36,7 +36,7 @@ const BusinessFinanceHero = () => {
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link 
-                to="/contact" 
+                to="/apply-online?category=business" 
                 className="w-full sm:w-auto inline-flex items-center justify-center bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-[13px] py-3.5 px-8 rounded-md transition-all duration-300 shadow-sm"
               >
                 Get Free Consultation

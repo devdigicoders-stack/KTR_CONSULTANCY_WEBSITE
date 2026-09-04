@@ -13,28 +13,28 @@ const CADocumentsRequired = () => {
 
   const docData = [
     {
-      title: "1. Income Tax Return (ITR) Filing",
+      title: "1. GST Registration (Same Day GST Certificate)",
       docs: [
-        "PAN Card",
-        "Aadhaar Card",
-        "Previous ITR, if available",
-        "Form 16 / salary details, if applicable",
-        "Bank statements",
-        "Income and investment details",
-        "Business/professional income details, if applicable"
+        "PAN Card of Business / Proprietor / Directors",
+        "Aadhaar Card of Applicant / Partners / Directors",
+        "Mobile Number & Valid E-mail ID",
+        "Passport Size Photograph",
+        "Business Address Proof (Electricity bill / Rent agreement / NOC)",
+        "Property Ownership / Lease Documents",
+        "Bank Account Details / Cancelled Cheque",
+        "Business Constitution Documents (Partnership Deed / COI / MOA-AOA, if applicable)"
       ]
     },
     {
-      title: "2. GST Registration",
+      title: "2. Income Tax Return (ITR) Filing",
       docs: [
         "PAN Card",
         "Aadhaar Card",
-        "Mobile Number & E-mail ID",
-        "Photograph",
-        "Business address proof",
-        "Property ownership/rent/lease documents, as applicable",
-        "Bank details",
-        "Business constitution documents, if applicable"
+        "Previous ITR (if available)",
+        "Form 16 / Salary Slips (for salaried individuals)",
+        "Bank Account Statements (Past 6 to 12 months)",
+        "Income & Investment Details (80C, 80D, LIC, PPF, etc.)",
+        "Business / Professional Income & Expense Details (if applicable)"
       ]
     },
     {

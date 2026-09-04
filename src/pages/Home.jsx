@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
 import HomeUSPBanner from '../components/HomeUSPBanner';
+import HomeGSTUSPBanner from '../components/HomeGSTUSPBanner';
 import StatsBanner from '../components/StatsBanner';
 import ServicesGrid from '../components/ServicesGrid';
 import EMICalculator from '../components/EMICalculator';
@@ -17,6 +18,7 @@ const Home = () => {
     <>
       <Hero />
       <Services />
+      <HomeGSTUSPBanner />
       <HomeUSPBanner />
       <StatsBanner />
       <ServicesGrid />

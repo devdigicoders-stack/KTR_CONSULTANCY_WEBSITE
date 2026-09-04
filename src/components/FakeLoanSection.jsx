@@ -190,7 +190,24 @@ const FakeLoanSection = () => {
             {
               step: '01',
               title: 'Submit Case Details',
-              desc: 'Provide your PAN, identity verification, and details of the suspected unauthorized loan.'
+              desc: 'Provide your PAN, identity verification, and details of the suspected unauthorized loan.',
+              action: (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const formElement = document.getElementById('fake-loan-assessment-form');
+                    if (formElement) {
+                      formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  className="mt-3 inline-flex items-center gap-1.5 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-black text-xs px-3.5 py-1.5 rounded-lg shadow-sm hover:shadow transition-all cursor-pointer group-hover:scale-105"
+                >
+                  <span>Submit Case Now</span>
+                  <svg className="w-3.5 h-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </button>
+              )
             },
             {
               step: '02',
@@ -208,12 +225,39 @@ const FakeLoanSection = () => {
               desc: 'Receive formal eligibility outcome, expected dispute timeline, and quote for full resolution.'
             }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white p-5 rounded-xl border border-gray-200/80 shadow-sm relative group hover:border-[#de9e48]/50 transition-all">
-              <span className="text-xs font-black text-[#de9e48] bg-[#de9e48]/10 px-2 py-0.5 rounded uppercase tracking-wider mb-2 inline-block">
-                Step {item.step}
-              </span>
-              <h4 className="text-[#020d1c] font-bold text-sm mb-1.5">{item.title}</h4>
-              <p className="text-gray-500 text-xs leading-relaxed">{item.desc}</p>
+            <div 
+              key={idx} 
+              onClick={() => {
+                if (item.step === '01') {
+                  const formElement = document.getElementById('fake-loan-assessment-form');
+                  if (formElement) {
+                    formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }
+              }}
+              className={`bg-white p-5 rounded-xl border border-gray-200/80 shadow-sm relative group hover:border-[#de9e48]/60 transition-all flex flex-col justify-between ${
+                item.step === '01' ? 'ring-2 ring-[#de9e48]/30 cursor-pointer hover:shadow-md' : ''
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-black text-[#de9e48] bg-[#de9e48]/10 px-2 py-0.5 rounded uppercase tracking-wider inline-block">
+                    Step {item.step}
+                  </span>
+                  {item.step === '01' && (
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">
+                      Click to Fill Form ↓
+                    </span>
+                  )}
+                </div>
+                <h4 className="text-[#020d1c] font-bold text-sm mb-1.5">{item.title}</h4>
+                <p className="text-gray-500 text-xs leading-relaxed">{item.desc}</p>
+              </div>
+              {item.action && (
+                <div className="pt-2">
+                  {item.action}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -435,7 +479,7 @@ const FakeLoanSection = () => {
               </div>
             ) : (
               /* Case Submission Form */
-              <div className="bg-white rounded-2xl border border-gray-200/90 shadow-xl p-6 md:p-8">
+              <div id="fake-loan-assessment-form" className="bg-white rounded-2xl border border-gray-200/90 shadow-xl p-6 md:p-8 scroll-mt-24">
                 
                 <div className="flex items-center justify-between pb-4 mb-6 border-b border-gray-100">
                   <div>

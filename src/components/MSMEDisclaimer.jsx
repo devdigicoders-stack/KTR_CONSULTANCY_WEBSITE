@@ -23,7 +23,7 @@ const MSMEDisclaimer = () => {
               Loan sanction and final terms are solely subject to the concerned bank/lender's credit, legal, technical, financial, and internal policies. <span className="text-white font-bold">KTR Consultants' role is to assist, prepare, coordinate, and follow-up.</span> We do not guarantee loan approvals.
             </p>
             <div className="flex justify-center sm:justify-start">
-              <Link to="/apply-online" className="text-[#de9e48] hover:text-white font-bold text-[14px] uppercase tracking-wider transition-colors duration-300 flex items-center gap-2 group border-b border-[#de9e48]/30 pb-1">
+              <Link to="/apply-online?category=msme" className="text-[#de9e48] hover:text-white font-bold text-[14px] uppercase tracking-wider transition-colors duration-300 flex items-center gap-2 group border-b border-[#de9e48]/30 pb-1">
                 Start Your Funding Request
                 <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </Link>

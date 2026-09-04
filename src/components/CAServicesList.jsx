@@ -28,21 +28,22 @@ const CAServicesList = () => {
   const services = [
     {
       id: "01",
-      title: "Income Tax Return (ITR) Filing",
-      description: "ITR filing for individuals, salaried, professionals, proprietors, firms and businesses.",
+      title: "GST Registration",
+      description: "Assistance with new GST registration and related documentation.",
+      usp: "Same Day GST Certificate",
       icon: (
         <svg className="w-[26px] h-[26px] text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
       )
     },
     {
       id: "02",
-      title: "GST Registration",
-      description: "Assistance with new GST registration and related documentation.",
+      title: "Income Tax Return (ITR) Filing",
+      description: "ITR filing for individuals, salaried, professionals, proprietors, firms and businesses.",
       icon: (
         <svg className="w-[26px] h-[26px] text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
       )
     },
@@ -164,19 +165,36 @@ const CAServicesList = () => {
                 className="bg-white rounded-xl p-5 sm:p-6 border border-gray-100 shadow-[0_2px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.08)] transition-all duration-300 relative flex flex-col h-full group"
               >
                 {/* Number */}
-                <div className="absolute top-5 left-5 text-[#de9e48] font-bold text-[13px]">
+                <div className="absolute top-4 left-4 text-[#de9e48] font-bold text-[13px]">
                   {service.id}
                 </div>
+
+                {/* USP Badge (if available) */}
+                {service.usp && (
+                  <div className="absolute top-3.5 right-3 bg-gradient-to-r from-amber-500 to-[#de9e48] text-[#020d1c] font-black text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs flex items-center gap-1 border border-amber-300">
+                    <span>⚡</span>
+                    <span>{service.usp}</span>
+                  </div>
+                )}
                 
                 {/* Icon Circle */}
-                <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full bg-orange-50/70 group-hover:bg-orange-100/70 transition-colors flex items-center justify-center mb-4 sm:mb-5 mt-2">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full bg-orange-50/70 group-hover:bg-orange-100/70 transition-colors flex items-center justify-center mb-3 sm:mb-4 mt-2">
                   {service.icon}
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-[#020d1c] font-bold text-[14.5px] sm:text-[15.5px] text-center leading-snug mb-2.5 min-h-[44px] flex items-center justify-center">
+                <h3 className="text-[#020d1c] font-bold text-[14.5px] sm:text-[15.5px] text-center leading-snug mb-1 min-h-[44px] flex items-center justify-center">
                   {service.title}
                 </h3>
+
+                {/* Highlight Tag under Title for USP */}
+                {service.usp && (
+                  <div className="mb-2 text-center">
+                    <span className="inline-block bg-emerald-50 text-emerald-700 font-bold text-[11px] px-2.5 py-0.5 rounded-full border border-emerald-200">
+                      ✓ Instant / Same Day Delivery
+                    </span>
+                  </div>
+                )}
                 
                 {/* Description */}
                 <p className="text-gray-600 text-[12.5px] sm:text-[13px] text-center leading-relaxed mb-5 flex-grow">

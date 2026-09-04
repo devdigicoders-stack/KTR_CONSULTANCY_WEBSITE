@@ -424,18 +424,16 @@ const CAApplyModal = ({ isOpen, onClose, service, onViewDocsClick }) => {
                 </div>
               </div>
 
-              {/* 2. Documents Upload Section (Optional) */}
+              {/* 2. Documents Upload Section */}
               <div className="pt-2 border-t border-gray-100">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1 h-3.5 bg-[#de9e48] rounded-full"></span>
-                    <h4 className="text-xs font-bold text-[#020d1c] uppercase tracking-wider">
-                      Upload Documents (Optional)
-                    </h4>
-                  </div>
-                  <span className="text-[10.5px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded border border-emerald-200">
-                    Not Mandatory
-                  </span>
+                <div className="mb-2.5">
+                  <h4 className="text-xs sm:text-[13px] font-bold text-[#020d1c] flex items-center gap-1.5">
+                    <span>Already have the documents ready? Upload them now and let us get started.</span>
+                    <span className="text-sm">🔒</span>
+                  </h4>
+                  <p className="text-[11px] sm:text-xs text-gray-500 mt-1 leading-relaxed">
+                    You may upload the documents you currently have — our team will guide you if anything else is required.
+                  </p>
                 </div>
 
                 {/* Helpful Checklist of Required Documents for this Service */}
@@ -471,11 +469,23 @@ const CAApplyModal = ({ isOpen, onClose, service, onViewDocsClick }) => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
                   </div>
-                  <p className="text-xs font-bold text-[#020d1c] group-hover:text-[#de9e48] transition-colors">
-                    Click to browse or drag & drop files here
+                  <p className="text-xs sm:text-[13px] font-bold text-[#020d1c] group-hover:text-[#de9e48] transition-colors flex items-center justify-center gap-1">
+                    <span>📤</span>
+                    <span>Upload Your Documents</span>
                   </p>
-                  <p className="text-[11px] text-gray-400 mt-0.5">
-                    PDF, JPG, PNG, DOC, XLS (Up to 15MB each, max 10 files)
+                  <p className="text-[11px] text-gray-600 mt-1">
+                    Upload available documents to help us review your requirement faster
+                  </p>
+                  <p className="text-[10.5px] text-gray-400 mt-0.5">
+                    PDF, JPG, PNG, DOC, XLS — Up to 15MB each
+                  </p>
+                </div>
+
+                {/* Small trust message below upload */}
+                <div className="mt-2 flex items-start gap-1.5 text-[11px] text-gray-600 bg-emerald-50/70 border border-emerald-100 rounded-lg p-2">
+                  <span className="text-xs">🔐</span>
+                  <p className="leading-snug">
+                    <strong className="text-emerald-800 font-semibold">Secure & Confidential:</strong> Your documents are used only to assess and process your requested service.
                   </p>
                 </div>
 

@@ -15,6 +15,19 @@ const services = [
     )
   },
   {
+    title: 'CA & GST Services',
+    desc: 'Same Day GST Certificate, ITR filing, audit, CMA data & compliance.',
+    link: '/ca-services',
+    badge: 'Same Day GST',
+    icon: (
+      <svg className="w-6 h-6 xl:w-5 xl:h-5 2xl:w-6 2xl:h-6 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* CA & GST Stamp / Certification */}
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 9v3m-1.5-1.5h3" />
+      </svg>
+    )
+  },
+  {
     title: 'Business Finance',
     desc: 'Working capital, CC/OD limits, term loans & business growth.',
     link: '/business-finance',
@@ -105,29 +118,36 @@ const Services = () => {
         {/* Outer Container for Services */}
         <div className="bg-white border border-gray-100 shadow-[0_4px_30px_rgba(0,0,0,0.04)] rounded-2xl p-4 sm:p-6 lg:p-8">
           
-          {/* Grid Wrapper - 7 Column responsive distribution */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 xl:gap-3 2xl:gap-4">
+          {/* Grid Wrapper - 8 Column responsive distribution */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-8 gap-4 xl:gap-3 2xl:gap-3">
             {services.map((service, index) => (
               <Link 
                 to={service.link}
                 key={index} 
-                className="group bg-white border border-gray-100 rounded-xl p-5 xl:p-4 2xl:p-5 hover:border-[#de9e48]/60 hover:shadow-[0_12px_30px_rgba(222,158,72,0.12)] transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden h-full transform hover:-translate-y-1.5"
+                className="group bg-white border border-gray-100 rounded-xl p-5 xl:p-4 2xl:p-4 hover:border-[#de9e48]/60 hover:shadow-[0_12px_30px_rgba(222,158,72,0.12)] transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden h-full transform hover:-translate-y-1.5"
               >
                 {/* Subtle top indicator on hover */}
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#de9e48]/20 via-[#de9e48] to-[#de9e48]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
+                {/* USP Badge (if available) */}
+                {service.badge && (
+                  <div className="absolute top-2 right-2 bg-gradient-to-r from-amber-500 to-[#de9e48] text-[#020d1c] font-black text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs border border-amber-300">
+                    ⚡ {service.badge}
+                  </div>
+                )}
+
                 {/* Professional Icon Container */}
-                <div className="w-13 h-13 xl:w-12 xl:h-12 2xl:w-14 2xl:h-14 rounded-2xl bg-[#fff8ed] border border-[#de9e48]/20 flex items-center justify-center mb-3.5 group-hover:bg-[#de9e48] group-hover:border-[#de9e48] group-hover:scale-105 transition-all duration-300 text-[#020d1c] group-hover:text-white shadow-sm flex-shrink-0">
+                <div className="w-13 h-13 xl:w-12 xl:h-12 2xl:w-13 2xl:h-13 rounded-2xl bg-[#fff8ed] border border-[#de9e48]/20 flex items-center justify-center mb-3.5 group-hover:bg-[#de9e48] group-hover:border-[#de9e48] group-hover:scale-105 transition-all duration-300 text-[#020d1c] group-hover:text-white shadow-sm flex-shrink-0 mt-1">
                   {service.icon}
                 </div>
 
                 {/* Title */}
-                <h4 className="text-[#020d1c] font-bold text-[14px] xl:text-[13px] 2xl:text-[14px] mb-2 leading-snug group-hover:text-[#de9e48] transition-colors min-h-[38px] xl:min-h-[34px] 2xl:min-h-[40px] flex items-center justify-center">
+                <h4 className="text-[#020d1c] font-bold text-[14px] xl:text-[13px] 2xl:text-[13.5px] mb-2 leading-snug group-hover:text-[#de9e48] transition-colors min-h-[38px] xl:min-h-[34px] 2xl:min-h-[38px] flex items-center justify-center">
                   {service.title}
                 </h4>
 
                 {/* Short 1-line description */}
-                <p className="text-gray-500 text-[11.5px] xl:text-[11px] 2xl:text-[11.5px] leading-relaxed font-normal mb-4 flex-grow">
+                <p className="text-gray-500 text-[11.5px] xl:text-[11px] 2xl:text-[11px] leading-relaxed font-normal mb-4 flex-grow">
                   {service.desc}
                 </p>
 
