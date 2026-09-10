@@ -30,10 +30,9 @@ const PropertyValuationOverview = ({ onSelectService }) => {
             <div>
               {/* Header */}
               <div className="flex items-center justify-between mb-4">
-                <span className="bg-[#020d1c] text-[#de9e48] text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
-                  Service 01
+                <span className="bg-[#de9e48]/15 text-[#020d1c] border border-[#de9e48]/40 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  Valuation Report
                 </span>
-                <span className="text-xs font-bold text-gray-500 uppercase">Valuation Report</span>
               </div>
 
               <div className="flex items-start gap-4 mb-4">
@@ -89,10 +88,9 @@ const PropertyValuationOverview = ({ onSelectService }) => {
             <div>
               {/* Header */}
               <div className="flex items-center justify-between mb-4">
-                <span className="bg-[#020d1c] text-[#de9e48] text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
-                  Service 02
+                <span className="bg-[#de9e48]/15 text-[#020d1c] border border-[#de9e48]/40 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  TDS Compliance
                 </span>
-                <span className="text-xs font-bold text-gray-500 uppercase">TDS Compliance</span>
               </div>
 
               <div className="flex items-start gap-4 mb-4">

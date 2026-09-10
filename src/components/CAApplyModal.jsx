@@ -13,8 +13,7 @@ const serviceDocMap = {
     "PAN Card (Proprietor / Partners / Directors)",
     "Aadhaar Card",
     "Passport Size Photograph",
-    "Business Address Proof (Electricity bill / Rent agreement)",
-    "Bank Account Details / Cancelled Cheque"
+    "Business Address Proof (Electricity bill / Rent agreement)"
   ],
   "GST Return Filing & Compliance": [
     "GSTIN Credentials",
@@ -25,7 +24,6 @@ const serviceDocMap = {
   ],
   "Business Registration & Setup": [
     "PAN & Aadhaar Card of Directors / Partners / Proprietor",
-    "Passport Size Photographs",
     "Business Address Proof (Electricity bill / Rent agreement)",
     "Proposed Business Names & Details"
   ],

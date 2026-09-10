@@ -168,8 +168,7 @@ const businessSolutions = [
       "PAN & Aadhaar Card of Applicant",
       "Proof of Business Enterprise (Udyam / Shop Act)",
       "Bank Statement (Past 6 to 12 Months)",
-      "Quotations of items / machinery to be purchased",
-      "Passport Size Photographs"
+      "Quotations of items / machinery to be purchased"
     ],
     icon: (
       <svg className="w-[22px] h-[22px] text-[#020d1c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

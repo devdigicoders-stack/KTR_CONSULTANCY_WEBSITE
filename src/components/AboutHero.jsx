@@ -32,7 +32,7 @@ const AboutHero = () => {
             
             {/* Button */}
             <Link 
-              to="/contact" 
+              to="/apply-online" 
               className="w-full sm:w-auto inline-flex items-center justify-center bg-[#020d1c] hover:bg-[#031326] text-white font-semibold py-3.5 px-8 rounded-md transition-all duration-300 shadow-[0_4px_14px_0_rgba(2,13,28,0.39)] hover:-translate-y-0.5 text-[14px]"
             >
               Get Free Consultation

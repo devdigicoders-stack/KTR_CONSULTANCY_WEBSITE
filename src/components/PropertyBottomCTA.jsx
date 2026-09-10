@@ -38,7 +38,7 @@ const PropertyBottomCTA = () => {
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto relative z-10 flex-shrink-0 mt-4 lg:mt-0">
             {/* Consultation Button */}
             <Link 
-              to="/contact"
+              to="/apply-online?category=property"
               className="w-full sm:w-auto bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-[14px] md:text-[14.5px] px-6 md:px-8 py-3.5 rounded-md transition-colors flex items-center justify-center shadow-md whitespace-nowrap"
             >
               Get Free Consultation

@@ -14,8 +14,7 @@ const servicesConfig = {
     uploads: [
       { id: 'property-papers', label: 'Property Papers', desc: 'Scan or clear photo of property documents' },
       { id: 'gps-photo', label: 'GPS Property Photograph', desc: 'Photo of the property with GPS coordinates' },
-      { id: 'electricity-bill', label: 'Latest Electricity Bill', desc: 'Recent electricity bill copy' },
-      { id: 'owner-photo', label: 'Passport-size Photo', desc: 'Recent photograph of the property owner' }
+      { id: 'electricity-bill', label: 'Latest Electricity Bill', desc: 'Recent electricity bill copy' }
     ],
     chargesText: 'Charges will be confirmed after receiving the documents and discussing the case with the concerned Nagar Nigam department.',
     disclaimer: 'Assessment is subject to approval by the concerned Nagar Nigam office. KTR Consultants acts only as a mediator/consultant, working as a bridge between the customer and the Nagar Nigam. We assist with the process and follow up with the Nagar Nigam on the customer\'s behalf. Final assessment/approval is solely at the discretion of the concerned authority.'

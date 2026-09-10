@@ -164,11 +164,6 @@ const CAServicesList = () => {
                 key={index} 
                 className="bg-white rounded-xl p-5 sm:p-6 border border-gray-100 shadow-[0_2px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.08)] transition-all duration-300 relative flex flex-col h-full group"
               >
-                {/* Number */}
-                <div className="absolute top-4 left-4 text-[#de9e48] font-bold text-[13px]">
-                  {service.id}
-                </div>
-
                 {/* USP Badge (if available) */}
                 {service.usp && (
                   <div className="absolute top-3.5 right-3 bg-gradient-to-r from-amber-500 to-[#de9e48] text-[#020d1c] font-black text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs flex items-center gap-1 border border-amber-300">

@@ -728,6 +728,7 @@ const ChainDeedForm = () => {
             {/* Footer */}
             <div className="mt-12 text-center text-gray-400 text-[12px] pt-6 border-t border-dashed border-gray-200">
               <p>This is a computer-generated invoice and does not require a physical signature.</p>
+              <p className="mt-0.5 text-gray-500 font-medium">Subject to Lucknow Jurisdiction only.</p>
               <p className="mt-1 font-bold">KTR Consultants | Property Loan & Legal Services</p>
             </div>
           </div>

@@ -13,7 +13,7 @@ const CADocumentsRequired = () => {
 
   const docData = [
     {
-      title: "1. GST Registration (Same Day GST Certificate)",
+      title: "GST Registration (Same Day GST Certificate)",
       docs: [
         "PAN Card of Business / Proprietor / Directors",
         "Aadhaar Card of Applicant / Partners / Directors",
@@ -21,12 +21,11 @@ const CADocumentsRequired = () => {
         "Passport Size Photograph",
         "Business Address Proof (Electricity bill / Rent agreement / NOC)",
         "Property Ownership / Lease Documents",
-        "Bank Account Details / Cancelled Cheque",
         "Business Constitution Documents (Partnership Deed / COI / MOA-AOA, if applicable)"
       ]
     },
     {
-      title: "2. Income Tax Return (ITR) Filing",
+      title: "Income Tax Return (ITR) Filing",
       docs: [
         "PAN Card",
         "Aadhaar Card",
@@ -38,7 +37,7 @@ const CADocumentsRequired = () => {
       ]
     },
     {
-      title: "3. GST Return Filing & Compliance",
+      title: "GST Return Filing & Compliance",
       docs: [
         "GSTIN",
         "Sales invoices",
@@ -50,17 +49,16 @@ const CADocumentsRequired = () => {
       ]
     },
     {
-      title: "4. Business Registration & Setup",
+      title: "Business Registration & Setup",
       docs: [
         "PAN Card and Aadhaar Card",
-        "Photographs of directors/partners/proprietor",
         "Business address proof",
         "Business details (name, nature of business)",
         "Other documents depending on the type of registration (Proprietorship, Partnership, LLP, Pvt Ltd, MSME)"
       ]
     },
     {
-      title: "5. Financial Statements & CA Certification",
+      title: "Financial Statements & CA Certification",
       docs: [
         "Previous financial statements, if available",
         "Bank statements",
@@ -72,7 +70,7 @@ const CADocumentsRequired = () => {
       ]
     },
     {
-      title: "6. CMA Data & Loan Documentation",
+      title: "CMA Data & Loan Documentation",
       docs: [
         "Previous 2–3 years financial statements, where available",
         "ITRs and GST returns",
@@ -84,7 +82,7 @@ const CADocumentsRequired = () => {
       ]
     },
     {
-      title: "7. Project Report / DPR",
+      title: "Project Report / DPR",
       docs: [
         "Business details & Promoter details",
         "Project details & Estimated project cost",
@@ -96,7 +94,7 @@ const CADocumentsRequired = () => {
       ]
     },
     {
-      title: "8. Financial Projections",
+      title: "Financial Projections",
       docs: [
         "Existing financial statements, if available",
         "ITRs and GST returns",
@@ -107,7 +105,7 @@ const CADocumentsRequired = () => {
       ]
     },
     {
-      title: "9. Income / Turnover / Net Worth Certificates",
+      title: "Income / Turnover / Net Worth Certificates",
       docs: [
         "PAN Card & Aadhaar Card",
         "ITRs",
@@ -118,7 +116,7 @@ const CADocumentsRequired = () => {
       ]
     },
     {
-      title: "10. Tax & GST Compliance / Notice Assistance",
+      title: "Tax & GST Compliance / Notice Assistance",
       docs: [
         "PAN/GSTIN",
         "Notice/order received",
@@ -129,7 +127,7 @@ const CADocumentsRequired = () => {
       ]
     },
     {
-      title: "11. Audit Services",
+      title: "Audit Services",
       docs: [
         "Financial statements",
         "Books of accounts",

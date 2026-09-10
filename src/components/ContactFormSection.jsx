@@ -1,35 +1,79 @@
 import React, { useState } from 'react';
 
 const SUBJECTS = [
-  'General Inquiry',
-  'Loan Assistance',
-  'Property Consultation',
+  'Home Loan',
+  'Property Loan',
+  'Non Approved Society Loans',
+  'MSME / Project Finance',
+  'General Business Finance',
+  'CA Services',
   'CIBIL Services',
-  'Loan Enquiry',
+  'Property Legal / Valuation / TDS Services',
+  'Insurance and Retirement',
   'Application Status',
   'Document Support',
-  'Interest Rate Query',
   'Eligibility Check',
   'Complaint / Feedback',
   'Other'
 ];
 
-const LOAN_SERVICES = [
-  'Home Loan',
-  'Plot + Construction (P+C)',
-  'Construction Loan',
-  'Loan Against Property (LAP)',
-  'LAP Takeover + Top-Up',
-  'MSME / Business Loan',
-  'Mudra Loan',
-  'CC / OD – Working Capital',
-  'Project Finance / Project Loan',
-  'Term Loan',
-  'Business Loan Takeover + Top-Up',
-  'Home Loan Balance Transfer + Top-Up',
-  'Property Purchase Loan',
-  'Commercial Property Loan',
-  'Other'
+const SERVICE_GROUPS = [
+  {
+    category: 'Loans & Financing',
+    services: [
+      'Home Loan',
+      'Plot + Construction (P+C)',
+      'Construction Loan',
+      'Loan Against Property (LAP)',
+      'LAP Takeover + Top-Up',
+      'MSME / Business Loan',
+      'Mudra Loan',
+      'CC / OD – Working Capital',
+      'Project Finance / Project Loan',
+      'Term Loan',
+      'Business Loan Takeover + Top-Up',
+      'Home Loan Balance Transfer + Top-Up',
+      'Property Purchase Loan',
+      'Commercial Property Loan'
+    ]
+  },
+  {
+    category: 'Property Services',
+    services: [
+      'Property Legal Services',
+      'Property Valuation & TDS Services',
+      'Assessment & Map Services',
+      'Property Search & Shortlisting'
+    ]
+  },
+  {
+    category: 'CA & Financial Services',
+    services: [
+      'GST Registration',
+      'Income Tax Return (ITR) Filing',
+      'GST Return Filing & Compliance',
+      'Business Registration & Setup',
+      'Financial Statements & CA Certification',
+      'CMA Data & Loan Documentation',
+      'Project Report / DPR',
+      'Financial Projections',
+      'Income / Turnover / Net Worth Certificates',
+      'Tax & GST Notice Assistance',
+      'Audit Services'
+    ]
+  },
+  {
+    category: 'Insurance Services',
+    services: [
+      'Life Insurance',
+      'Health Insurance (Care Supreme)',
+      'Vehicle Insurance'
+    ]
+  },
+  {
+    category: 'Other',
+    services: ['Other Custom Requirement']
+  }
 ];
 
 const ContactFormSection = () => {
@@ -231,10 +275,16 @@ const ContactFormSection = () => {
                       name="serviceInterested"
                       value={formData.serviceInterested}
                       onChange={handleChange}
-                      className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-600 text-[13.5px] appearance-none cursor-pointer"
+                      className="w-full h-10 px-3.5 rounded-md bg-white border border-transparent outline-none focus:border-[#de9e48] transition-all text-gray-800 text-[13.5px] appearance-none cursor-pointer"
                     >
                       <option value="">Select a service (optional)</option>
-                      {LOAN_SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
+                      {SERVICE_GROUPS.map((group) => (
+                        <optgroup key={group.category} label={`── ${group.category} ──`}>
+                          {group.services.map((s) => (
+                            <option key={s} value={s}>{s}</option>
+                          ))}
+                        </optgroup>
+                      ))}
                     </select>
                     <svg className="w-4 h-4 text-gray-400 absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                   </div>

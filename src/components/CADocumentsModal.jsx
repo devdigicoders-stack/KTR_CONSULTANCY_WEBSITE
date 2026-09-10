@@ -17,7 +17,6 @@ const serviceDocMap = {
     "Passport Size Photograph",
     "Business Address Proof (Electricity bill / Rent agreement / NOC)",
     "Property Ownership / Lease Documents",
-    "Bank Account Details / Cancelled Cheque",
     "Business Constitution Documents (Partnership Deed / COI / MOA-AOA, if applicable)"
   ],
   "GST Return Filing & Compliance": [
@@ -31,7 +30,6 @@ const serviceDocMap = {
   ],
   "Business Registration & Setup": [
     "PAN Card and Aadhaar Card of Directors / Partners / Proprietor",
-    "Passport Size Photographs of all promoters",
     "Registered Office Address Proof (Electricity bill / Rent Agreement + NOC)",
     "Proposed Business Names (2-3 options in order of preference)",
     "Object & Nature of Business Activity",

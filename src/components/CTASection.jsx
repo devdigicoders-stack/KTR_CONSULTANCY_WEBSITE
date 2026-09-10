@@ -47,7 +47,7 @@ const CTASection = () => {
             </Link>
 
             <Link 
-              to="/contact" 
+              to="/apply-online" 
               className="w-full sm:w-auto inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-semibold text-[13px] py-3.5 px-6 rounded-md transition-all duration-300 border border-white/20 whitespace-nowrap"
             >
               Get Free Consultation

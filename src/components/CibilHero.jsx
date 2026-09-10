@@ -3,6 +3,8 @@ import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { BUREAU_CONFIGS, calculatePricing, fetchCreditReportFromSurepass } from '../services/surepassApi';
 import { processRazorpayPayment } from '../services/razorpay';
+import CibilInvoiceModal from './CibilInvoiceModal';
+import { FileText, RotateCcw, ShieldCheck, AlertOctagon, HelpCircle } from 'lucide-react';
 
 const CibilHero = ({
   selectedBureauProp,
@@ -44,6 +46,9 @@ const CibilHero = ({
   const [apiResult, setApiResult] = useState(null);
   const [apiError, setApiError] = useState(null);
 
+  // Invoice modal state
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  
   // Pricing calculations
   const pricing = calculatePricing(selectedBureau, appliedCoupon);
 
@@ -77,10 +82,8 @@ const CibilHero = ({
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (name === 'pan') {
-      // Auto uppercase & max 10 chars
       setFormData(prev => ({ ...prev, pan: value.toUpperCase().slice(0, 10) }));
     } else if (name === 'mobile') {
-      // Digits only & max 10
       const digits = value.replace(/\D/g, '').slice(0, 10);
       setFormData(prev => ({ ...prev, mobile: digits }));
     } else {
@@ -89,7 +92,6 @@ const CibilHero = ({
         [name]: type === 'checkbox' ? checked : value
       }));
     }
-    // Clear error for field
     if (formErrors[name]) {
       setFormErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -155,8 +157,37 @@ const CibilHero = ({
     return Object.keys(errors).length === 0;
   };
 
+  // Auto refund helper when bureau call fails after payment
+  const triggerAutoRefund = async ({ paymentId, amount, reason }) => {
+    try {
+      setProcessingStage('Initiating automatic refund to your source account...');
+      const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const refundRes = await fetch(`${backendUrl}/cibil-reports/auto-refund`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentId,
+          amount,
+          reason: reason || 'Bureau report could not be generated. Auto refund processed.',
+          name: formData.name,
+          pan: formData.pan,
+          bureau: BUREAU_CONFIGS[selectedBureau].name,
+          mobile: formData.mobile,
+          gender: formData.gender
+        })
+      });
+
+      const refundData = await refundRes.json();
+      return refundData;
+    } catch (err) {
+      console.error("Auto-refund API failed:", err);
+      return { success: false, refundId: null, message: err.message };
+    }
+  };
+
   // Trigger Razorpay Live Payment Gateway
   // CRITICAL: Only after payment success is the Surepass API executed!
+  // If Surepass fails, automatic refund is immediately processed!
   const handleStartPaymentFlow = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -185,31 +216,52 @@ const CibilHero = ({
       await new Promise(r => setTimeout(r, 600));
       setProcessingStage(`Querying official ${bureau.name} database for PAN: ${formData.pan}...`);
 
-      const response = await fetchCreditReportFromSurepass({
-        bureauId: selectedBureau,
-        pan: formData.pan,
-        name: formData.name,
-        mobile: formData.mobile,
-        gender: formData.gender
-      });
-
-      setIsProcessing(false);
+      let response;
+      try {
+        response = await fetchCreditReportFromSurepass({
+          bureauId: selectedBureau,
+          pan: formData.pan,
+          name: formData.name,
+          mobile: formData.mobile,
+          gender: formData.gender
+        });
+      } catch (fetchErr) {
+        console.error("Credit report API exception:", fetchErr);
+        response = {
+          success: false,
+          message: fetchErr.message || 'Bureau connection timeout or gateway exception'
+        };
+      }
 
       // Helper function to save to backend
       const saveReportToBackend = async (payload) => {
         try {
           const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-          await fetch(`${backendUrl}/cibil-reports/save`, {
+          const res = await fetch(`${backendUrl}/cibil-reports/save`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
+          const resData = await res.json();
+          if (resData.data?.invoiceNumber) {
+            payload.invoiceNumber = resData.data.invoiceNumber;
+          }
+          return resData;
         } catch (err) {
           console.error("Failed to save report to backend:", err);
+          return null;
         }
       };
 
-      if (response.success && response.data?.credit_report_link) {
+      const pricingPayload = {
+        basePrice: pricing.basePrice,
+        discountAmount: pricing.couponResult.discountAmount || 0,
+        gstAmount: pricing.gstAmount,
+        totalPayable: pricing.totalPayable,
+        couponCode: appliedCoupon || null
+      };
+
+      if (response && response.success && response.data?.credit_report_link) {
         // Success case with PDF link
         const successData = {
           status: 'success',
@@ -222,11 +274,13 @@ const CibilHero = ({
           pdfLink: response.data.credit_report_link,
           bureau: bureau.name,
           paymentId: paymentResult.paymentId,
+          pricing: pricingPayload,
           date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
         };
+        setIsProcessing(false);
         setApiResult(successData);
         saveReportToBackend(successData);
-      } else if (response.statusCode === 422 || response.httpStatus === 422) {
+      } else if (response && (response.statusCode === 422 || response.httpStatus === 422)) {
         // Consumer not found in bureau
         const notFoundData = {
           status: 'notFound',
@@ -238,29 +292,47 @@ const CibilHero = ({
           gender: formData.gender,
           bureau: bureau.name,
           paymentId: paymentResult.paymentId,
-          pdfLink: response.data?.credit_report_link || null
+          pdfLink: response.data?.credit_report_link || null,
+          pricing: pricingPayload,
+          date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
         };
+        setIsProcessing(false);
         setApiResult(notFoundData);
         saveReportToBackend(notFoundData);
       } else {
-        const errorMsg = response.message || 'Failed to fetch report from bureau. Please contact support.';
-        setApiError(errorMsg);
-        saveReportToBackend({
-          status: 'failed',
-          message: errorMsg,
+        // REPORT GENERATION FAILED AFTER PAYMENT WAS CAPTURED!
+        // INITIATE AUTO-REFUND IMMEDIATELY SO USER DOES NOT LOSE MONEY
+        const failureReason = response?.message || 'Bureau report generation failed. Automatic refund processed.';
+        setProcessingStage('Report generation could not complete. Reversing payment via Razorpay Auto-Refund...');
+        
+        const refundResult = await triggerAutoRefund({
+          paymentId: paymentResult.paymentId,
+          amount: pricing.totalPayable,
+          reason: failureReason
+        });
+
+        setIsProcessing(false);
+
+        const refundedData = {
+          status: 'refunded',
+          refundId: refundResult?.refundId || 'RFND_' + Date.now(),
+          amount: pricing.totalPayable,
+          paymentId: paymentResult.paymentId,
+          message: failureReason,
           name: formData.name,
           pan: formData.pan,
           mobile: formData.mobile,
-          gender: formData.gender,
           bureau: bureau.name,
-          paymentId: paymentResult.paymentId
-        });
+          date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+        };
+
+        setApiResult(refundedData);
       }
 
     } catch (err) {
       setIsProcessing(false);
-      // If user cancelled or payment failed, Surepass API is NOT called
-      setApiError(err.message || 'Payment was not completed. Credit report API was not triggered.');
+      // If user closed Razorpay popup or payment failed, Surepass API is NOT called
+      setApiError(err.message || 'Payment was cancelled or failed. Your card was not charged.');
     }
   };
 
@@ -269,6 +341,7 @@ const CibilHero = ({
     setApiError(null);
     setIsProcessing(false);
     setPaymentSuccessData(null);
+    setShowInvoiceModal(false);
   };
 
   return (
@@ -557,24 +630,41 @@ const CibilHero = ({
                         <span className="text-gray-400">Payment ID:</span>
                         <span className="font-mono text-[11px] text-green-400 font-semibold">{apiResult.paymentId}</span>
                       </div>
+                      {apiResult.invoiceNumber && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Invoice No:</span>
+                          <span className="font-mono text-[11px] text-[#de9e48] font-semibold">{apiResult.invoiceNumber}</span>
+                        </div>
+                      )}
                       <div className="flex justify-between">
                         <span className="text-gray-400">Reference ID:</span>
                         <span className="font-mono text-[11px] text-gray-300 truncate max-w-[160px]">{apiResult.client_id}</span>
                       </div>
                     </div>
 
-                    {/* Download Button */}
-                    <a
-                      href={apiResult.pdfLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full h-12 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-[#de9e48]/20 active:scale-98"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      Download Official PDF Report
-                    </a>
+                    {/* Action Buttons: Download PDF & View Tax Invoice */}
+                    <div className="space-y-2.5">
+                      <a
+                        href={apiResult.pdfLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full h-12 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-[#de9e48]/20 active:scale-98"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download Official PDF Report
+                      </a>
+
+                      <button
+                        type="button"
+                        onClick={() => setShowInvoiceModal(true)}
+                        className="w-full h-11 bg-white/10 hover:bg-white/15 border border-[#de9e48]/50 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                      >
+                        <FileText className="w-4 h-4 text-[#de9e48]" />
+                        <span>View / Print Tax Invoice</span>
+                      </button>
+                    </div>
 
                     {/* Report Dispute / Issue Help Link */}
                     <div className="mt-4 p-3 bg-gray-900/90 border border-gray-800 rounded-xl text-center">
@@ -597,6 +687,81 @@ const CibilHero = ({
                       className="w-full mt-3 text-xs text-gray-400 hover:text-white py-2 transition-colors text-center block"
                     >
                       ← Check Another Credit Score
+                    </button>
+                  </>
+                ) : apiResult.status === 'refunded' ? (
+                  // Case: Bureau Failed -> Payment was Auto-Refunded to User
+                  <>
+                    <div className="text-center py-2">
+                      <div className="w-13 h-13 bg-red-500/15 text-red-400 border border-red-500/30 rounded-2xl flex items-center justify-center mx-auto mb-3.5 shadow-inner">
+                        <RotateCcw className="w-6 h-6 text-red-400 animate-spin-slow" />
+                      </div>
+                      <span className="inline-block bg-red-950/80 text-red-300 border border-red-700/80 text-[10.5px] px-3 py-1 rounded-full font-bold uppercase tracking-wider mb-2">
+                        🛡️ Payment Auto-Refunded
+                      </span>
+                      <h3 className="text-lg font-bold text-white mb-1">
+                        Report Unavailable — Full Refund Processed
+                      </h3>
+                      <p className="text-xs text-gray-300 px-2 leading-relaxed">
+                        We could not fetch your credit report from the bureau. Your full payment of <strong className="text-[#de9e48]">₹{apiResult.amount}</strong> has been automatically reversed to your source account.
+                      </p>
+                    </div>
+
+                    <div className="bg-gray-900/90 p-4 rounded-xl border border-gray-800 text-xs space-y-2.5 my-4">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Refund ID:</span>
+                        <span className="font-mono text-green-400 font-bold">{apiResult.refundId}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Original Payment ID:</span>
+                        <span className="font-mono text-gray-300">{apiResult.paymentId}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Refund Amount:</span>
+                        <span className="font-bold text-[#de9e48]">₹{apiResult.amount} (100% Refunded)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Bureau Queried:</span>
+                        <span className="font-semibold text-white">{apiResult.bureau}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">PAN Number:</span>
+                        <span className="font-mono text-white">{apiResult.pan}</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-green-950/40 border border-green-800/60 p-3.5 rounded-xl text-[11.5px] text-green-200 mb-4 leading-relaxed">
+                      ✓ <strong>Razorpay Refund Note:</strong> The refund has been initiated to your original payment method (UPI / Card / NetBanking). It typically reflects in <strong>5-7 business days</strong>.
+                    </div>
+
+                    {/* Support Help Link */}
+                    <div className="p-3 bg-gray-900/90 border border-gray-800 rounded-xl text-center space-y-2">
+                      <p className="text-[11.5px] text-gray-300">
+                        Need immediate assistance with your refund or credit check?
+                      </p>
+                      <div className="flex items-center justify-center gap-2 flex-wrap">
+                        <a
+                          href="https://wa.me/919918699696?text=Hi%20KTR%20Consultants%2C%20my%20CIBIL%20report%20refund%20was%20initiated%20for%20Payment%20ID%3A%20"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#25D366] text-xs font-bold px-3 py-1.5 rounded-lg border border-[#25D366]/40 transition-colors"
+                        >
+                          💬 WhatsApp Support
+                        </a>
+                        <a
+                          href="tel:+919918699696"
+                          className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-gray-700 transition-colors"
+                        >
+                          📞 Call Support
+                        </a>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={handleReset}
+                      className="w-full mt-3 bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold text-xs py-2.5 rounded-xl transition-colors text-center cursor-pointer"
+                    >
+                      ← Try Again / Choose Another Bureau
                     </button>
                   </>
                 ) : (
@@ -635,23 +800,34 @@ const CibilHero = ({
                       </div>
                     </div>
 
-                    <div className="bg-blue-950/50 border border-blue-800/60 p-3 rounded-xl text-[11.5px] text-blue-200 mb-5 leading-relaxed">
+                    <div className="bg-blue-950/50 border border-blue-800/60 p-3 rounded-xl text-[11.5px] text-blue-200 mb-4 leading-relaxed">
                       💡 <strong>Bureau Note:</strong> This PAN has no prior credit history or active credit accounts in the {apiResult.bureau} database. Payment ID <strong>{apiResult.paymentId}</strong> is safely registered.
                     </div>
 
-                    {apiResult.pdfLink ? (
-                      <a
-                        href={apiResult.pdfLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full h-11 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 shadow"
+                    <div className="space-y-2 mb-3">
+                      {apiResult.pdfLink ? (
+                        <a
+                          href={apiResult.pdfLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full h-11 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 shadow"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                          </svg>
+                          Download Bureau PDF Output
+                        </a>
+                      ) : null}
+
+                      <button
+                        type="button"
+                        onClick={() => setShowInvoiceModal(true)}
+                        className="w-full h-10 bg-white/10 hover:bg-white/15 border border-[#de9e48]/50 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        Download Bureau PDF Output
-                      </a>
-                    ) : null}
+                        <FileText className="w-4 h-4 text-[#de9e48]" />
+                        <span>View / Print Tax Invoice</span>
+                      </button>
+                    </div>
 
                     {/* Support Help Link for 422 */}
                     <div className="mt-3 p-3 bg-gray-900/90 border border-gray-800 rounded-xl text-center">
@@ -957,6 +1133,13 @@ const CibilHero = ({
         </div>
 
       </div>
+
+      {/* Tax Invoice Modal */}
+      <CibilInvoiceModal 
+        isOpen={showInvoiceModal} 
+        onClose={() => setShowInvoiceModal(false)} 
+        reportData={apiResult} 
+      />
 
     </section>
   );

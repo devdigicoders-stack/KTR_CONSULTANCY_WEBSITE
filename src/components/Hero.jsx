@@ -39,7 +39,7 @@ const Hero = () => {
 
             {/* Consultation Button */}
             <Link 
-              to="/contact" 
+              to="/apply-online" 
               className="w-full sm:w-auto inline-flex items-center justify-center border-2 border-[#de9e48] text-[#020d1c] hover:bg-orange-50 font-bold py-3 sm:py-2.5 px-5 rounded-lg transition-all duration-300 text-sm whitespace-nowrap"
             >
               Get Free Consultation

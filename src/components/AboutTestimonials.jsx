@@ -4,19 +4,19 @@ const testimonialsData = [
     text: "KTR Consultants made our home loan process so easy. Their team is very professional, responsive and supportive.",
     name: "Ramesh Sharma",
     role: "Home Loan Client",
-    image: "https://randomuser.me/api/portraits/men/32.jpg"
+    image: "/ramesh_sharma.jpg"
   },
   {
     text: "Excellent support for our business loan. Everything was handled smoothly from documentation to funding.",
     name: "Sunita Verma",
     role: "Business Owner",
-    image: "https://randomuser.me/api/portraits/women/44.jpg"
+    image: "/sunita_verma.jpg"
   },
   {
     text: "Detailed CIBIL report with bank name and account details. Very reliable and trustworthy service.",
     name: "Amit Kumar",
     role: "Entrepreneur",
-    image: "https://randomuser.me/api/portraits/men/46.jpg"
+    image: "/amit_kumar.jpg"
   }
 ];
 

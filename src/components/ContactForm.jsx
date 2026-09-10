@@ -1,31 +1,78 @@
 import React, { useState } from 'react';
 
-const LOAN_SERVICES = [
-  'Home Loan',
-  'Plot + Construction (P+C)',
-  'Construction Loan',
-  'Loan Against Property (LAP)',
-  'LAP Takeover + Top-Up',
-  'MSME / Business Loan',
-  'Mudra Loan',
-  'CC / OD – Working Capital',
-  'Project Finance / Project Loan',
-  'Term Loan',
-  'Business Loan Takeover + Top-Up',
-  'Home Loan Balance Transfer + Top-Up',
-  'Property Purchase Loan',
-  'Commercial Property Loan',
-  'Other'
+const SERVICE_GROUPS = [
+  {
+    category: 'Loans & Financing',
+    services: [
+      'Home Loan',
+      'Plot + Construction (P+C)',
+      'Construction Loan',
+      'Loan Against Property (LAP)',
+      'LAP Takeover + Top-Up',
+      'MSME / Business Loan',
+      'Mudra Loan',
+      'CC / OD – Working Capital',
+      'Project Finance / Project Loan',
+      'Term Loan',
+      'Business Loan Takeover + Top-Up',
+      'Home Loan Balance Transfer + Top-Up',
+      'Property Purchase Loan',
+      'Commercial Property Loan'
+    ]
+  },
+  {
+    category: 'Property Services',
+    services: [
+      'Property Legal Services',
+      'Property Valuation & TDS Services',
+      'Assessment & Map Services',
+      'Property Search & Shortlisting'
+    ]
+  },
+  {
+    category: 'CA & Financial Services',
+    services: [
+      'GST Registration',
+      'Income Tax Return (ITR) Filing',
+      'GST Return Filing & Compliance',
+      'Business Registration & Setup',
+      'Financial Statements & CA Certification',
+      'CMA Data & Loan Documentation',
+      'Project Report / DPR',
+      'Financial Projections',
+      'Income / Turnover / Net Worth Certificates',
+      'Tax & GST Notice Assistance',
+      'Audit Services'
+    ]
+  },
+  {
+    category: 'Insurance Services',
+    services: [
+      'Life Insurance',
+      'Health Insurance (Care Supreme)',
+      'Vehicle Insurance'
+    ]
+  },
+  {
+    category: 'Other',
+    services: ['Other Custom Requirement']
+  }
 ];
 
 const SUBJECTS = [
-  'Loan Enquiry',
+  'Home Loan',
+  'Property Loan',
+  'Non Approved Society Loans',
+  'MSME / Project Finance',
+  'General Business Finance',
+  'CA Services',
+  'CIBIL Services',
+  'Property Legal / Valuation / TDS Services',
+  'Insurance and Retirement',
   'Application Status',
   'Document Support',
-  'Interest Rate Query',
   'Eligibility Check',
   'Complaint / Feedback',
-  'General Query',
   'Other'
 ];
 
@@ -196,7 +243,13 @@ const ContactForm = () => {
                     className="w-full bg-[#fcfcfc] border border-gray-200 rounded-lg px-4 py-3.5 text-[14px] text-gray-700 appearance-none focus:outline-none focus:border-[#de9e48] focus:ring-1 focus:ring-[#de9e48] transition-colors"
                   >
                     <option value="">Select a service (optional)</option>
-                    {LOAN_SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
+                    {SERVICE_GROUPS.map((group) => (
+                      <optgroup key={group.category} label={`── ${group.category} ──`}>
+                        {group.services.map((s) => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </optgroup>
+                    ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -284,7 +337,7 @@ const ContactForm = () => {
               </div>
               <div>
                 <h5 className="text-[#020d1c] font-bold text-[14px]">Phone</h5>
-                <p className="text-gray-500 text-[12.5px]">+91 98765 43210</p>
+                <a href="tel:+919918699696" className="text-gray-500 hover:text-[#de9e48] transition-colors text-[12.5px]">+91 99186 99696</a>
               </div>
             </div>
 
@@ -296,7 +349,7 @@ const ContactForm = () => {
               </div>
               <div>
                 <h5 className="text-[#020d1c] font-bold text-[14px]">Email</h5>
-                <p className="text-gray-500 text-[12.5px]">info@ktrconsultants.com</p>
+                <a href="mailto:info@ktrconsultants.in" className="text-gray-500 hover:text-[#de9e48] transition-colors text-[12.5px]">info@ktrconsultants.in</a>
               </div>
             </div>
 

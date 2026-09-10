@@ -6,8 +6,7 @@ const loanDocMap = {
     "PAN Card & Aadhaar Card",
     "Latest 3 Months Salary Slips / ITR",
     "Latest 6 Months Bank Statement",
-    "Property Documents / Allotment Letter",
-    "Passport Size Photograph"
+    "Property Documents / Allotment Letter"
   ],
   "Plot + Construction (P+C)": [
     "PAN & Aadhaar Card",
@@ -55,8 +54,7 @@ const loanDocMap = {
     "PAN & Aadhaar Card",
     "Business Registration / Udyam Certificate",
     "6 Months Bank Statement",
-    "Quotation of Machinery / Items to purchase",
-    "Passport Size Photographs"
+    "Quotation of Machinery / Items to purchase"
   ],
   "Project Finance / Funding": [
     "Detailed Project Report (DPR)",
@@ -114,6 +112,128 @@ const loanDocMap = {
     "12 Months Bank Statement",
     "GST Registration & Returns"
   ],
+  "Property Legal Services": [
+    "PAN Card & Aadhaar Card",
+    "Current Title Deed / Sale Deed Copy",
+    "Parent Deed / Chain Deeds Copy (if available)",
+    "Property Tax Receipt / Khata / Mutation Copy",
+    "Any existing encumbrance / legal notice copy (if applicable)"
+  ],
+  "Property Valuation & TDS Services": [
+    "PAN Card & Aadhaar Card of Buyer & Seller",
+    "Property Registered Sale Deed / Agreement to Sale",
+    "Form 26QB Acknowledgement / Challan details (for TDS)",
+    "Approved Building Plan / Map (if available)",
+    "Previous valuation / acquisition cost proof (for Capital Gains)"
+  ],
+  "Assessment & Map Services": [
+    "PAN & Aadhaar Card",
+    "Property Registry / Allotment Letter Copy",
+    "Municipal Assessment Bill / House Tax Receipt",
+    "Existing Layout / Location Map Copy",
+    "Site Photographs (if available)"
+  ],
+  "Property Search & Shortlisting": [
+    "PAN & Aadhaar Card",
+    "Budget & Preferred Location Details",
+    "Property Type Requirement (Residential / Commercial / Plot)",
+    "Income Proof (if planning with loan)"
+  ],
+  "Life Insurance": [
+    "PAN Card & Aadhaar Card",
+    "Latest 3 Months Salary Slips / Past 2 Years ITR",
+    "Latest 6 Months Bank Statement",
+    "Medical checkup records (if applicable / for high sum assured)",
+    "Passport size photo"
+  ],
+  "Health Insurance (Care Supreme)": [
+    "PAN Card & Aadhaar Card",
+    "Previous Health Insurance Policy Copy (for porting/continuity bonus)",
+    "Medical history / existing ailment prescriptions (if any)",
+    "Bank Account Details / Cancelled Cheque (for claims & refund)"
+  ],
+  "Vehicle Insurance": [
+    "Vehicle RC (Registration Certificate) Copy",
+    "Previous Year Vehicle Insurance Policy Copy",
+    "PAN Card & Aadhaar Card of Vehicle Owner",
+    "No Claim Bonus (NCB) Proof (if applicable)"
+  ],
+  "GST Registration": [
+    "PAN Card of Business / Proprietor / Directors",
+    "Aadhaar Card of Applicant / Partners / Directors",
+    "Passport Size Photograph",
+    "Business Address Proof (Electricity bill / Rent agreement + NOC)",
+    "Business Constitution Documents (Partnership Deed / COI / MOA-AOA, if applicable)"
+  ],
+  "Income Tax Return (ITR) Filing": [
+    "PAN Card & Aadhaar Card",
+    "Form 16 / Salary Slips (for salaried individuals)",
+    "Previous Year ITR Copy (if available)",
+    "Bank Account Statements (Past 12 months for all active accounts)",
+    "Investment Proofs (80C, 80D, LIC, PPF, etc.)"
+  ],
+  "GST Return Filing & Compliance": [
+    "GSTIN Number & Portal Credentials",
+    "Monthly / Quarterly Sales Invoices / Summary",
+    "Purchase Invoices & Bills",
+    "Bank Statements (Past 6 to 12 months)",
+    "Previous GST Returns (GSTR-1, GSTR-3B)"
+  ],
+  "Business Registration & Setup": [
+    "PAN & Aadhaar Card of Directors / Partners / Proprietor",
+    "Registered Office Address Proof (Electricity bill / Rent Agreement + NOC)",
+    "Proposed Business Names (2-3 options)",
+    "Object & Nature of Business Activity",
+    "Supporting Registration Specific Documents"
+  ],
+  "Financial Statements & CA Certification": [
+    "Previous 2-3 Years Financial Statements",
+    "Bank Statements (Past 12 months for all active accounts)",
+    "GST Returns (GSTR-3B & GSTR-1)",
+    "Income Tax Returns (ITRs with Computation)",
+    "Sales, Purchase & Expense Summary Records"
+  ],
+  "CMA Data & Loan Documentation": [
+    "Audited / Provisional Financial Statements (Past 2-3 years)",
+    "ITRs with Computation (Past 2-3 years)",
+    "GST Returns (Past 12 months)",
+    "Bank Statements of all active accounts (Past 12 months)",
+    "Existing Loan Sanction Letters & Outstanding Repayment Track"
+  ],
+  "Project Report / DPR": [
+    "Business Profile & Promoter Profiles",
+    "Project Concept & Estimated Project Cost Breakdown",
+    "Machinery, Equipment & Infrastructure Quotations",
+    "Land / Property Details / Civil Construction Estimates",
+    "Existing Business Financial Statements (if applicable)"
+  ],
+  "Financial Projections": [
+    "Existing Financial Statements / Provisional Accounts",
+    "Past ITRs and GST Returns",
+    "Current Turnover & Bank Statements",
+    "Proposed Investment & Expansion Outlay",
+    "Projected Revenue, Direct Costs & Operating Expenses"
+  ],
+  "Income / Turnover / Net Worth Certificates": [
+    "PAN Card & Aadhaar Card of Applicant / Entity",
+    "Last 1 to 3 Years ITRs with Computation Sheets",
+    "Financial Statements (Balance Sheet & P&L)",
+    "Bank Statements & Fixed Deposit / Mutual Fund / Demat Proofs",
+    "Property Valuation Reports / Land Registry Papers"
+  ],
+  "Tax & GST Notice Assistance": [
+    "PAN / GSTIN Credentials",
+    "Copy of Income Tax / GST Notice, Order or Intimation received",
+    "Relevant Previous Returns filed (ITR / GST)",
+    "Books of Accounts / Ledger Records corresponding to notice points"
+  ],
+  "Audit Services": [
+    "Full Books of Accounts (Tally / Busy / ERP Backup)",
+    "Financial Statements (Balance Sheet, P&L, Trial Balance)",
+    "Bank Statements of all bank accounts (Complete Year)",
+    "GST Returns & Monthly ITC Reconciliation",
+    "Statutory Registers, Minutes & ROC Filings (for Companies)"
+  ],
   "Other": [
     "PAN Card",
     "Aadhaar Card",
@@ -123,75 +243,125 @@ const loanDocMap = {
   ]
 };
 
-const allServices = [
-  { id: 'Home Loan', label: 'Home Loan' },
-  { id: 'Plot + Construction (P+C)', label: 'Plot + Construction (P+C)' },
-  { id: 'Construction Loan', label: 'Construction Loan' },
-  { id: 'Loan Against Property (LAP)', label: 'Loan Against Property (LAP)' },
-  { id: 'LAP Takeover + Top-Up', label: 'LAP Takeover + Top-Up' },
-  { id: 'MSME / Business Loan', label: 'MSME / Business Loan' },
-  { id: 'Mudra Loan', label: 'Mudra Loan' },
-  { id: 'CC / OD – Working Capital', label: 'CC / OD – Working Capital' },
-  { id: 'Project Finance / Project Loan', label: 'Project Finance / Project Loan' },
-  { id: 'Term Loan', label: 'Term Loan' },
-  { id: 'Business Loan Takeover + Top-Up', label: 'Business Loan Takeover + Top-Up' },
-  { id: 'Home Loan Balance Transfer + Top-Up', label: 'Home Loan Balance Transfer + Top-Up' },
-  { id: 'Property Purchase Loan', label: 'Property Purchase Loan' },
-  { id: 'Commercial Property Loan', label: 'Commercial Property Loan' },
-  { id: 'Other', label: 'Other' }
-];
+// Loan Services
+const loanServicesGroup = {
+  category: 'Loans & Financing',
+  services: [
+    { id: 'Home Loan', label: 'Home Loan' },
+    { id: 'Plot + Construction (P+C)', label: 'Plot + Construction (P+C)' },
+    { id: 'Construction Loan', label: 'Construction Loan' },
+    { id: 'Loan Against Property (LAP)', label: 'Loan Against Property (LAP)' },
+    { id: 'LAP Takeover + Top-Up', label: 'LAP Takeover + Top-Up' },
+    { id: 'MSME / Business Loan', label: 'MSME / Business Loan' },
+    { id: 'Mudra Loan', label: 'Mudra Loan' },
+    { id: 'CC / OD – Working Capital', label: 'CC / OD – Working Capital' },
+    { id: 'Project Finance / Project Loan', label: 'Project Finance / Project Loan' },
+    { id: 'Term Loan', label: 'Term Loan' },
+    { id: 'Business Loan Takeover + Top-Up', label: 'Business Loan Takeover + Top-Up' },
+    { id: 'Home Loan Balance Transfer + Top-Up', label: 'Home Loan Balance Transfer + Top-Up' },
+    { id: 'Property Purchase Loan', label: 'Property Purchase Loan' },
+    { id: 'Commercial Property Loan', label: 'Commercial Property Loan' }
+  ]
+};
 
-const msmeServices = [
-  { id: 'Mudra Loan', label: 'Mudra Loan' },
-  { id: 'MSME Loan', label: 'MSME Loan' },
-  { id: 'Project Finance / Funding', label: 'Project Funding / Finance' }
-];
+// Property Services
+const propertyServicesGroup = {
+  category: 'Property Services',
+  services: [
+    { id: 'Property Legal Services', label: 'Property Legal Services (Chain Deed & Title Search)' },
+    { id: 'Property Valuation & TDS Services', label: 'Property Valuation & TDS (Form 26QB) Services' },
+    { id: 'Assessment & Map Services', label: 'Assessment & Map Services' },
+    { id: 'Property Search & Shortlisting', label: 'Property Search & Shortlisting' }
+  ]
+};
 
-const businessServices = [
-  { id: 'MSME / Business Loan', label: 'MSME / Business Loan' },
-  { id: 'CC / OD – Working Capital', label: 'CC / OD – Working Capital' },
-  { id: 'Project Finance / Project Loan', label: 'Project Finance / Project Loan' },
-  { id: 'Term Loan', label: 'Term Loan' },
-  { id: 'Business Loan Takeover + Top-Up', label: 'Business Loan Takeover + Top-Up' },
-  { id: 'Mudra Loan', label: 'Mudra Loan' },
-  { id: 'Commercial Property Loan', label: 'Commercial Property Loan' },
-  { id: 'Other', label: 'Other Business Requirement' }
-];
+// CA & Financial Services
+const caServicesGroup = {
+  category: 'CA & Financial Services',
+  services: [
+    { id: 'GST Registration', label: 'GST Registration' },
+    { id: 'Income Tax Return (ITR) Filing', label: 'Income Tax Return (ITR) Filing' },
+    { id: 'GST Return Filing & Compliance', label: 'GST Return Filing & Compliance' },
+    { id: 'Business Registration & Setup', label: 'Business Registration & Setup (Pvt Ltd, LLP, MSME)' },
+    { id: 'Financial Statements & CA Certification', label: 'Financial Statements & CA Certification' },
+    { id: 'CMA Data & Loan Documentation', label: 'CMA Data & Loan Documentation' },
+    { id: 'Project Report / DPR', label: 'Project Report / DPR' },
+    { id: 'Financial Projections', label: 'Financial Projections' },
+    { id: 'Income / Turnover / Net Worth Certificates', label: 'Income / Turnover / Net Worth Certificates' },
+    { id: 'Tax & GST Notice Assistance', label: 'Tax & GST Notice Assistance' },
+    { id: 'Audit Services', label: 'Audit Services' }
+  ]
+};
+
+// Insurance Services
+const insuranceServicesGroup = {
+  category: 'Insurance Services',
+  services: [
+    { id: 'Life Insurance', label: 'Life Insurance' },
+    { id: 'Health Insurance (Care Supreme)', label: 'Health Insurance (Care Supreme)' },
+    { id: 'Vehicle Insurance', label: 'Vehicle Insurance' }
+  ]
+};
+
+const otherServicesGroup = {
+  category: 'Other Services',
+  services: [
+    { id: 'Other', label: 'Other Custom Requirement' }
+  ]
+};
 
 const ApplyForm = () => {
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get('category')?.toLowerCase() || '';
   const serviceParam = searchParams.get('service') || '';
 
+  const isPropertyCategory = categoryParam === 'property' || categoryParam === 'property-services' || categoryParam === 'real-estate';
+  const isCaCategory = categoryParam === 'ca' || categoryParam === 'ca-services' || categoryParam === 'tax' || categoryParam === 'gst' || categoryParam === 'itr';
+  const isInsuranceCategory = categoryParam === 'insurance' || categoryParam === 'insurance-services';
   const isMsmeCategory = categoryParam === 'msme' || categoryParam === 'msme-loans';
   const isBusinessCategory = categoryParam === 'business' || categoryParam === 'business-finance' || categoryParam === 'business-loan';
 
-  let availableServices = allServices;
+  // Sort groups dynamically: current page category comes FIRST on top, followed by others
+  let orderedGroups = [];
   let defaultService = 'Home Loan';
 
-  if (isMsmeCategory) {
-    availableServices = msmeServices;
-    defaultService = 'Mudra Loan';
-  } else if (isBusinessCategory) {
-    availableServices = businessServices;
-    defaultService = 'MSME / Business Loan';
+  if (isPropertyCategory) {
+    orderedGroups = [propertyServicesGroup, loanServicesGroup, caServicesGroup, insuranceServicesGroup, otherServicesGroup];
+    defaultService = 'Property Legal Services';
+  } else if (isCaCategory) {
+    orderedGroups = [caServicesGroup, loanServicesGroup, propertyServicesGroup, insuranceServicesGroup, otherServicesGroup];
+    defaultService = 'Income Tax Return (ITR) Filing';
+  } else if (isInsuranceCategory) {
+    orderedGroups = [insuranceServicesGroup, loanServicesGroup, propertyServicesGroup, caServicesGroup, otherServicesGroup];
+    defaultService = 'Life Insurance';
+  } else if (isMsmeCategory || isBusinessCategory) {
+    orderedGroups = [loanServicesGroup, caServicesGroup, propertyServicesGroup, insuranceServicesGroup, otherServicesGroup];
+    defaultService = isMsmeCategory ? 'Mudra Loan' : 'MSME / Business Loan';
+  } else {
+    // Default Loan page / General Apply Online
+    orderedGroups = [loanServicesGroup, propertyServicesGroup, caServicesGroup, insuranceServicesGroup, otherServicesGroup];
+    defaultService = 'Home Loan';
   }
 
-  const [selectedService, setSelectedService] = useState(
-    serviceParam || defaultService
-  );
+  // Flatten for quick validation
+  const allAvailableServices = orderedGroups.flatMap(g => g.services);
+
+  const [selectedService, setSelectedService] = useState(() => {
+    if (serviceParam && allAvailableServices.some(s => s.id.toLowerCase() === serviceParam.toLowerCase() || s.id === serviceParam)) {
+      const match = allAvailableServices.find(s => s.id.toLowerCase() === serviceParam.toLowerCase() || s.id === serviceParam);
+      return match ? match.id : defaultService;
+    }
+    return defaultService;
+  });
 
   useEffect(() => {
-    if (isMsmeCategory) {
-      if (!msmeServices.some(s => s.id === selectedService)) {
-        setSelectedService('Mudra Loan');
-      }
-    } else if (isBusinessCategory) {
-      if (!businessServices.some(s => s.id === selectedService)) {
-        setSelectedService('MSME / Business Loan');
-      }
+    if (serviceParam) {
+      const match = allAvailableServices.find(s => s.id.toLowerCase() === serviceParam.toLowerCase() || s.id === serviceParam);
+      if (match) setSelectedService(match.id);
+    } else {
+      setSelectedService(defaultService);
     }
-  }, [isMsmeCategory, isBusinessCategory]);
+  }, [categoryParam, serviceParam]);
 
   const [loading, setLoading] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
@@ -531,10 +701,14 @@ const ApplyForm = () => {
                 onChange={(e) => setSelectedService(e.target.value)}
                 className="w-full h-12 px-4 pr-10 border border-gray-300 rounded-xl outline-none focus:border-[#de9e48] focus:ring-2 focus:ring-[#de9e48]/20 text-[14px] sm:text-[15px] font-semibold text-[#020d1c] bg-white shadow-xs appearance-none cursor-pointer transition-all"
               >
-                {availableServices.map((service) => (
-                  <option key={service.id} value={service.id}>
-                    {service.label}
-                  </option>
+                {orderedGroups.map((group) => (
+                  <optgroup key={group.category} label={`── ${group.category} ──`} className="font-bold text-[#020d1c] bg-gray-50">
+                    {group.services.map((service) => (
+                      <option key={service.id} value={service.id} className="font-normal text-gray-800 bg-white py-1">
+                        {service.label}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#de9e48]">

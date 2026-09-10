@@ -63,9 +63,6 @@ const CibilServiceNav = ({ activeService = 'enquiry' }) => {
             {/* Top Row: Service Number & Active Badge */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-md bg-[#020d1c] text-[#de9e48]">
-                  Service 01
-                </span>
                 <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                   Instant Bureau Check
                 </span>
@@ -130,9 +127,6 @@ const CibilServiceNav = ({ activeService = 'enquiry' }) => {
             {/* Top Row: Service Number & Active Badge */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-md bg-[#020d1c] text-[#de9e48]">
-                  Service 02
-                </span>
                 <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                   Dispute & Forensic Audit
                 </span>

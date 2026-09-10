@@ -352,35 +352,37 @@ const QuickLoanApplyModal = ({ isOpen, onClose, service }) => {
             </svg>
           </button>
 
-          {/* Badge & Stepper */}
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <div className="inline-flex items-center gap-2 bg-[#de9e48]/20 text-[#de9e48] border border-[#de9e48]/40 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#de9e48] animate-pulse"></span>
-              <span>{serviceTitle}</span>
+          {/* Badge & Stepper & Close Button Row */}
+          <div className="flex items-center justify-between gap-3 mb-3 pr-10">
+            {/* Service Badge */}
+            <div className="inline-flex items-center gap-2 bg-[#de9e48]/20 text-[#de9e48] border border-[#de9e48]/40 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider truncate max-w-[200px] sm:max-w-none">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#de9e48] animate-pulse shrink-0"></span>
+              <span className="truncate">{serviceTitle}</span>
             </div>
 
+            {/* Stepper Tabs */}
             {!submittedData && (
-              <div className="flex items-center gap-1.5 text-[11px] font-bold">
+              <div className="flex items-center gap-1.5 text-[11px] font-bold shrink-0">
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className={`px-2.5 py-0.5 rounded transition-colors ${
+                  className={`px-2.5 py-1 rounded-md transition-colors ${
                     step === 1 
-                      ? 'bg-[#de9e48] text-[#020d1c]' 
+                      ? 'bg-[#de9e48] text-[#020d1c] font-black' 
                       : 'bg-white/10 text-gray-300 hover:text-white'
                   }`}
                 >
                   Step 1: Details
                 </button>
-                <span className="text-gray-500">→</span>
+                <span className="text-gray-500 text-xs">→</span>
                 <button
                   type="button"
                   onClick={() => {
                     if (validateStep1()) setStep(2);
                   }}
-                  className={`px-2.5 py-0.5 rounded transition-colors ${
+                  className={`px-2.5 py-1 rounded-md transition-colors ${
                     step === 2 
-                      ? 'bg-[#de9e48] text-[#020d1c]' 
+                      ? 'bg-[#de9e48] text-[#020d1c] font-black' 
                       : 'bg-white/10 text-gray-300 hover:text-white'
                   }`}
                 >
@@ -601,7 +603,7 @@ const QuickLoanApplyModal = ({ isOpen, onClose, service }) => {
 
                     <div>
                       <label className="block text-xs font-bold text-[#020d1c] mb-1">
-                        Loan Purpose <span className="text-gray-400 font-normal text-[11px]">(Auto-selected)</span>
+                        Loan Purpose
                       </label>
                       <input
                         type="text"
@@ -797,12 +799,15 @@ const QuickLoanApplyModal = ({ isOpen, onClose, service }) => {
                     </div>
 
                     {/* OPTION 1 (Submit Query - For clients preferring to discuss first) */}
-                    <div className="bg-gray-50/90 border border-gray-200 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-3">
-                      <div className="text-left">
-                        <p className="text-xs font-bold text-[#020d1c]">
-                          Prefer to discuss first?
-                        </p>
-                        <p className="text-[11px] text-gray-500">
+                    <div className="bg-gradient-to-br from-[#020d1c]/5 via-[#020d1c]/[0.08] to-[#de9e48]/10 border border-[#020d1c]/15 rounded-xl p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm relative overflow-hidden">
+                      <div className="text-left relative z-10">
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#020d1c]"></span>
+                          <p className="text-xs font-bold text-[#020d1c]">
+                            Prefer to discuss first?
+                          </p>
+                        </div>
+                        <p className="text-[11px] text-gray-600 leading-snug">
                           Submit your enquiry and our loan advisor will contact you to understand your requirement.
                         </p>
                       </div>
@@ -811,15 +816,15 @@ const QuickLoanApplyModal = ({ isOpen, onClose, service }) => {
                         type="button"
                         onClick={(e) => handleSubmit(e, true)}
                         disabled={loading}
-                        className="w-full sm:w-auto shrink-0 h-10 px-5 border border-gray-300 hover:border-gray-800 bg-white hover:bg-gray-100 disabled:opacity-50 text-[#020d1c] font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs active:scale-98"
+                        className="w-full sm:w-auto shrink-0 h-10 px-5 bg-[#020d1c] hover:bg-[#0a1930] disabled:opacity-50 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md hover:shadow-lg active:scale-98 relative z-10"
                       >
                         {loading ? (
                           <span>Submitting...</span>
                         ) : (
                           <>
                             <span>SUBMIT QUERY</span>
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                            <svg className="w-3.5 h-3.5 text-[#de9e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                             </svg>
                           </>
                         )}

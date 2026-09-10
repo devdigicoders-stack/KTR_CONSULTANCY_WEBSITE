@@ -81,7 +81,7 @@ const Terms = () => {
             <div>
               <h2 className="text-[#020d1c] font-bold text-[22px] font-serif mb-3 tracking-tight">6. Governing Law & Jurisdiction</h2>
               <p className="text-gray-600 text-[15px] leading-[1.8]">
-                These Terms will be governed by and interpreted in accordance with the laws of the State of New York, and you submit to the non-exclusive jurisdiction of the state and federal courts located in New York for the resolution of any disputes. Any claim related to KTR Consultants's Website shall be governed by the laws of the State of New York without regard to its conflict of law provisions.
+                These Terms will be governed by and interpreted in accordance with the laws of India, and you submit to the exclusive jurisdiction of the competent courts located in Lucknow, Uttar Pradesh for the resolution of any disputes. Any claim related to KTR Consultants's Website and services shall be subject to Lucknow jurisdiction only.
               </p>
             </div>
           </div>

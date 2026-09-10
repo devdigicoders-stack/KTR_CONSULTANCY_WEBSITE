@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const testimonialsData = [
@@ -6,30 +6,48 @@ const testimonialsData = [
     text: "KTR Consultants made our home loan process so easy. Their team is very professional and supportive.",
     name: "Ramesh Sharma",
     role: "Home Loan Client",
-    image: "https://randomuser.me/api/portraits/men/32.jpg"
+    image: "/ramesh_sharma.jpg"
   },
   {
     text: "We got Mudra loan for our business within few days. Great experience with KTR team.",
     name: "Sunita Verma",
     role: "Business Owner",
-    image: "https://randomuser.me/api/portraits/women/44.jpg"
+    image: "/sunita_verma.jpg"
   },
   {
     text: "Excellent service for CIBIL report. Detailed information with bank names and account numbers.",
     name: "Amit Kumar",
     role: "Entrepreneur",
-    image: "https://randomuser.me/api/portraits/men/46.jpg"
+    image: "/amit_kumar.jpg"
   }
 ];
 
 const faqsData = [
-  "What types of loans do you offer?",
-  "Do you provide loan for non-approved society property?",
-  "How long does the loan process take?",
-  "What documents are required for loan?"
+  {
+    q: "What types of loans do you offer?",
+    a: "We offer Home Loans, Mortgage Loans (LAP), Business & MSME Loans, Mudra Loans, Personal Loans, and Loans against Lal Dora / Non-approved / Chain Deed properties across 50+ partner banks & NBFCs."
+  },
+  {
+    q: "Do you provide loan for non-approved society property?",
+    a: "Yes, we specialize in funding for unapproved colony properties, Gram Sabha land, lal dora properties, and chain deed properties through select specialized NBFCs and private funding partners."
+  },
+  {
+    q: "How long does the loan process take?",
+    a: "Standard loan approvals typically take 3 to 7 working days depending on the property type and verification. Unsecured business and personal loans can be processed in as fast as 48 to 72 hours."
+  },
+  {
+    q: "What documents are required for loan?",
+    a: "Primary documents include PAN Card, Aadhaar Card, Income Proof (Salary Slips / ITR), 6-month Bank Statements, and Complete Property Chain Documents (Registry, Mutation, Electricity Bill)."
+  }
 ];
 
 const Testimonials = () => {
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
+
+  const toggleFaq = (index) => {
+    setOpenFaqIndex(prevIndex => prevIndex === index ? -1 : index);
+  };
+
   return (
     <section className="bg-white py-16 font-sans">
       <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-12">
@@ -79,28 +97,47 @@ const Testimonials = () => {
             </div>
           </div>
 
-          {/* Right Side: FAQ */}
+          {/* Right Side: FAQ Accordion */}
           <div className="w-full xl:w-[35%] 2xl:w-[30%] flex flex-col pt-2 xl:pt-0">
             <h3 className="text-[#de9e48] text-[15px] font-bold tracking-wide uppercase mb-6 pl-1">
               FREQUENTLY ASKED QUESTIONS
             </h3>
             
             <div className="flex flex-col gap-3 mb-6">
-              {faqsData.map((faq, index) => (
-                <div 
-                  key={index} 
-                  className="bg-white border border-gray-100 rounded-lg px-5 py-4 flex items-center justify-between cursor-pointer hover:border-gray-200 hover:shadow-sm transition-all"
-                >
-                  <span className="text-[#020d1c] text-[13px] md:text-[14px] font-semibold pr-4">
-                    {faq}
-                  </span>
-                  <div className="text-[#de9e48] flex-shrink-0">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                    </svg>
+              {faqsData.map((faq, index) => {
+                const isOpen = openFaqIndex === index;
+                return (
+                  <div 
+                    key={index} 
+                    className={`bg-white border rounded-xl transition-all duration-200 overflow-hidden ${
+                      isOpen ? 'border-[#de9e48]/60 shadow-sm ring-1 ring-[#de9e48]/20' : 'border-gray-100 hover:border-gray-200'
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(index)}
+                      className="w-full text-left px-5 py-3.5 flex items-center justify-between gap-3 cursor-pointer"
+                    >
+                      <span className={`text-[13px] md:text-[14px] font-semibold transition-colors ${
+                        isOpen ? 'text-[#020d1c] font-bold' : 'text-[#020d1c]'
+                      }`}>
+                        {faq.q}
+                      </span>
+                      <div className={`text-[#de9e48] flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </button>
+                    
+                    {isOpen && (
+                      <div className="px-5 pb-4 pt-1 text-[12.5px] text-gray-600 leading-relaxed border-t border-gray-50 animate-fadeIn">
+                        {faq.a}
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
