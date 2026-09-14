@@ -330,9 +330,33 @@ const CibilHero = ({
       }
 
     } catch (err) {
-      setIsProcessing(false);
-      // If user closed Razorpay popup or payment failed, Surepass API is NOT called
-      setApiError(err.message || 'Payment was cancelled or failed. Your card was not charged.');
+      if (paymentResult && paymentResult.paymentId) {
+        console.warn('Bureau API error after payment capture, triggering auto-refund:', err.message);
+        setProcessingStage('Report could not be retrieved. Initiating automatic refund...');
+        const refundResult = await triggerAutoRefund({
+          paymentId: paymentResult.paymentId,
+          amount: pricing.totalPayable,
+          reason: err.message || 'Bureau API request failed after payment.'
+        });
+
+        setIsProcessing(false);
+        setApiResult({
+          status: 'refunded',
+          refundId: refundResult?.refundId || 'RFND_' + Date.now(),
+          amount: pricing.totalPayable,
+          paymentId: paymentResult.paymentId,
+          message: err.message || 'Bureau report generation failed post-payment. Payment reversed.',
+          name: formData.name,
+          pan: formData.pan,
+          mobile: formData.mobile,
+          bureau: bureau.name,
+          date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+        });
+      } else {
+        setIsProcessing(false);
+        // If user closed Razorpay popup or payment failed, Surepass API was NOT called
+        setApiError(err.message || 'Payment was cancelled or failed. Your card was not charged.');
+      }
     }
   };
 

@@ -29,6 +29,7 @@ import FakeLoanRemoval from './pages/FakeLoanRemoval';
 import InsuranceServices from './pages/InsuranceServices';
 import InvestmentRetirement from './pages/InvestmentRetirement';
 import EMICalculatorPage from './pages/EMICalculatorPage';
+import PaymentPage from './pages/PaymentPage';
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="/loans" element={<Services />} />
           <Route path="/property-loans" element={<Services />} />
           <Route path="/emi-calculator" element={<EMICalculatorPage />} />
+          <Route path="/pay/:linkId" element={<PaymentPage />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
