@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import SEO from '../components/SEO';
 import CibilHero from '../components/CibilHero';
 import CibilPricingTable from '../components/CibilPricingTable';
 import CibilInfo from '../components/CibilInfo';
@@ -41,6 +42,12 @@ const CibilServices = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEO 
+        title="CIBIL Score Improvement & Credit Dispute Resolution"
+        description="Improve your CIBIL credit score and resolve negative remarks, default entries, and bureau discrepancies with expert guidance from KTR Consultants (ktrconsultants.in) in Lucknow."
+        keywords="cibil score improvement, cibil dispute rectification, cibil repair lucknow, fix cibil score, ktr consultants cibil"
+        canonicalUrl="https://www.ktrconsultants.in/cibil-services"
+      />
       <CibilHero 
         selectedBureauProp={selectedBureau} 
         setSelectedBureauProp={setSelectedBureau}

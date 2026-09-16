@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../components/SEO';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
 import HomeUSPBanner from '../components/HomeUSPBanner';
@@ -16,6 +17,12 @@ import CTASection from '../components/CTASection';
 const Home = () => {
   return (
     <>
+      <SEO 
+        title="Financial Advisory, Business Loans & CIBIL Solutions"
+        description="Welcome to KTR Consultants (ktrconsultants.in) in Gomti Nagar, Lucknow. Fast, trusted assistance for Business Finance, MSME Loans, CIBIL Score Improvement, Fake Loan Removal, and Property Legal Services."
+        keywords="ktrconsultants, ktr consultants, ktrconsultants.in, business loans lucknow, cibil improvement, fake loan removal, property legal services"
+        canonicalUrl="https://www.ktrconsultants.in/"
+      />
       <Hero />
       <Services />
       <HomeGSTUSPBanner />

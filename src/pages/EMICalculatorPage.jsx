@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import EMICalculator from '../components/EMICalculator';
 import LoansBottomCTA from '../components/LoansBottomCTA';
 
@@ -23,15 +24,21 @@ const EMICalculatorPage = () => {
     },
     {
       q: "Does prepaying part of the loan reduce EMI or tenure?",
-      a: "When you make part-prepayments, banks generally allow you to either reduce the remaining loan tenure (keeping EMI constant) to save maximum interest, or reduce the monthly EMI amount to ease your monthly budget."
+      a: "Prepaying even small amounts towards your loan principal drastically reduces total interest outgo. Most banks allow you to choose between reducing your loan tenure (recommended) or decreasing your monthly EMI."
     }
   ];
 
   return (
-    <div className="min-h-screen bg-[#fafafa] font-sans">
+    <div className="bg-[#fafafa] min-h-screen font-sans">
+      <SEO 
+        title="Loan EMI & Financial Planning Calculator"
+        description="Free online Loan EMI Calculator by KTR Consultants (ktrconsultants.in). Calculate monthly installments, total interest outgo, and amortization schedule for Home Loans & Business Loans."
+        keywords="loan emi calculator, home loan emi lucknow, business loan calculator, ktr consultants emi calculator"
+        canonicalUrl="https://www.ktrconsultants.in/emi-calculator"
+      />
       
-      {/* Hero Header Section */}
-      <section className="bg-[#020d1c] text-white pt-10 pb-16 md:pt-14 md:pb-20 relative overflow-hidden">
+      {/* Hero Header */}
+      <section className="bg-[#020d1c] text-white pt-8 pb-16 relative overflow-hidden border-b border-gray-800">
         {/* Background glow */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#de9e48]/10 rounded-full blur-3xl pointer-events-none"></div>
 

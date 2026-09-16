@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../components/SEO';
 import ServicesHero from '../components/ServicesHero';
 import ServicesGrid from '../components/ServicesGrid';
 import EMICalculator from '../components/EMICalculator';
@@ -9,6 +10,12 @@ import LoansBottomCTA from '../components/LoansBottomCTA';
 const Services = () => {
   return (
     <>
+      <SEO 
+        title="Our Financial & Legal Services"
+        description="Explore comprehensive services from KTR Consultants (ktrconsultants.in): Business Loans, MSME Funding, CIBIL Dispute Resolution, Property Legal Verification, and CA Services in Lucknow."
+        keywords="ktr consultants services, business finance, loan services lucknow, cibil score rectification, property assessment"
+        canonicalUrl="https://www.ktrconsultants.in/services"
+      />
       <ServicesHero />
       <ServicesGrid />
       <div className="bg-white py-12 md:py-16 border-t border-b border-gray-100">

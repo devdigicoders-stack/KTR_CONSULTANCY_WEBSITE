@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import InsuranceQuickEnquiryForm from '../components/InsuranceQuickEnquiryForm';
 import CareSupremeSpotlight from '../components/CareSupremeSpotlight';
 
@@ -23,13 +24,21 @@ const InsuranceServices = () => {
 
   const lifePartners = [
     { name: 'LIC of India', badge: 'Govt. Sovereign Guarantee', icon: '🏛️' },
-    { name: 'Canara HSBC Life', badge: 'Bank Backed Trust', icon: '🏦' },
-    { name: 'Future Generali Life', badge: 'Global Financial Expertise', icon: '🌐' },
-    { name: 'Bajaj Allianz Life', badge: 'Comprehensive Protection', icon: '🛡️' }
+    { name: 'HDFC Life', badge: 'Top Private Insurer', icon: '⭐' },
+    { name: 'ICICI Prudential', badge: 'High Claim Ratio', icon: '🛡️' },
+    { name: 'Max Life', badge: '99.5% Settlement', icon: '🎖️' },
+    { name: 'SBI Life', badge: 'Trusted Banking Brand', icon: '🏦' },
+    { name: 'Tata AIA', badge: 'Comprehensive Cover', icon: '✨' }
   ];
 
   return (
     <div className="bg-white min-h-screen font-sans">
+      <SEO 
+        title="Insurance Solutions - Life, Health & Commercial"
+        description="Get the right Life, Health, and Commercial Insurance policies with highest claim settlement ratios from KTR Consultants (ktrconsultants.in) in Lucknow."
+        keywords="insurance services lucknow, term life insurance, health insurance care supreme, commercial insurance, ktr consultants insurance"
+        canonicalUrl="https://www.ktrconsultants.in/insurance-services"
+      />
       
       {/* 1. Hero Section */}
       <section className="bg-gradient-to-b from-[#020d1c] via-[#091b35] to-[#020d1c] text-white pt-10 pb-16 lg:pt-14 lg:pb-20 relative overflow-hidden">
