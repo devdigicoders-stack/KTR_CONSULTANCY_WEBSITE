@@ -419,86 +419,99 @@ const CibilHero = ({
               Select your preferred credit bureau below, enter your basic details, pay securely via Razorpay, and download your full official PDF credit report immediately.
             </p>
 
-            {/* Bureau Selection Cards Grid */}
-            <div className="mb-8">
-              <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">
-                1. Select Credit Bureau ({Object.keys(BUREAU_CONFIGS).length} Available)
-              </label>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {Object.values(BUREAU_CONFIGS).map((bureau) => {
-                  const isSelected = selectedBureau === bureau.id;
-                  const priceInfo = calculatePricing(bureau.id, appliedCoupon);
-                  
-                  return (
-                    <div
-                      key={bureau.id}
-                      onClick={() => handleBureauSelect(bureau.id)}
-                      className={`relative p-4 rounded-xl cursor-pointer transition-all duration-200 border-2 ${
-                        isSelected
-                          ? 'border-[#de9e48] bg-[#fdf9f2] shadow-md ring-2 ring-[#de9e48]/30'
-                          : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/70'
-                      }`}
-                    >
-                      {bureau.id === 'cibil' && (
-                        <span className="absolute -top-2.5 right-3 bg-[#020d1c] text-[#de9e48] text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider border border-[#de9e48]/60">
+            {/* Bureau Selection Dropdown */}
+            <div className="mb-7">
+              <div className="flex items-center justify-between mb-2">
+                <label htmlFor="bureau_dropdown" className="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                  1. Select Credit Bureau
+                </label>
+                <span className="text-[11px] font-bold text-[#de9e48] bg-[#de9e48]/10 px-2 py-0.5 rounded-full border border-[#de9e48]/20">
+                  TransUnion Default
+                </span>
+              </div>
+
+              {/* Styled Dropdown Container */}
+              <div className="relative">
+                <select
+                  id="bureau_dropdown"
+                  value={selectedBureau}
+                  onChange={(e) => handleBureauSelect(e.target.value)}
+                  className="w-full bg-white border-2 border-[#de9e48] text-[#020d1c] text-sm sm:text-[15px] font-bold py-3.5 pl-4 pr-10 rounded-xl shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#de9e48]/40 transition-all cursor-pointer"
+                >
+                  {Object.values(BUREAU_CONFIGS).map((bureau) => {
+                    const priceInfo = calculatePricing(bureau.id, appliedCoupon);
+                    const priceDisplay = appliedCoupon
+                      ? `₹${priceInfo.discountedBase} (${priceInfo.couponResult.discountPercent}% OFF)`
+                      : `₹${bureau.basePrice} + GST`;
+                    const star = bureau.id === 'cibil' ? '⭐ (Recommended) ' : '';
+
+                    return (
+                      <option key={bureau.id} value={bureau.id} className="py-2 text-gray-900 font-medium">
+                        {star}{bureau.name} — {priceDisplay}
+                      </option>
+                    );
+                  })}
+                </select>
+
+                {/* Custom Chevron Icon */}
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-[#de9e48]">
+                  <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Selected Bureau Detail Card */}
+              {BUREAU_CONFIGS[selectedBureau] && (
+                <div className="mt-3 p-3.5 bg-gradient-to-r from-[#fdf9f2] to-white border border-[#de9e48]/40 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      <span className="font-extrabold text-[#020d1c] text-sm">
+                        {BUREAU_CONFIGS[selectedBureau].name}
+                      </span>
+                      {selectedBureau === 'cibil' && (
+                        <span className="bg-[#020d1c] text-[#de9e48] text-[9.5px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider border border-[#de9e48]/60">
                           ⭐ Recommended USP
                         </span>
                       )}
-
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="radio"
-                            name="bureau_select"
-                            checked={isSelected}
-                            onChange={() => handleBureauSelect(bureau.id)}
-                            className="w-4 h-4 text-[#de9e48] focus:ring-[#de9e48] accent-[#de9e48] cursor-pointer"
-                          />
-                          <h4 className="font-bold text-[#020d1c] text-[15px]">
-                            {bureau.name}
-                          </h4>
-                        </div>
-                      </div>
-
-                      <p className="text-[11.5px] text-gray-500 mb-3 leading-snug">
-                        {bureau.usp}
-                      </p>
-
-                      <div className="flex items-baseline justify-between pt-2 border-t border-gray-200/80">
-                        <span className="text-[11px] font-semibold text-gray-500 uppercase">
-                          Price (+18% GST):
-                        </span>
-                        <div className="text-right">
-                          {appliedCoupon ? (
-                            <div className="flex items-center gap-1.5">
-                              <span className="line-through text-xs text-gray-400 font-medium">₹{bureau.basePrice}</span>
-                              <span className="font-black text-[#020d1c] text-sm">
-                                ₹{priceInfo.discountedBase} <span className="text-[10px] text-green-600 font-bold">({priceInfo.couponResult.discountPercent}% OFF)</span>
-                              </span>
-                            </div>
-                          ) : (
-                            <span className="font-bold text-[#020d1c] text-sm">
-                              ₹{bureau.basePrice} <span className="text-[10px] text-gray-500">+ GST</span>
-                            </span>
-                          )}
-                        </div>
-                      </div>
                     </div>
-                  );
-                })}
-              </div>
+                    <p className="text-[11.5px] text-gray-600 leading-snug">
+                      {BUREAU_CONFIGS[selectedBureau].usp}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center sm:flex-col sm:items-end justify-between border-t sm:border-t-0 pt-2 sm:pt-0 border-gray-200/60">
+                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                      Report Price
+                    </span>
+                    <div className="text-right">
+                      {appliedCoupon ? (
+                        <div className="flex items-center gap-1.5">
+                          <span className="line-through text-xs text-gray-400">₹{BUREAU_CONFIGS[selectedBureau].basePrice}</span>
+                          <span className="font-black text-[#020d1c] text-sm">
+                            ₹{calculatePricing(selectedBureau, appliedCoupon).discountedBase} + GST
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="font-black text-[#020d1c] text-sm">
+                          ₹{BUREAU_CONFIGS[selectedBureau].basePrice} <span className="text-[10.5px] text-gray-500 font-semibold">+ GST</span>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Mobile Quick Action Indicator */}
-              <div className="block lg:hidden mt-4">
+              <div className="block lg:hidden mt-3">
                 <button
                   type="button"
                   onClick={() => handleBureauSelect(selectedBureau)}
-                  className="w-full bg-[#020d1c] hover:bg-[#071933] text-white border border-[#de9e48]/50 font-semibold text-xs py-3 px-4 rounded-xl flex items-center justify-between shadow-md active:scale-[0.98] transition-all"
+                  className="w-full bg-[#020d1c] hover:bg-[#071933] text-white border border-[#de9e48]/50 font-semibold text-xs py-2.5 px-4 rounded-xl flex items-center justify-between shadow-xs active:scale-[0.98] transition-all"
                 >
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-[#de9e48] animate-ping"></span>
-                    <span className="text-gray-200">Selected: <strong className="text-[#de9e48]">{BUREAU_CONFIGS[selectedBureau]?.name}</strong></span>
+                    <span className="text-gray-200">Bureau Selected: <strong className="text-[#de9e48]">{BUREAU_CONFIGS[selectedBureau]?.name}</strong></span>
                   </div>
                   <span className="flex items-center gap-1 text-[#de9e48] font-bold text-xs bg-[#de9e48]/15 px-2.5 py-1 rounded-lg border border-[#de9e48]/30">
                     Fill Details ↓
