@@ -32,6 +32,7 @@ const Header = () => {
       path: '/cibil-services',
       dropdown: [
         { name: 'CIBIL Enquiry & Score Check', path: '/cibil-services' },
+        { name: 'Company CIBIL Report (CMR)', path: '/company-cibil-report' },
         { name: 'Fake Loan Removal Services', path: '/fake-loan-removal' }
       ]
     },

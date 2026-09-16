@@ -26,6 +26,7 @@ import Contact from './pages/Contact';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import FakeLoanRemoval from './pages/FakeLoanRemoval';
+import CompanyCibilReport from './pages/CompanyCibilReport';
 import InsuranceServices from './pages/InsuranceServices';
 import InvestmentRetirement from './pages/InvestmentRetirement';
 import EMICalculatorPage from './pages/EMICalculatorPage';
@@ -46,6 +47,8 @@ function App() {
           <Route path="/business-finance" element={<BusinessFinance />} />
           <Route path="/cibil-services" element={<CibilServices />} />
           <Route path="/cibil-enquiry" element={<CibilServices />} />
+          <Route path="/company-cibil-report" element={<CompanyCibilReport />} />
+          <Route path="/business-cibil-report" element={<CompanyCibilReport />} />
           <Route path="/fake-loan-removal" element={<FakeLoanRemoval />} />
           <Route path="/cibil-fake-loan-removal" element={<FakeLoanRemoval />} />
           <Route path="/property-services" element={<PropertyServices />} />

@@ -11,6 +11,7 @@ const Footer = () => {
     { name: 'Loans & MSME Finance', path: '/loans' },
     { name: 'Business & CA Services', path: '/business-finance' },
     { name: 'CIBIL Enquiry & Score', path: '/cibil-services' },
+    { name: 'Company CIBIL Report (CMR)', path: '/company-cibil-report' },
     { name: 'Property & TDS Services', path: '/property-services' },
     { name: 'Insurance (Life/Health/Auto)', path: '/insurance-services' },
     { name: 'Investment & Retirement', path: '/investment-retirement' }
