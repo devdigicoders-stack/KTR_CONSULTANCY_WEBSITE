@@ -24,7 +24,40 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
   const totalGst = pricing.gstAmount !== undefined ? pricing.gstAmount : Math.round(taxableValue * 0.18);
   const cgst = (totalGst / 2).toFixed(2);
   const sgst = (totalGst / 2).toFixed(2);
-  const totalAmount = pricing.totalPayable || (taxableValue + totalGst);
+  const [downloading, setDownloading] = React.useState(false);
+
+  const handleDownloadPdf = async () => {
+    setDownloading(true);
+    const targetId = reportData?._id || reportData?.paymentId;
+    const invNoClean = (invoiceNumber || 'KTR_CIBIL_INVOICE').replace(/[^a-zA-Z0-9_-]/g, '_');
+
+    try {
+      if (targetId) {
+        const backendBase = import.meta.env.VITE_API_URL || 'https://api.ktrconsultants.in/api';
+        const url = `${backendBase.replace(/\/+$/, '')}/cibil-reports/invoice-pdf/${targetId}`;
+        const response = await fetch(url);
+        if (response.ok) {
+          const blob = await response.blob();
+          const downloadUrl = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.download = `Invoice_${invNoClean}.pdf`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(downloadUrl);
+          setDownloading(false);
+          return;
+        }
+      }
+      window.print();
+    } catch (err) {
+      console.error('PDF generation error:', err);
+      window.print();
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const handlePrint = () => {
     window.print();
@@ -91,15 +124,23 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
           </div>
           <div className="flex items-center gap-2">
             <button
+              onClick={handleDownloadPdf}
+              disabled={downloading}
+              className="px-3 py-1.5 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 disabled:opacity-50 cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>{downloading ? 'Downloading...' : 'Download PDF'}</span>
+            </button>
+            <button
               onClick={handlePrint}
-              className="px-3 py-1.5 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
+              className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print / Save PDF</span>
+              <span>Print</span>
             </button>
             <button
               onClick={onClose}
-              className="w-8 h-8 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white flex items-center justify-center transition-colors"
+              className="w-8 h-8 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
