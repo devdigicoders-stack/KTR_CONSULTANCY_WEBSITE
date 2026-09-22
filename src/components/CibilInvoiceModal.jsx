@@ -24,6 +24,7 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
   const totalGst = pricing.gstAmount !== undefined ? pricing.gstAmount : Math.round(taxableValue * 0.18);
   const cgst = (totalGst / 2).toFixed(2);
   const sgst = (totalGst / 2).toFixed(2);
+  const totalAmount = pricing.totalPayable !== undefined ? pricing.totalPayable : (taxableValue + totalGst);
   const [downloading, setDownloading] = React.useState(false);
 
   const handleDownloadPdf = async () => {

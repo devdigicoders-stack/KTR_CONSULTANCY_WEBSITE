@@ -106,14 +106,20 @@ const CibilHero = ({
       return;
     }
     const clean = code.trim().toUpperCase();
-    if (clean === 'FLAT25') {
-      setAppliedCoupon('Flat25');
+    if (clean === 'WE100') {
+      setAppliedCoupon('WE100');
       setCouponFeedback({
         type: 'success',
-        text: '🎉 Flat25 applied: 25% discount applied successfully!'
+        text: '🎉 WE100 applied: Any report for flat ₹100 + GST!'
+      });
+    } else if (clean === 'FLAT25') {
+      setAppliedCoupon('FLAT25');
+      setCouponFeedback({
+        type: 'success',
+        text: '🎉 FLAT25 applied: 25% discount applied successfully!'
       });
     } else if (clean === 'TEAM50') {
-      setAppliedCoupon('Team50');
+      setAppliedCoupon('TEAM50');
       setCouponFeedback({
         type: 'success',
         text: '🎉 TEAM50 applied: 50% discount applied successfully!'

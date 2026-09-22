@@ -59,13 +59,27 @@ export function evaluateCoupon(code, basePrice) {
     return { valid: false, discountPercent: 0, discountAmount: 0, message: '' };
   }
   const cleanCode = code.trim().toUpperCase();
+  if (cleanCode === 'WE100') {
+    const targetBase = 100;
+    const discountAmount = Math.max(0, basePrice - targetBase);
+    const discountPercent = Math.round((discountAmount / basePrice) * 100);
+    return {
+      valid: true,
+      discountPercent,
+      discountAmount,
+      targetBase: 100,
+      code: 'WE100',
+      message: '🎉 WE100 Applied! Flat ₹100 + GST for any bureau report.'
+    };
+  }
   if (cleanCode === 'FLAT25') {
     const discountAmount = Math.round(basePrice * 0.25);
     return {
       valid: true,
       discountPercent: 25,
       discountAmount,
-      message: '🎉 25% discount coupon (Flat25) applied successfully!'
+      code: 'FLAT25',
+      message: '🎉 FLAT25 Applied! 25% discount applied successfully.'
     };
   }
   if (cleanCode === 'TEAM50') {
@@ -74,7 +88,8 @@ export function evaluateCoupon(code, basePrice) {
       valid: true,
       discountPercent: 50,
       discountAmount,
-      message: '🎉 50% discount coupon applied successfully!'
+      code: 'TEAM50',
+      message: '🎉 TEAM50 Applied! 50% discount applied successfully.'
     };
   }
   return {
@@ -92,7 +107,9 @@ export function calculatePricing(bureauId, couponCode = '') {
   const bureau = BUREAU_CONFIGS[bureauId] || BUREAU_CONFIGS.cibil;
   const basePrice = bureau.basePrice;
   const couponResult = evaluateCoupon(couponCode, basePrice);
-  const discountedBase = couponResult.valid ? basePrice - couponResult.discountAmount : basePrice;
+  const discountedBase = couponResult.valid
+    ? (couponResult.targetBase !== undefined ? couponResult.targetBase : basePrice - couponResult.discountAmount)
+    : basePrice;
   const gstAmount = Math.round(discountedBase * bureau.gstRate);
   const totalPayable = discountedBase + gstAmount;
 
