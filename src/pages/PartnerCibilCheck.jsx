@@ -37,10 +37,13 @@ export default function PartnerCibilCheck() {
     consent: true
   });
 
-  // Coupon state
+  // Coupon state (Default FLAT25 pre-applied just like website)
   const [couponInput, setCouponInput] = useState('');
-  const [appliedCoupon, setAppliedCoupon] = useState('');
-  const [couponFeedback, setCouponFeedback] = useState(null);
+  const [appliedCoupon, setAppliedCoupon] = useState('FLAT25');
+  const [couponFeedback, setCouponFeedback] = useState({
+    type: 'success',
+    text: '🎉 FLAT25 applied: 25% discount applied successfully!'
+  });
 
   // Flow states
   const [formErrors, setFormErrors] = useState({});
@@ -518,59 +521,26 @@ export default function PartnerCibilCheck() {
           </div>
         </div>
 
-        {/* Quick Discount Codes Banner */}
-        <div className="mb-10 bg-slate-900/80 border border-amber-500/20 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        {/* Discount Offer Banner (FLAT25 Pre-applied as standard) */}
+        <div className="mb-10 bg-slate-900/80 border border-amber-500/20 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center flex-shrink-0">
               <Tag className="w-5 h-5" />
             </div>
             <div>
               <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                Available Discount Offers & Partner Codes
+                Special Discount Offer Applied
               </h4>
-              <p className="text-xs text-gray-400 mt-0.5">
-                Click any code chip below to apply instant discount:
+              <p className="text-xs text-emerald-400 font-semibold mt-0.5">
+                🎉 Standard 25% Discount (FLAT25) pre-applied for all clients
               </p>
             </div>
           </div>
 
-          {/* Quick Apply Chips */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <button
-              type="button"
-              onClick={() => handleApplyCoupon('WE100')}
-              className={`text-xs font-bold px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
-                appliedCoupon === 'WE100'
-                  ? 'bg-amber-400 text-slate-950 border-amber-400 shadow-md scale-105'
-                  : 'bg-slate-800 hover:bg-slate-700 text-amber-300 border-amber-500/30'
-              }`}
-            >
-              🏷️ WE100 <span className="font-normal text-[11px] opacity-90">(Flat ₹100 + GST)</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleApplyCoupon('TEAM50')}
-              className={`text-xs font-bold px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
-                appliedCoupon === 'TEAM50'
-                  ? 'bg-amber-400 text-slate-950 border-amber-400 shadow-md scale-105'
-                  : 'bg-slate-800 hover:bg-slate-700 text-amber-300 border-amber-500/30'
-              }`}
-            >
-              🏷️ TEAM50 <span className="font-normal text-[11px] opacity-90">(50% OFF)</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleApplyCoupon('FLAT25')}
-              className={`text-xs font-bold px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
-                appliedCoupon === 'FLAT25'
-                  ? 'bg-amber-400 text-slate-950 border-amber-400 shadow-md scale-105'
-                  : 'bg-slate-800 hover:bg-slate-700 text-amber-300 border-amber-500/30'
-              }`}
-            >
-              🏷️ FLAT25 <span className="font-normal text-[11px] opacity-90">(25% OFF)</span>
-            </button>
+          <div className="flex items-center gap-2">
+            <span className="bg-amber-400/15 text-amber-300 border border-amber-400/40 text-xs font-bold px-3.5 py-1.5 rounded-xl shadow-sm flex items-center gap-1.5">
+              🏷️ FLAT25 <span className="font-normal text-[11px] text-gray-300">(25% OFF Applied)</span>
+            </span>
           </div>
         </div>
 
@@ -978,7 +948,7 @@ export default function PartnerCibilCheck() {
                       type="text"
                       value={couponInput}
                       onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
-                      placeholder="Enter code (e.g. WE100)"
+                      placeholder="Enter coupon code"
                       className="flex-1 bg-slate-950 border border-slate-800 text-white text-xs font-mono tracking-wider rounded-xl px-3.5 py-2.5 uppercase focus:outline-none focus:ring-2 focus:ring-amber-400/50"
                     />
                     <button
