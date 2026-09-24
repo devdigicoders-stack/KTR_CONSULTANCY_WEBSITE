@@ -32,6 +32,7 @@ import InsuranceServices from './pages/InsuranceServices';
 import InvestmentRetirement from './pages/InvestmentRetirement';
 import EMICalculatorPage from './pages/EMICalculatorPage';
 import PaymentPage from './pages/PaymentPage';
+import SharedDocuments from './pages/SharedDocuments';
 
 function MainLayout() {
   const location = useLocation();
@@ -40,7 +41,7 @@ function MainLayout() {
     '/direct-cibil-check',
     '/partner-cibil-check',
     '/cibil-check'
-  ].includes(location.pathname.toLowerCase());
+  ].includes(location.pathname.toLowerCase()) || location.pathname.toLowerCase().startsWith('/shared-docs');
 
   return (
     <div className="min-h-screen bg-[#fafafa] font-sans relative">
@@ -86,6 +87,7 @@ function MainLayout() {
         <Route path="/property-loans" element={<Services />} />
         <Route path="/emi-calculator" element={<EMICalculatorPage />} />
         <Route path="/pay/:linkId" element={<PaymentPage />} />
+        <Route path="/shared-docs/:id" element={<SharedDocuments />} />
         <Route path="/services/:serviceId" element={<ServiceDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
