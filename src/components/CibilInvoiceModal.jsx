@@ -31,14 +31,60 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
     setDownloading(true);
     const targetId = reportData?._id || reportData?.paymentId;
     const invNoClean = (invoiceNumber || 'KTR_CIBIL_INVOICE').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const backendBase = (import.meta.env.VITE_API_URL || 'https://api.ktrconsultants.in/api').replace(/\/+$/, '');
 
     try {
+      // 1. Try fetching by ID / Payment ID
       if (targetId) {
-        const backendBase = import.meta.env.VITE_API_URL || 'https://api.ktrconsultants.in/api';
-        const url = `${backendBase.replace(/\/+$/, '')}/cibil-reports/invoice-pdf/${targetId}`;
-        const response = await fetch(url);
-        if (response.ok) {
-          const blob = await response.blob();
+        try {
+          const url = `${backendBase}/cibil-reports/invoice-pdf/${encodeURIComponent(targetId)}`;
+          const response = await fetch(url);
+          if (response.ok) {
+            const blob = await response.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = `Invoice_${invNoClean}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(downloadUrl);
+            setDownloading(false);
+            return;
+          }
+        } catch (fetchErr) {
+          console.warn('Direct ID invoice fetch failed, trying on-the-fly generator:', fetchErr);
+        }
+      }
+
+      // 2. Fallback: POST full invoice payload to generate on-the-fly PDF
+      try {
+        const genUrl = `${backendBase}/cibil-reports/generate-invoice-pdf`;
+        const genRes = await fetch(genUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            invoiceNumber,
+            name,
+            pan,
+            mobile,
+            bureau,
+            paymentId,
+            date,
+            pricing: {
+              basePrice,
+              discountAmount,
+              couponCode,
+              taxableValue,
+              gstAmount: totalGst,
+              totalPayable: totalAmount,
+              totalAmount
+            }
+          })
+        });
+
+        if (genRes.ok) {
+          const blob = await genRes.blob();
           const downloadUrl = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = downloadUrl;
@@ -50,7 +96,11 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
           setDownloading(false);
           return;
         }
+      } catch (genErr) {
+        console.warn('On-the-fly invoice generation failed:', genErr);
       }
+
+      // 3. Last fallback: Trigger browser print
       window.print();
     } catch (err) {
       console.error('PDF generation error:', err);
