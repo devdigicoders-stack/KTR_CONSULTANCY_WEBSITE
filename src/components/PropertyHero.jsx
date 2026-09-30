@@ -45,11 +45,12 @@ const PropertyHero = () => {
                 to="/apply-online?category=property"
                 className="w-full sm:w-auto bg-[#de9e48] hover:bg-[#c98e41] text-white font-bold text-[14.5px] px-8 py-3.5 rounded-md transition-colors flex items-center justify-center shadow-md whitespace-nowrap"
               >
-                Get Free Consultation
+                Apply Online
                 <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
+
               
               <a 
                 href="https://wa.me/919918699696"

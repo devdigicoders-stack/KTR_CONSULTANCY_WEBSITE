@@ -1,8 +1,11 @@
-import React, { useRef } from 'react';
-import { X, Printer, CheckCircle } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { X, Printer, Download, CheckCircle, Loader2 } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
+import toast from 'react-hot-toast';
 
 const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
   const printRef = useRef(null);
+  const [downloading, setDownloading] = useState(false);
 
   if (!isOpen || !invoiceData) return null;
 
@@ -34,6 +37,36 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
   const cgst = (gstVal / 2).toFixed(2);
   const sgst = (gstVal / 2).toFixed(2);
   const finalTotal = totalAmount || (taxableValue + gstVal);
+
+  const handleDownloadPdf = async () => {
+    if (downloading) return;
+    setDownloading(true);
+    const toastId = toast.loading('Generating invoice PDF...');
+    const invNoClean = (invoiceNumber || 'KTR_INVOICE').replace(/[^a-zA-Z0-9_-]/g, '_');
+
+    try {
+      if (printRef.current) {
+        const element = printRef.current;
+        const opt = {
+          margin: [6, 6, 6, 6],
+          filename: `Invoice_${invNoClean}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        await html2pdf().set(opt).from(element).save();
+        toast.success('Invoice downloaded successfully!', { id: toastId });
+        return;
+      }
+      window.print();
+    } catch (err) {
+      console.error('PDF generation error:', err);
+      toast.error('Could not download PDF. Opening print preview...', { id: toastId });
+      window.print();
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const handlePrint = () => {
     window.print();
@@ -100,11 +133,19 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
           </div>
           <div className="flex items-center gap-2">
             <button
+              onClick={handleDownloadPdf}
+              disabled={downloading}
+              className="px-3 py-1.5 bg-[#f59e0b] hover:bg-orange-500 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 disabled:opacity-50 cursor-pointer"
+            >
+              {downloading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
+              <span>{downloading ? 'Downloading...' : 'Download PDF'}</span>
+            </button>
+            <button
               onClick={handlePrint}
-              className="px-3 py-1.5 bg-[#f59e0b] hover:bg-orange-500 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+              className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer border border-gray-700"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print / Save PDF</span>
+              <span>Print</span>
             </button>
             <button
               onClick={onClose}
@@ -136,9 +177,6 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
               </div>
               <p className="text-[11px] text-gray-500 leading-tight mt-1">
                 Website: www.ktrconsultants.in | Email: info@ktrconsultants.in
-              </p>
-              <p className="text-[11px] text-gray-500 leading-tight">
-                Helpline: +91 99186 99696 / +91 96969 66896
               </p>
             </div>
 

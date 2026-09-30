@@ -35,7 +35,7 @@ const AboutHero = () => {
               to="/apply-online" 
               className="w-full sm:w-auto inline-flex items-center justify-center bg-[#020d1c] hover:bg-[#031326] text-white font-semibold py-3.5 px-8 rounded-md transition-all duration-300 shadow-[0_4px_14px_0_rgba(2,13,28,0.39)] hover:-translate-y-0.5 text-[14px]"
             >
-              Get Free Consultation
+              Apply Online
               <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>

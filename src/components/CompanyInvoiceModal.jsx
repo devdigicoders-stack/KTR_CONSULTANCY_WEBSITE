@@ -132,7 +132,7 @@ const CompanyInvoiceModal = ({ isOpen, onClose, reportData }) => {
                 Address: 3/52, Virat Khand, Gomti Nagar, Lucknow, UP - 226010
               </p>
               <p className="text-[11px] text-gray-500 leading-tight">
-                Website: www.ktrconsultants.in | Email: info@ktrconsultants.in | Tel: +91 99186 99696
+                Website: www.ktrconsultants.in | Email: info@ktrconsultants.in
               </p>
             </div>
 

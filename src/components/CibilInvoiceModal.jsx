@@ -1,8 +1,11 @@
-import React, { useRef } from 'react';
-import { X, Printer, Download, CheckCircle, ShieldCheck } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { X, Printer, Download, CheckCircle, ShieldCheck, Loader2 } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
+import toast from 'react-hot-toast';
 
 const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
   const printRef = useRef(null);
+  const [downloading, setDownloading] = useState(false);
 
   if (!isOpen || !reportData) return null;
 
@@ -12,8 +15,8 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
     mobile = 'N/A',
     bureau = 'TransUnion CIBIL',
     paymentId = 'N/A',
-    invoiceNumber = 'KTR/INV/' + new Date().getFullYear() + '/' + Math.floor(10000 + Math.random() * 90000),
-    date = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }),
+    invoiceNumber = reportData?.invoiceNumber || ('KTR/INV/' + new Date().getFullYear() + '/' + Math.floor(10000 + Math.random() * 90000)),
+    date = reportData?.date || new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }),
     pricing = {}
   } = reportData;
 
@@ -25,42 +28,20 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
   const cgst = (totalGst / 2).toFixed(2);
   const sgst = (totalGst / 2).toFixed(2);
   const totalAmount = pricing.totalPayable !== undefined ? pricing.totalPayable : (taxableValue + totalGst);
-  const [downloading, setDownloading] = React.useState(false);
 
   const handleDownloadPdf = async () => {
+    if (downloading) return;
     setDownloading(true);
-    const targetId = reportData?._id || reportData?.paymentId;
+    const toastId = toast.loading('Generating official tax invoice PDF...');
     const invNoClean = (invoiceNumber || 'KTR_CIBIL_INVOICE').replace(/[^a-zA-Z0-9_-]/g, '_');
     const backendBase = (import.meta.env.VITE_API_URL || 'https://api.ktrconsultants.in/api').replace(/\/+$/, '');
 
     try {
-      // 1. Try fetching by ID / Payment ID
-      if (targetId) {
-        try {
-          const url = `${backendBase}/cibil-reports/invoice-pdf/${encodeURIComponent(targetId)}`;
-          const response = await fetch(url);
-          if (response.ok) {
-            const blob = await response.blob();
-            const downloadUrl = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = downloadUrl;
-            link.download = `Invoice_${invNoClean}.pdf`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(downloadUrl);
-            setDownloading(false);
-            return;
-          }
-        } catch (fetchErr) {
-          console.warn('Direct ID invoice fetch failed, trying on-the-fly generator:', fetchErr);
-        }
-      }
+      let blobData = null;
 
-      // 2. Fallback: POST full invoice payload to generate on-the-fly PDF
+      // Method 1: On-the-fly server generation with full data
       try {
-        const genUrl = `${backendBase}/cibil-reports/generate-invoice-pdf`;
-        const genRes = await fetch(genUrl, {
+        const genRes = await fetch(`${backendBase}/cibil-reports/generate-invoice-pdf`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -84,26 +65,80 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
         });
 
         if (genRes.ok) {
-          const blob = await genRes.blob();
-          const downloadUrl = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = downloadUrl;
-          link.download = `Invoice_${invNoClean}.pdf`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          window.URL.revokeObjectURL(downloadUrl);
-          setDownloading(false);
-          return;
+          blobData = await genRes.blob();
         }
-      } catch (genErr) {
-        console.warn('On-the-fly invoice generation failed:', genErr);
+      } catch (postErr) {
+        console.warn('POST /generate-invoice-pdf failed, trying GET by ID...', postErr);
       }
 
-      // 3. Last fallback: Trigger browser print
+      // Method 2: Try fetching by ID / Payment ID
+      if (!blobData) {
+        const targetId = reportData?._id || reportData?.paymentId;
+        if (targetId) {
+          try {
+            const getRes = await fetch(`${backendBase}/cibil-reports/invoice-pdf/${encodeURIComponent(targetId)}`);
+            if (getRes.ok) {
+              blobData = await getRes.blob();
+            }
+          } catch (fetchErr) {
+            console.warn('Direct ID invoice fetch failed:', fetchErr);
+          }
+        }
+      }
+
+      if (blobData) {
+        const blob = new Blob([blobData], { type: 'application/pdf' });
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = `Invoice_${invNoClean}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(downloadUrl);
+        }, 200);
+        toast.success('Official Tax Invoice PDF downloaded!', { id: toastId });
+        return;
+      }
+
+      // Method 3: Client-side html2pdf fallback (Works 100% offline & client-side)
+      if (printRef.current) {
+        const element = printRef.current;
+        const opt = {
+          margin: [6, 6, 6, 6],
+          filename: `Invoice_${invNoClean}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        await html2pdf().set(opt).from(element).save();
+        toast.success('Invoice downloaded successfully!', { id: toastId });
+        return;
+      }
+
       window.print();
     } catch (err) {
       console.error('PDF generation error:', err);
+      // Client-side html2pdf emergency try
+      if (printRef.current) {
+        try {
+          const element = printRef.current;
+          const opt = {
+            margin: [6, 6, 6, 6],
+            filename: `Invoice_${invNoClean}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, logging: false },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          };
+          await html2pdf().set(opt).from(element).save();
+          toast.success('Invoice downloaded successfully!', { id: toastId });
+          return;
+        } catch (pdfErr) {
+          console.error('html2pdf fallback error:', pdfErr);
+        }
+      }
+      toast.error('Could not download PDF. Opening print preview...', { id: toastId });
       window.print();
     } finally {
       setDownloading(false);
@@ -179,7 +214,7 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
               disabled={downloading}
               className="px-3 py-1.5 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 disabled:opacity-50 cursor-pointer"
             >
-              <Download className="w-3.5 h-3.5" />
+              {downloading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
               <span>{downloading ? 'Downloading...' : 'Download PDF'}</span>
             </button>
             <button
@@ -219,9 +254,6 @@ const CibilInvoiceModal = ({ isOpen, onClose, reportData }) => {
               </div>
               <p className="text-[11px] text-gray-500 leading-tight mt-1">
                 Website: www.ktrconsultants.in | Email: info@ktrconsultants.in
-              </p>
-              <p className="text-[11px] text-gray-500 leading-tight">
-                Helpline: +91 99186 99696 / +91 96969 66896
               </p>
             </div>
 

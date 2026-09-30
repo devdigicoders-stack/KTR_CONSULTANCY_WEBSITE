@@ -242,15 +242,20 @@ const CibilHero = ({
       // Helper function to save to backend
       const saveReportToBackend = async (payload) => {
         try {
-          const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+          const backendUrl = (import.meta.env.VITE_API_URL || 'https://api.ktrconsultants.in/api').replace(/\/+$/, '');
           const res = await fetch(`${backendUrl}/cibil-reports/save`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
           const resData = await res.json();
-          if (resData.data?.invoiceNumber) {
-            payload.invoiceNumber = resData.data.invoiceNumber;
+          if (resData?.data) {
+            const updated = {
+              ...payload,
+              invoiceNumber: resData.data.invoiceNumber || payload.invoiceNumber,
+              _id: resData.data._id
+            };
+            setApiResult(updated);
           }
           return resData;
         } catch (err) {
