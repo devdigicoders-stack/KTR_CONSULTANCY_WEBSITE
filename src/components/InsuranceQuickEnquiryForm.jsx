@@ -332,7 +332,7 @@ const InsuranceQuickEnquiryForm = ({
                     <label className="flex items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#de9e48] rounded-xl p-3 text-center cursor-pointer bg-gray-50/50">
                       <input
                         type="file"
-                        accept=".jpg,.jpeg,.png,.pdf"
+                        accept="application/pdf,image/*,.pdf,.jpg,.jpeg,.png,*/*"
                         onChange={(e) => {
                           const f = e.target.files?.[0];
                           if (f) { setRcFile(f); setRcFileName(f.name); }
@@ -357,7 +357,7 @@ const InsuranceQuickEnquiryForm = ({
                     <label className="flex items-center justify-center border-2 border-dashed border-gray-300 hover:border-[#de9e48] rounded-xl p-3 text-center cursor-pointer bg-gray-50/50">
                       <input
                         type="file"
-                        accept=".jpg,.jpeg,.png,.pdf"
+                        accept="application/pdf,image/*,.pdf,.jpg,.jpeg,.png,*/*"
                         onChange={(e) => {
                           const f = e.target.files?.[0];
                           if (f) { setPrevPolicyFile(f); setPrevPolicyFileName(f.name); }

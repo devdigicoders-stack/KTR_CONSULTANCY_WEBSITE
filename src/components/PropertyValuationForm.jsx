@@ -506,7 +506,7 @@ const PropertyValuationForm = ({ selectedServiceProp, formRefProp }) => {
                   <div className="relative border-2 border-dashed border-gray-300 hover:border-[#de9e48] rounded-2xl p-6 text-center transition-colors bg-gray-50/50">
                     <input
                       type="file"
-                      accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                      accept="application/pdf,image/*,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*"
                       onChange={handleFileChange}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                     />

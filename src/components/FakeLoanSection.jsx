@@ -584,7 +584,7 @@ const FakeLoanSection = () => {
                           <span className="text-xs font-medium">Choose PAN File (Max 5MB)</span>
                           <input
                             type="file"
-                            accept=".jpg,.jpeg,.png,.pdf"
+                            accept="application/pdf,image/*,.jpg,.jpeg,.png,.pdf,*/*"
                             onChange={handleFileChange}
                             className="hidden"
                           />

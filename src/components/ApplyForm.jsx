@@ -824,7 +824,7 @@ const ApplyForm = () => {
               ref={fileInputRef}
               onChange={handleFileSelect}
               multiple
-              accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx,.zip"
+              accept="application/pdf,image/*,.doc,.docx,.xls,.xlsx,.zip,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,*/*"
               className="hidden"
             />
             <div className="w-11 h-11 rounded-full bg-white group-hover:bg-[#de9e48]/15 text-gray-500 group-hover:text-[#de9e48] flex items-center justify-center mx-auto mb-2 transition-colors shadow-2xs">

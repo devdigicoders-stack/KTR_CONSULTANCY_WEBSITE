@@ -355,7 +355,7 @@ const ChainDeedForm = () => {
              ref={fileInputRef} 
              onChange={handleFileChange} 
              className="hidden" 
-             accept="image/*,.pdf"
+             accept="application/pdf,image/*,.pdf,.jpg,.jpeg,.png,*/*"
           />
         </div>
   

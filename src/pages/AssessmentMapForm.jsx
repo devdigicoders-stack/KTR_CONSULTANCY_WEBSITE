@@ -309,7 +309,7 @@ const AssessmentMapForm = () => {
                           type="file" 
                           required
                           onChange={(e) => handleFileChange(e, doc.id, false)}
-                          accept="image/*,.pdf"
+                          accept="application/pdf,image/*,.pdf,.jpg,.jpeg,.png,*/*"
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         />
                       </>
