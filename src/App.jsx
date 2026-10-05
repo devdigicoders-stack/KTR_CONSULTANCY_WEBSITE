@@ -33,6 +33,8 @@ import InvestmentRetirement from './pages/InvestmentRetirement';
 import EMICalculatorPage from './pages/EMICalculatorPage';
 import PaymentPage from './pages/PaymentPage';
 import SharedDocuments from './pages/SharedDocuments';
+import PublicClientForm from './pages/PublicClientForm';
+import PublicDocUpload from './pages/PublicDocUpload';
 
 function MainLayout() {
   const location = useLocation();
@@ -41,7 +43,10 @@ function MainLayout() {
     '/direct-cibil-check',
     '/partner-cibil-check',
     '/cibil-check'
-  ].includes(location.pathname.toLowerCase()) || location.pathname.toLowerCase().startsWith('/shared-docs');
+  ].includes(location.pathname.toLowerCase()) || 
+  location.pathname.toLowerCase().startsWith('/shared-docs') ||
+  location.pathname.toLowerCase().startsWith('/form/') ||
+  location.pathname.toLowerCase().startsWith('/upload-docs/');
 
   return (
     <div className="min-h-screen bg-[#fafafa] font-sans relative">
@@ -88,6 +93,8 @@ function MainLayout() {
         <Route path="/emi-calculator" element={<EMICalculatorPage />} />
         <Route path="/pay/:linkId" element={<PaymentPage />} />
         <Route path="/shared-docs/:id" element={<SharedDocuments />} />
+        <Route path="/form/:id" element={<PublicClientForm />} />
+        <Route path="/upload-docs/:id" element={<PublicDocUpload />} />
         <Route path="/services/:serviceId" element={<ServiceDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
