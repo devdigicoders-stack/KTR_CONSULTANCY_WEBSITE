@@ -44,6 +44,9 @@ function MainLayout() {
     '/partner-cibil-check',
     '/cibil-check'
   ].includes(location.pathname.toLowerCase()) || 
+  location.pathname.toLowerCase().startsWith('/s/') ||
+  location.pathname.toLowerCase().startsWith('/f/') ||
+  location.pathname.toLowerCase().startsWith('/u/') ||
   location.pathname.toLowerCase().startsWith('/shared-docs') ||
   location.pathname.toLowerCase().startsWith('/form/') ||
   location.pathname.toLowerCase().startsWith('/upload-docs/');
@@ -91,9 +94,11 @@ function MainLayout() {
         <Route path="/loans" element={<Services />} />
         <Route path="/property-loans" element={<Services />} />
         <Route path="/emi-calculator" element={<EMICalculatorPage />} />
-        <Route path="/pay/:linkId" element={<PaymentPage />} />
+        <Route path="/s/:id" element={<SharedDocuments />} />
         <Route path="/shared-docs/:id" element={<SharedDocuments />} />
+        <Route path="/f/:id" element={<PublicClientForm />} />
         <Route path="/form/:id" element={<PublicClientForm />} />
+        <Route path="/u/:id" element={<PublicDocUpload />} />
         <Route path="/upload-docs/:id" element={<PublicDocUpload />} />
         <Route path="/services/:serviceId" element={<ServiceDetail />} />
         <Route path="/contact" element={<Contact />} />
