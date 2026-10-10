@@ -44,6 +44,7 @@ function MainLayout() {
     '/partner-cibil-check',
     '/cibil-check'
   ].includes(location.pathname.toLowerCase()) || 
+  location.pathname.toLowerCase().startsWith('/d/') ||
   location.pathname.toLowerCase().startsWith('/s/') ||
   location.pathname.toLowerCase().startsWith('/f/') ||
   location.pathname.toLowerCase().startsWith('/u/') ||
@@ -94,6 +95,7 @@ function MainLayout() {
         <Route path="/loans" element={<Services />} />
         <Route path="/property-loans" element={<Services />} />
         <Route path="/emi-calculator" element={<EMICalculatorPage />} />
+        <Route path="/d/:id" element={<SharedDocuments />} />
         <Route path="/s/:id" element={<SharedDocuments />} />
         <Route path="/shared-docs/:id" element={<SharedDocuments />} />
         <Route path="/f/:id" element={<PublicClientForm />} />
