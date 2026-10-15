@@ -23,6 +23,8 @@ import ApplyOnline from './pages/ApplyOnline';
 import NonApprovedLoans from './pages/NonApprovedLoans';
 import MSMELoans from './pages/MSMELoans';
 import HomeLoanLucknow from './pages/HomeLoanLucknow';
+import BlogList from './pages/BlogList';
+import BlogDetail from './pages/BlogDetail';
 
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
@@ -107,6 +109,9 @@ function MainLayout() {
         <Route path="/u/:id" element={<PublicDocUpload />} />
         <Route path="/upload-docs/:id" element={<PublicDocUpload />} />
         <Route path="/services/:serviceId" element={<ServiceDetail />} />
+        <Route path="/blogs" element={<BlogList />} />
+        <Route path="/blog" element={<BlogList />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

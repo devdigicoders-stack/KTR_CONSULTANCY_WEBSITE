@@ -4,22 +4,24 @@ const Footer = () => {
   const quickLinks = [
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
+    { name: 'Financial Blogs & Guides', path: '/blogs' },
     { name: 'Contact Us', path: '/contact' }
   ];
 
   const servicesLinks = [
-    { name: 'Loans & MSME Finance', path: '/loans' },
-    { name: 'Business & CA Services', path: '/business-finance' },
-    { name: 'CIBIL Enquiry & Score', path: '/cibil-services' },
-    { name: 'Company CIBIL Report (CMR)', path: '/company-cibil-report' },
-    { name: 'Property & TDS Services', path: '/property-services' },
-    { name: 'Insurance (Life/Health/Auto)', path: '/insurance-services' },
-    { name: 'Investment & Retirement', path: '/investment-retirement' }
+    { name: 'Home Loans in Lucknow', path: '/home-loan-in-lucknow' },
+    { name: 'Non-Approved Society Loans', path: '/non-approved-loans' },
+    { name: 'Fake Loan Removal from CIBIL', path: '/fake-loan-removal' },
+    { name: 'Business Loans in Lucknow', path: '/business-finance' },
+    { name: 'CIBIL Score Improvement', path: '/cibil-services' },
+    { name: 'Property Legal Verification', path: '/property-services' },
+    { name: 'Insurance & Investment', path: '/insurance-services' }
   ];
 
   const usefulLinks = [
     { name: 'Apply Online', path: '/apply-online' },
     { name: 'Loan EMI Calculator', path: '/emi-calculator' },
+    { name: 'Blogs & Articles', path: '/blogs' },
     { name: 'Privacy Policy', path: '/privacy-policy' },
     { name: 'Terms & Conditions', path: '/terms' }
   ];
