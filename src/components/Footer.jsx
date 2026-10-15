@@ -48,21 +48,48 @@ const Footer = () => {
             
             {/* Social Icons */}
             <div className="flex items-center gap-2.5">
-              <a href="#" className="w-8 h-8 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:text-white hover:border-white transition-all">
+              <a 
+                href="https://www.facebook.com/share/19eS4dJ2UH/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                title="Follow KTR Consultants on Facebook"
+                aria-label="KTR Consultants Facebook Page"
+                className="w-8 h-8 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#1877F2] hover:border-[#1877F2] transition-all"
+              >
                 {/* Facebook */}
                 <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M15.12 5.32H17V2.14A26.11 26.11 0 0014.26 2c-2.72 0-4.58 1.66-4.58 4.7v2.62H6.61v3.56h3.07V22h3.68v-9.12h3.06l.46-3.56h-3.52V5.71c0-1.03.29-1.73 1.76-1.73z"/></svg>
               </a>
-              <a href="#" className="w-8 h-8 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:text-white hover:border-white transition-all">
+              <a 
+                href="https://www.instagram.com/ktrconsultant?mdxt=MWZueG9xNnppaGJwbQ==" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                title="Follow KTR Consultants on Instagram (@ktrconsultant)"
+                aria-label="KTR Consultants Instagram Profile"
+                className="w-8 h-8 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#E4405F] hover:border-[#E4405F] transition-all"
+              >
                 {/* Instagram */}
                 <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.4 5.6 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.6 18.4 4 16.4 4H7.6m4.4 4a4 4 0 110 8 4 4 0 010-8m0 2a2 2 0 100 4 2 2 0 000-4m5.22-3.67a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/></svg>
               </a>
-              <a href="#" className="w-8 h-8 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:text-white hover:border-white transition-all">
-                {/* LinkedIn */}
-                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0zM7.12 20.45H3.56V9h3.56v11.45zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zm15.11 13.02h-3.56v-5.56c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.13 1.44-2.13 2.93v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29z"/></svg>
+              <a 
+                href="https://www.justdial.com/Lucknow/Ktr-Consultants-Pvt-Ltd-Near-Phoenix-Palassio-Mall-Gomti-Nagar/0522PX522-X522-230911181822-N8V5_BZDET" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                title="KTR Consultants on Justdial"
+                aria-label="KTR Consultants Justdial"
+                className="w-8 h-8 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#ff7a00] hover:border-[#ff7a00] transition-all text-[10px] font-black"
+              >
+                JD
               </a>
-              <a href="#" className="w-8 h-8 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:text-white hover:border-white transition-all">
-                {/* YouTube */}
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.58 7.2A2.7 2.7 0 0019.68 5.3C18.01 4.85 12 4.85 12 4.85s-6.01 0-7.68.45A2.7 2.7 0 002.42 7.2C1.97 8.87 1.97 12 1.97 12s0 3.13.45 4.8a2.7 2.7 0 001.9 1.9c1.67.45 7.68.45 7.68.45s6.01 0 7.68-.45a2.7 2.7 0 001.9-1.9c.45-1.67.45-4.8.45-4.8s0-3.13-.45-4.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+              <a 
+                href="https://wa.me/919918699696" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                title="Chat with KTR Consultants on WhatsApp"
+                aria-label="KTR Consultants WhatsApp"
+                className="w-8 h-8 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#25D366] hover:border-[#25D366] transition-all"
+              >
+                {/* WhatsApp */}
+                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
               </a>
             </div>
           </div>
