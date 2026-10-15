@@ -22,6 +22,7 @@ import CAQuote from './pages/CAQuote';
 import ApplyOnline from './pages/ApplyOnline';
 import NonApprovedLoans from './pages/NonApprovedLoans';
 import MSMELoans from './pages/MSMELoans';
+import HomeLoanLucknow from './pages/HomeLoanLucknow';
 
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
@@ -92,7 +93,10 @@ function MainLayout() {
         <Route path="/non-approved-loans" element={<NonApprovedLoans />} />
         <Route path="/msme-project-finance" element={<MSMELoans />} />
         <Route path="/msme-mudra-finance" element={<MSMELoans />} />
-        <Route path="/loans" element={<Services />} />
+        <Route path="/home-loan-in-lucknow" element={<HomeLoanLucknow />} />
+        <Route path="/home-loans" element={<HomeLoanLucknow />} />
+        <Route path="/home-loan" element={<HomeLoanLucknow />} />
+        <Route path="/loans" element={<HomeLoanLucknow />} />
         <Route path="/property-loans" element={<Services />} />
         <Route path="/emi-calculator" element={<EMICalculatorPage />} />
         <Route path="/d/:id" element={<SharedDocuments />} />

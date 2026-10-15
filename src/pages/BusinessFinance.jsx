@@ -10,9 +10,9 @@ const BusinessFinance = () => {
   return (
     <>
       <SEO 
-        title="Business Finance & MSME Project Loans"
-        description="Fast and flexible Business Loans, MSME Funding, Working Capital, and machinery loans with minimum paperwork from KTR Consultants (ktrconsultants.in) in Lucknow."
-        keywords="business loans lucknow, msme funding, working capital loan, ktr consultants business finance, commercial finance"
+        title="Business Loans in Lucknow & MSME Project Finance | Gomti Nagar"
+        description="Apply for Business Loans, Working Capital (CC/OD), MSME Funding & Machinery Loans in Lucknow with KTR Consultants. Fast approvals, low interest rates, 20+ partner banks."
+        keywords="business loan in lucknow, business loans lucknow, business loan consultant gomti nagar, working capital loan lucknow, msme project funding lucknow, ktr consultants business finance"
         canonicalUrl="https://www.ktrconsultants.in/business-finance"
       />
       <BusinessFinanceHero />

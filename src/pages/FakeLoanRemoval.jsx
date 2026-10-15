@@ -13,9 +13,9 @@ const FakeLoanRemoval = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO 
-        title="Fake Loan Removal from CIBIL & Credit Reports"
-        description="Victim of fraudulent loans or identity theft in your credit report? KTR Consultants (ktrconsultants.in) helps legally dispute and remove fake loans from CIBIL, Experian, Equifax, and CRIF."
-        keywords="fake loan removal, cibil fraud dispute, remove fraudulent loan, identity theft loan cibil, ktr consultants fake loan removal"
+        title="Fake Loan Removal from CIBIL in Lucknow & Pan-India | Credit Fraud Repair"
+        description="Victim of fraudulent loans, wrong PAN misuse, or identity theft in your credit report? KTR Consultants (Gomti Nagar, Lucknow) helps legally dispute and remove fake loans from CIBIL, Experian, Equifax, and CRIF."
+        keywords="fake loan removal, fake loan removal lucknow, cibil me fake loan kaise hataye, cibil fraud dispute, remove fraudulent loan lucknow, identity theft loan cibil, ktr consultants fake loan removal"
         canonicalUrl="https://www.ktrconsultants.in/fake-loan-removal"
       />
       <FakeLoanSection />

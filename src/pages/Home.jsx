@@ -18,9 +18,9 @@ const Home = () => {
   return (
     <>
       <SEO 
-        title="Financial Advisory, Business Loans & CIBIL Solutions"
-        description="Welcome to KTR Consultants (ktrconsultants.in) in Gomti Nagar, Lucknow. Fast, trusted assistance for Business Finance, MSME Loans, CIBIL Score Improvement, Fake Loan Removal, and Property Legal Services."
-        keywords="ktrconsultants, ktr consultants, ktrconsultants.in, business loans lucknow, cibil improvement, fake loan removal, property legal services"
+        title="Best Loan Consultant in Lucknow & Gomti Nagar | Home, Business & CIBIL Advisory"
+        description="Official website of KTR Consultants (ktrconsultants.in) in Virat Khand, Gomti Nagar, Lucknow. Premier financial consulting for Home Loans, Business Finance, MSME Loans, CIBIL Score Improvement, Fake Loan Removal, and Property Legal Services."
+        keywords="ktrconsultants, ktr consultants, ktrconsultants.in, best loan consultant in lucknow, loan consultant gomti nagar, home loan in lucknow, business loans lucknow, cibil score improvement lucknow, fake loan removal lucknow, property legal services gomti nagar"
         canonicalUrl="https://www.ktrconsultants.in/"
       />
       <Hero />

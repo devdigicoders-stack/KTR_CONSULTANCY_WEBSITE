@@ -25,18 +25,18 @@ const NonApprovedHero = () => {
 
               {/* Subtitle */}
               <h3 className="text-[#de9e48] text-[13px] font-bold tracking-wide uppercase mb-3">
-                LOAN ASSISTANCE FOR NON-APPROVED SOCIETIES
+                LOAN ASSISTANCE FOR NON-APPROVED SOCIETIES IN LUCKNOW
               </h3>
               
               {/* Title */}
               <h1 className="text-[#020d1c] text-4xl md:text-5xl lg:text-[42px] xl:text-[48px] font-bold font-serif leading-[1.15] mb-5">
-                Non-Approved Society?<br />
+                Loan on Non-Approved Property in Lucknow?<br />
                 <span className="text-[#de9e48]">Don't Assume Your<br />Loan Is Impossible.</span>
               </h1>
               
               {/* Paragraph */}
               <p className="text-gray-600 text-[13.5px] lg:text-[15px] leading-relaxed mb-8 max-w-[500px]">
-                KTR Consultants helps you explore <span className="text-gray-800 font-semibold">Home Loan & Property Finance</span> options through <span className="text-gray-800 font-semibold">Nationalized Banks</span> — even for <span className="text-gray-800 font-semibold">eligible properties in non-approved societies.</span>
+                KTR Consultants helps you explore <span className="text-gray-800 font-semibold">Home Loan & Mortgage</span> options in Lucknow through <span className="text-gray-800 font-semibold">Nationalized & Private Banks</span> — even for <span className="text-gray-800 font-semibold">eligible properties in non-approved societies and plots.</span>
               </p>
               
               {/* Button */}

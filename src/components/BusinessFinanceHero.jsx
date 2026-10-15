@@ -18,19 +18,18 @@ const BusinessFinanceHero = () => {
 
             {/* Subtitle */}
             <h3 className="text-[#de9e48] text-[13px] font-bold tracking-wide uppercase mb-2">
-              BUSINESS FINANCE
+              BUSINESS LOANS & MSME FINANCE IN LUCKNOW
             </h3>
-            
             
             {/* Title */}
             <h1 className="text-[#020d1c] text-4xl md:text-5xl lg:text-[42px] xl:text-[50px] font-bold font-serif leading-[1.15] mb-4">
-              Fuel Your Business Growth <br />
-              <span className="text-[#de9e48]">With Smart Financing</span>
+              Business Loans in Lucknow <br />
+              <span className="text-[#de9e48]">Fuel Growth With Smart Financing</span>
             </h1>
             
             {/* Paragraph */}
             <p className="text-gray-600 text-[13.5px] lg:text-[14.5px] leading-relaxed mb-6 max-w-[500px]">
-              End-to-end financial solutions for businesses of all sizes. From working capital to project finance, we help you achieve your business goals.
+              End-to-end financial solutions for MSMEs and businesses across Lucknow & Uttar Pradesh. Working Capital, CC/OD limits, and Project Loans with 20+ partner banks.
             </p>
             
             {/* Buttons */}

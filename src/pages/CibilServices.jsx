@@ -43,9 +43,9 @@ const CibilServices = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO 
-        title="CIBIL Score Improvement & Credit Dispute Resolution"
-        description="Improve your CIBIL credit score and resolve negative remarks, default entries, and bureau discrepancies with expert guidance from KTR Consultants (ktrconsultants.in) in Lucknow."
-        keywords="cibil score improvement, cibil dispute rectification, cibil repair lucknow, fix cibil score, ktr consultants cibil"
+        title="CIBIL Score Improvement & Repair Services in Lucknow | Gomti Nagar"
+        description="Improve your CIBIL score, rectify dispute entries, remove negative written-off remarks & settle overdue loans legally with KTR Consultants in Gomti Nagar, Lucknow."
+        keywords="cibil score improvement lucknow, cibil repair lucknow, cibil dispute rectification gomti nagar, fix cibil score lucknow, cibil check lucknow, ktr consultants cibil"
         canonicalUrl="https://www.ktrconsultants.in/cibil-services"
       />
       <CibilHero 

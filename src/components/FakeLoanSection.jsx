@@ -176,11 +176,11 @@ const FakeLoanSection = () => {
             Specialized CIBIL Dispute Service
           </div>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-[#020d1c] mb-4 tracking-tight leading-tight">
-            Fake / Unauthorized Loan <br className="hidden sm:block" />
-            <span className="text-[#de9e48]">Removal & Assessment from CIBIL</span>
+            Fake & Unauthorized Loan <br className="hidden sm:block" />
+            <span className="text-[#de9e48]">Removal from CIBIL | Lucknow & Pan-India</span>
           </h1>
           <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
-            Is an unauthorized loan or fraudulent credit account appearing on your CIBIL report that you never availed? Submit your case for initial forensic review and dispute assessment.
+            Is an unauthorized loan, fraud app entry, or identity theft appearing on your CIBIL report? KTR Consultants (Gomti Nagar, Lucknow) provides forensic bureau reviews and legal dispute resolution to clean your credit history.
           </p>
         </div>
 

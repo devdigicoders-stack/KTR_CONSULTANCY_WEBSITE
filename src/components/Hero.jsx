@@ -12,16 +12,16 @@ const Hero = () => {
         {/* Left Content */}
         <div className="w-full lg:w-[55%] xl:w-[60%] pt-4 lg:pt-0 z-20 lg:pr-8">
           <h3 className="text-[#de9e48] text-xs md:text-sm font-bold tracking-[0.15em] uppercase mb-4">
-            WELCOME TO KTR CONSULTANTS
+            PREMIER LOAN & FINANCIAL ADVISORY IN LUCKNOW (GOMTI NAGAR)
           </h3>
           
           <h1 className="text-4xl md:text-5xl xl:text-6xl font-bold text-[#020d1c] leading-[1.15] mb-5 font-serif">
-            Complete Financial Solutions <br className="hidden md:block" />
-            for Your <span className="text-[#de9e48]">Business & Property</span>
+            Trusted Loan & Financial <br className="hidden md:block" />
+            Advisory in <span className="text-[#de9e48]">Lucknow</span>
           </h1>
           
           <p className="text-gray-600 text-sm md:text-base max-w-[550px] mb-8 leading-[1.6] font-medium">
-            From documentation to funding, CIBIL to property services —<br className="hidden md:block" /> we handle it all for you with speed, transparency and trust.
+            From Home Loans, Business Finance & MSME Funding to CIBIL Score Repair & Property Legal Services — KTR Consultants (Virat Khand, Gomti Nagar) handles it all with 20+ partner banks.
           </p>
           
           {/* Primary Buttons Row */}
