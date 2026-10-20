@@ -21,9 +21,14 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
     discount = 0,
     totalAmount = 0,
     paymentId = 'N/A',
+    referenceNumber = '',
+    paymentMode = 'Online Gateway',
+    isManual = false,
     paidAt = new Date(),
     status = 'Paid',
   } = invoiceData;
+
+  const isManualPayment = isManual || (paymentMode && !['Online', 'Online Gateway'].includes(paymentMode));
 
   const date = new Date(paidAt || invoiceData.createdAt || Date.now()).toLocaleDateString('en-IN', {
     day: '2-digit',
@@ -32,8 +37,8 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
   });
 
   const basePrice = amount || 0;
-  const taxableValue = Math.max(0, basePrice - discount);
-  const gstVal = taxAmount || Math.round((taxableValue * taxRate) / 100);
+  const taxableValue = invoiceData?.taxableAmount !== undefined && invoiceData?.taxableAmount !== null ? invoiceData.taxableAmount : Math.max(0, basePrice - discount);
+  const gstVal = taxAmount !== undefined && taxAmount !== null ? taxAmount : Math.round((taxableValue * taxRate) / 100);
   const cgst = (gstVal / 2).toFixed(2);
   const sgst = (gstVal / 2).toFixed(2);
   const finalTotal = totalAmount || (taxableValue + gstVal);
@@ -41,21 +46,21 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
   const handleDownloadPdf = async () => {
     if (downloading) return;
     setDownloading(true);
-    const toastId = toast.loading('Generating invoice PDF...');
-    const invNoClean = (invoiceNumber || 'KTR_INVOICE').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const toastId = toast.loading('Generating receipt PDF...');
+    const invNoClean = (invoiceNumber || 'KTR_RECEIPT').replace(/[^a-zA-Z0-9_-]/g, '_');
 
     try {
       if (printRef.current) {
         const element = printRef.current;
         const opt = {
           margin: [6, 6, 6, 6],
-          filename: `Invoice_${invNoClean}.pdf`,
+          filename: `Receipt_${invNoClean}.pdf`,
           image: { type: 'jpeg', quality: 0.98 },
           html2canvas: { scale: 2, useCORS: true, logging: false },
           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
         await html2pdf().set(opt).from(element).save();
-        toast.success('Invoice downloaded successfully!', { id: toastId });
+        toast.success('Payment receipt downloaded successfully!', { id: toastId });
         return;
       }
       window.print();
@@ -129,7 +134,7 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
         <div className="no-print bg-[#020d1c] px-5 py-3.5 flex items-center justify-between text-white border-b border-gray-800">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]"></span>
-            <h3 className="text-sm font-bold tracking-wide">Official Tax Invoice</h3>
+            <h3 className="text-sm font-bold tracking-wide">Official Payment Receipt & Tax Invoice</h3>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -138,7 +143,7 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
               className="px-3 py-1.5 bg-[#f59e0b] hover:bg-orange-500 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               {downloading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
-              <span>{downloading ? 'Downloading...' : 'Download PDF'}</span>
+              <span>{downloading ? 'Downloading...' : 'Download Receipt'}</span>
             </button>
             <button
               onClick={handlePrint}
@@ -182,7 +187,7 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
 
             <div className="sm:text-right">
               <span className="inline-block bg-[#020d1c] text-[#f59e0b] font-black text-[11px] px-3 py-1 rounded-md uppercase tracking-wider mb-2">
-                ORIGINAL TAX INVOICE
+                PAYMENT RECEIPT & TAX INVOICE
               </span>
               <p className="text-[11.5px] font-bold text-gray-800">
                 Invoice No: <span className="font-mono text-[#020d1c]">{invoiceNumber}</span>
@@ -218,14 +223,16 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
               <p className="text-xs text-gray-600">
                 Payment Status:{' '}
                 <span className={`font-bold px-2 py-0.5 rounded text-[11px] ${status === 'Paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
-                  {status === 'Paid' ? 'PAID / VERIFIED' : 'PENDING'}
+                  {status === 'Paid' ? (isManualPayment ? 'PAID (MANUAL RECEIPT)' : 'PAID / VERIFIED') : 'PENDING'}
                 </span>
               </p>
               <p className="text-xs text-gray-600 mt-1">
-                Transaction ID: <span className="font-mono text-gray-900 font-bold">{paymentId}</span>
+                {isManualPayment ? 'Reference / UTR:' : 'Transaction ID:'}{' '}
+                <span className="font-mono text-gray-900 font-bold">{referenceNumber || paymentId || (status === 'Paid' ? 'Direct Payment' : '—')}</span>
               </p>
               <p className="text-xs text-gray-600">
-                Payment Mode: <span className="font-semibold text-gray-800">Online Gateway</span>
+                Payment Mode:{' '}
+                <span className="font-semibold text-gray-800">{paymentMode || (isManualPayment ? 'Direct Collection' : 'Online Gateway')}</span>
               </p>
             </div>
           </div>
@@ -258,7 +265,7 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
                     ₹{gstVal.toLocaleString('en-IN')}
                   </td>
                   <td className="py-3 px-3 text-right font-mono font-bold text-gray-900">
-                    ₹{(basePrice + gstVal).toLocaleString('en-IN')}
+                    ₹{finalTotal.toLocaleString('en-IN')}
                   </td>
                 </tr>
               </tbody>
@@ -281,16 +288,22 @@ const PaymentInvoiceModal = ({ isOpen, onClose, invoiceData }) => {
                 <span>Subtotal:</span>
                 <span className="font-mono">₹{basePrice.toLocaleString('en-IN')}</span>
               </div>
-              {taxRate > 0 && (
-                <div className="flex justify-between text-xs text-gray-600">
-                  <span>GST ({taxRate}%):</span>
-                  <span className="font-mono">+₹{gstVal.toLocaleString('en-IN')}</span>
-                </div>
-              )}
               {discount > 0 && (
                 <div className="flex justify-between text-xs text-emerald-600 font-medium">
                   <span>Discount:</span>
                   <span className="font-mono">-₹{discount.toLocaleString('en-IN')}</span>
+                </div>
+              )}
+              {discount > 0 && (
+                <div className="flex justify-between text-xs text-gray-700 font-semibold">
+                  <span>Taxable Value:</span>
+                  <span className="font-mono">₹{taxableValue.toLocaleString('en-IN')}</span>
+                </div>
+              )}
+              {taxRate > 0 && (
+                <div className="flex justify-between text-xs text-gray-600">
+                  <span>GST ({taxRate}%):</span>
+                  <span className="font-mono">+₹{gstVal.toLocaleString('en-IN')}</span>
                 </div>
               )}
               <div className="flex justify-between text-sm font-extrabold text-[#020d1c] border-t border-gray-300 pt-2 mt-1">

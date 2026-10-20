@@ -53,7 +53,9 @@ function MainLayout() {
   location.pathname.toLowerCase().startsWith('/u/') ||
   location.pathname.toLowerCase().startsWith('/shared-docs') ||
   location.pathname.toLowerCase().startsWith('/form/') ||
-  location.pathname.toLowerCase().startsWith('/upload-docs/');
+  location.pathname.toLowerCase().startsWith('/upload-docs/') ||
+  location.pathname.toLowerCase().startsWith('/pay/') ||
+  location.pathname.toLowerCase().startsWith('/payment/');
 
   return (
     <div className="min-h-screen bg-[#fafafa] font-sans relative">
@@ -108,6 +110,8 @@ function MainLayout() {
         <Route path="/form/:id" element={<PublicClientForm />} />
         <Route path="/u/:id" element={<PublicDocUpload />} />
         <Route path="/upload-docs/:id" element={<PublicDocUpload />} />
+        <Route path="/pay/:linkId" element={<PaymentPage />} />
+        <Route path="/payment/:linkId" element={<PaymentPage />} />
         <Route path="/services/:serviceId" element={<ServiceDetail />} />
         <Route path="/blogs" element={<BlogList />} />
         <Route path="/blog" element={<BlogList />} />

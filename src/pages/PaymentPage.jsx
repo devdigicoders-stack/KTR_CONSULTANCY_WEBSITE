@@ -189,56 +189,98 @@ const PaymentPage = () => {
           </div>
 
           {/* Pricing Breakdown */}
-          <div className="flex flex-col gap-2.5 text-xs text-gray-700">
-            <h3 className="font-bold text-[#020d1c] text-sm mb-1">Bill Summary</h3>
-            
-            <div className="flex justify-between py-1 border-b border-gray-100">
-              <span className="text-gray-600">Base Amount:</span>
-              <span className="font-mono font-semibold">₹{linkData.amount?.toLocaleString('en-IN')}</span>
-            </div>
+          {(() => {
+            const taxableAmount = linkData.taxableAmount !== undefined && linkData.taxableAmount !== null
+              ? linkData.taxableAmount
+              : Math.max(0, (linkData.amount || 0) - (linkData.discount || 0));
 
-            {linkData.taxRate > 0 && (
-              <div className="flex justify-between py-1 border-b border-gray-100 text-gray-600">
-                <span>GST ({linkData.taxRate}%):</span>
-                <span className="font-mono">+₹{linkData.taxAmount?.toLocaleString('en-IN')}</span>
+            return (
+              <div className="flex flex-col gap-2.5 text-xs text-gray-700">
+                <h3 className="font-bold text-[#020d1c] text-sm mb-1">Bill Summary</h3>
+                
+                <div className="flex justify-between py-1 border-b border-gray-100">
+                  <span className="text-gray-600">Base Amount:</span>
+                  <span className="font-mono font-semibold">₹{linkData.amount?.toLocaleString('en-IN')}</span>
+                </div>
+
+                {linkData.discount > 0 && (
+                  <div className="flex justify-between py-1 border-b border-gray-100 text-emerald-600 font-semibold">
+                    <span>Discount Applied:</span>
+                    <span className="font-mono">-₹{linkData.discount?.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
+
+                {linkData.discount > 0 && (
+                  <div className="flex justify-between py-1 border-b border-gray-100 text-gray-800 font-semibold">
+                    <span>Taxable Amount:</span>
+                    <span className="font-mono">₹{taxableAmount?.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
+
+                {linkData.taxRate > 0 && (
+                  <div className="flex justify-between py-1 border-b border-gray-100 text-gray-600">
+                    <span>GST ({linkData.taxRate}%):</span>
+                    <span className="font-mono">+₹{linkData.taxAmount?.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
+
+                <div className="flex justify-between items-baseline pt-3 text-base font-extrabold text-[#020d1c]">
+                  <span>Total Amount Payable:</span>
+                  <span className="text-xl font-mono text-[#f59e0b]">
+                    ₹{linkData.totalAmount?.toLocaleString('en-IN')}
+                  </span>
+                </div>
               </div>
-            )}
-
-            {linkData.discount > 0 && (
-              <div className="flex justify-between py-1 border-b border-gray-100 text-emerald-600 font-semibold">
-                <span>Discount Applied:</span>
-                <span className="font-mono">-₹{linkData.discount?.toLocaleString('en-IN')}</span>
-              </div>
-            )}
-
-            <div className="flex justify-between items-baseline pt-3 text-base font-extrabold text-[#020d1c]">
-              <span>Total Amount Payable:</span>
-              <span className="text-xl font-mono text-[#f59e0b]">
-                ₹{linkData.totalAmount?.toLocaleString('en-IN')}
-              </span>
-            </div>
-          </div>
+            );
+          })()}
 
           {/* Action Button: Paid vs Pending */}
           {isAlreadyPaid ? (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 text-center flex flex-col items-center gap-3">
+            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 text-center flex flex-col items-center gap-3">
               <div className="w-12 h-12 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-md">
                 <CheckCircle2 className="w-7 h-7" />
               </div>
               <div>
                 <h3 className="font-extrabold text-emerald-900 text-base">Payment Completed Successfully!</h3>
-                <p className="text-xs text-emerald-700 mt-0.5 font-mono">
+                <p className="text-xs text-emerald-700 mt-1 font-mono">
                   Transaction ID: <strong>{linkData.paymentId}</strong>
                 </p>
               </div>
 
-              <button
-                onClick={() => setIsInvoiceOpen(true)}
-                className="mt-1 px-6 py-3 bg-[#020d1c] hover:bg-black text-white rounded-xl text-xs font-bold shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto"
-              >
-                <Download className="w-4 h-4 text-[#f59e0b]" />
-                <span>Download Tax Invoice</span>
-              </button>
+              {Number(linkData.taxRate) > 0 ? (
+                <div className="flex flex-col items-center gap-2 mt-2 w-full">
+                  <button
+                    onClick={() => setIsInvoiceOpen(true)}
+                    className="px-6 py-3 bg-[#020d1c] hover:bg-black text-white rounded-xl text-xs font-bold shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto"
+                  >
+                    <Download className="w-4 h-4 text-[#f59e0b]" />
+                    <span>Download Receipt</span>
+                  </button>
+                  <p className="text-[11px] text-gray-500">
+                    Your official payment receipt and tax invoice is available for immediate download.
+                  </p>
+                </div>
+              ) : (
+                <div className="w-full mt-2 pt-3 border-t border-emerald-200/60">
+                  <div className="bg-white/80 border border-emerald-200/80 rounded-xl p-3 text-left w-full text-xs text-gray-700 space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Service:</span>
+                      <span className="font-bold text-gray-900">{linkData.serviceName}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Amount Paid:</span>
+                      <span className="font-mono font-bold text-emerald-700">₹{linkData.totalAmount?.toLocaleString('en-IN')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Tax Treatment:</span>
+                      <span className="font-semibold text-gray-700">0% (No Tax / Non-Taxable)</span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+                    Payment has been securely recorded and verified in the system. Because this collection uses the 0% (No Tax) option, no tax invoice is generated or issued for this transaction.
+                  </p>
+                </div>
+              )}
             </div>
           ) : (
             <div className="flex flex-col gap-3 pt-2">
@@ -261,12 +303,14 @@ const PaymentPage = () => {
 
       </div>
 
-      {/* Printable Invoice Modal */}
-      <PaymentInvoiceModal
-        isOpen={isInvoiceOpen}
-        onClose={() => setIsInvoiceOpen(false)}
-        invoiceData={linkData}
-      />
+      {/* Printable Invoice / Receipt Modal (Only for taxable collections) */}
+      {Number(linkData?.taxRate) > 0 && (
+        <PaymentInvoiceModal
+          isOpen={isInvoiceOpen}
+          onClose={() => setIsInvoiceOpen(false)}
+          invoiceData={linkData}
+        />
+      )}
 
     </div>
   );

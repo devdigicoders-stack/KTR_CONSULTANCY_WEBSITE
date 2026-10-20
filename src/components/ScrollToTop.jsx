@@ -45,10 +45,16 @@ const ScrollToTop = () => {
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
+  const isDocPortal = pathname.startsWith('/d/') || pathname.startsWith('/s/') || pathname.startsWith('/shared-docs');
+
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-6 right-6 z-40 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] w-12 h-12 rounded-xl shadow-[0_4px_14px_0_rgba(222,158,72,0.4)] flex items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer ${
+      className={`fixed z-40 bg-[#de9e48] hover:bg-[#c98e41] text-[#020d1c] shadow-[0_4px_14px_0_rgba(222,158,72,0.4)] flex items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer ${
+        isDocPortal
+          ? 'bottom-18 right-3 sm:bottom-22 sm:right-6 w-10 h-10 sm:w-11 sm:h-11 rounded-xl'
+          : 'bottom-6 right-6 w-12 h-12 rounded-xl'
+      } ${
         isVisible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-6 pointer-events-none'
       }`}
       aria-label="Scroll to top"
