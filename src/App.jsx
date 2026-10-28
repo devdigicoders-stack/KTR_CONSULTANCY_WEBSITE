@@ -38,6 +38,7 @@ import PaymentPage from './pages/PaymentPage';
 import SharedDocuments from './pages/SharedDocuments';
 import PublicClientForm from './pages/PublicClientForm';
 import PublicDocUpload from './pages/PublicDocUpload';
+import SharedCaseStudy from './pages/SharedCaseStudy';
 
 function MainLayout() {
   const location = useLocation();
@@ -48,6 +49,7 @@ function MainLayout() {
     '/cibil-check'
   ].includes(location.pathname.toLowerCase()) || 
   location.pathname.toLowerCase().startsWith('/d/') ||
+  location.pathname.toLowerCase().startsWith('/case-studies/shared/') ||
   location.pathname.toLowerCase().startsWith('/s/') ||
   location.pathname.toLowerCase().startsWith('/f/') ||
   location.pathname.toLowerCase().startsWith('/u/') ||
@@ -103,6 +105,8 @@ function MainLayout() {
         <Route path="/loans" element={<HomeLoanLucknow />} />
         <Route path="/property-loans" element={<Services />} />
         <Route path="/emi-calculator" element={<EMICalculatorPage />} />
+        <Route path="/d/case/:id" element={<SharedCaseStudy />} />
+        <Route path="/case-studies/shared/:id" element={<SharedCaseStudy />} />
         <Route path="/d/:id" element={<SharedDocuments />} />
         <Route path="/s/:id" element={<SharedDocuments />} />
         <Route path="/shared-docs/:id" element={<SharedDocuments />} />
